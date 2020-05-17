@@ -1,0 +1,601 @@
+<html>
+
+<head>
+<STYLE>@page Section1 {size: 612.0pt 792.0pt; margin: 70.85pt 2.0cm 2.0cm 2.0cm; mso-header-margin: 36.0pt; mso-footer-margin: 36.0pt; mso-paper-source: 0; }
+P.MsoNormal {
+	FONT-SIZE: 12pt; MARGIN: 0cm 0cm 0pt; FONT-FAMILY: "Times New Roman"; mso-style-parent: ""; mso-pagination: widow-orphan; mso-fareast-font-family: "Times New Roman"
+}
+LI.MsoNormal {
+	FONT-SIZE: 12pt; MARGIN: 0cm 0cm 0pt; FONT-FAMILY: "Times New Roman"; mso-style-parent: ""; mso-pagination: widow-orphan; mso-fareast-font-family: "Times New Roman"
+}
+DIV.MsoNormal {
+	FONT-SIZE: 12pt; MARGIN: 0cm 0cm 0pt; FONT-FAMILY: "Times New Roman"; mso-style-parent: ""; mso-pagination: widow-orphan; mso-fareast-font-family: "Times New Roman"
+}
+SPAN.SpellE {
+	mso-style-name: ""; mso-spl-e: yes
+}
+SPAN.GramE {
+	mso-style-name: ""; mso-gram-e: yes
+}
+DIV.Section1 {
+	page: Section1
+}
+</STYLE>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Beginner Tutorial #8 Breakpoints</title>
+<style type="text/css">
+<!--
+body {
+background-image: url(images/Background.gif);
+}
+div#side {
+	height: 7000;
+}
+.style6 {
+	font-size: 12px;
+	font-style: italic;
+}
+.style16 {color: #FFFFFF}
+.style17 {color: #FFFF00}
+-->
+</style>
+</head>
+
+<body style="background-attachment: fixed; text-align:center" behavior="fixed" text="#C0C0C0" link="#FFFFFF" vlink="#FFFFFF" alink="#FFFFFF" lang="IT">
+ <div style="position:absolute; overflow:hidden; left:0px; top:0px; width:90px; height:90px; z-index:14; filter:Alpha(Opacity=40); -moz-opacity:0.50;"><img width=90 height=90  border=0 src="images/corner.jpg"></DIV> 
+  <div style="position:absolute; overflow:hidden; left:3px; top:-1px;"></div>
+  <center><div align = "center">
+    <table align = "center" border="1" width="554" bgcolor="#336699" height="382" bordercolor="#3D486E" cellspacing="0" cellpadding="2" background="images/table.gif" bordercolordark="#3D486E" bordercolorlight="#3D486E" style="border-collapse: collapse">
+      <tr>
+        <td width="100%" height="19" align="center" bordercolor="#3D486E" bordercolorlight="#3D486E" bordercolordark="#3D486E" background="images/ARTeam.gif"><p>
+		<span class="style16"><u><b>Beginner Tutorial #8 </b></u><br>
+        By: Shub-Nigurrath /ARTeam<br>
+  <a href="http://cracking.accessroot.com">
+  http://cracking.accessroot.com</a></span></p>
+        <p class="style16">Breakpoints Theory <font size="2">v1.3</font></td>
+      </tr>
+      <tr>
+        <td width="100%" height="19" align="left"><b><u>The Target:</u></b><br> 
+          none</td>
+      </tr>
+      <tr>
+        <td width="100%" height="23" align="left"><b><u>The Tools:</u></b><br>
+       Ollydbg 1.10</td>
+      </tr>
+      <tr>
+        <td width="100%" height="62" align="left" background="images/table.gif"><b><u>The Protection:</u></b><br>
+      	none</td>
+      </tr>
+      <tr>
+        <td width="100%" height="98" align="left"><p><b><u>Other Information:</u></b><br>
+        This tutorial will cover some basic concepts about breakpoints and their 
+		differencies, helping to cover also this aspect for beginners..</p></td>
+      </tr>
+    </table>
+</div></center>
+    <p align="center" class="style6">Best viewed in Firefox at 1280x1024</p>
+    <div align="center"> 
+    <center>
+<div align="center">
+<table width="75%" height="118" border="1" cellspacing="0" bordercolor="#3D486E" bordercolorlight="#3D486E" bordercolordark="#3D486E" background="/images/table.gif" style="border-collapse: collapse" bgcolor="#C0C0C0" id="table1" cellpadding="5">
+  <tr>
+    <td width="100%" background="images/table.gif">
+    <p align="center"><b><u>Introduction:</u></b></p></td>
+  </tr>
+  <tr>
+    <td width="100%" height="92" valign="top" background="images/table.gif">
+		<p align="justify">
+		Well' once since the first tutorial of the beginners series you learnt 
+		that there are different breakpoints and that the can be used in 
+		different ways, but no one till now (in this series of tutorials of 
+		course) told&nbsp; you what are the differencies among all the 
+		breakpoints types we can set. Even if you barely know what happens under 
+		the hood of breakpoints, it would suffice to understand why there are 
+		different usages for each of them.</p>
+		<p align="justify">
+		First of all there's a big distinction between the breakpoints, there 
+		are <b>Software Breakpoints</b> and <b>Hardware Breakpoints</b>...</p>
+		<p>
+		&nbsp;</p>
+    </td>
+  </tr>
+</table>
+</div>
+    <br>
+    <br>
+  </center>
+</div>
+<div align=n "center">
+<div align="center">
+<table width="75%" height="183" border="1" cellspacing="0" bordercolor="#3D486E" bordercolorlight="#3D486E" bordercolordark="#3D486E" background="/images/table.gif" style="border-collapse: collapse" bgcolor="#C0C0C0" cellpadding="5">
+  <tr>
+    <td width="100%" background="images/table.gif">
+    <p align="center"><b><u>Hardware Breakpoints:</u></b></p></td>
+  </tr>
+  <tr>
+    <td width="100%" height="157" valign="top" background="images/table.gif" align="justify">
+		<p>The latter ones, Hardware Breakpoints, are directly supported by the 
+		CPU, using some special registers, called debug registers.</p>
+		<p>There are four debug registers: DR0, DR1, DR2, DR3. They store the 
+		linear addresses of four breakpoints. The break conditions of each of 
+		these breakpoints are inside a special CPU register, the DR7 register. 
+		When any of these conditions are TRUE, the processor throws an INT 1 
+		exception and the control is passed to the debugger. There are four 
+		possible breaking conditions foreseen by the CPU:</p>
+		<ol>
+			<li>An instruction is executed</li>
+			<li>The contents of a memory location is modified</li>
+			<li>A memory location is read or updated, but not executed</li>
+			<li>An input-output port is referenced<br>
+&nbsp;</li>
+		</ol>
+		<p>Once you set an Hardware Breakpoint, the debugger will check to see 
+		if the trap bit of the flags register is set. If so, an INT 1 debug 
+		exception is generated automatically by the CPU, and the control is 
+		passed to the debugger, or generally speaking the exception handler 
+		registered in the system.</p>
+		<p><u><b>Considerations</b></u><br>
+		Since these few details you can see that there is a maximum of four 
+		hardware breakpoints you can set and that the number of possible 
+		conditions is limited by design.</p>
+		<p>The advantage on the other hand is that the Hardware Breakpoints are 
+		almost undetectable by the software, the only way they can use to detect 
+		that an hardware breakpoint is set is to read the DR0..DR7 values: a 
+		code could detect tracing (debugging) by analizing the flags register 
+		(DR7). Unfortunately, it is only possible to work with these registers 
+		in ring0. </p>
+		<p>As such, we can use some tricks for switching over into ring0. For 
+		example I'm reporting here an example taken from the Pavol Cerven's book 
+		&quot;Crackproof your Software&quot; (excellent reading I suggest to all of you). </p>
+		<p><font face="Courier New" color="#FFFFFF" size="2">.386<br>
+		.MODEL FLAT,STDCALL locals<br>
+		jumps<br>
+		UNICODE=0<br>
+		include w32.inc<br>
+		<br>
+		Extrn SetUnhandledExceptionFilter : PROC<br>
+		Interrupt equ 5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		;the interrupt numbers 1 or 3 will make <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		;debugging more difficult<br>
+		.DATA<br>
+		<br>
+		message1 db &quot;Debug breakpoint detection&quot;,0<br>
+		message2 db &quot;Debug breakpoint not found&quot;,0<br>
+		message3 db &quot;Debug breakpoint found&quot;,0<br>
+		delayESP dd 0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		;the ESP register saves here<br>
+		previous dd 0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		;the ESP register will save the address <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		;of the previous SEH service here<br>
+		<br>
+		.CODE<br>
+		Start:<br>
+		;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;<br>
+		;Sets SEH in case of an error<br>
+		;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;<br>
+&nbsp;&nbsp;&nbsp;&nbsp; mov [delayESP], esp<br>
+&nbsp;&nbsp;&nbsp;&nbsp; push offset error<br>
+&nbsp;&nbsp;&nbsp;&nbsp; call SetUnhandledExceptionFilter<br>
+&nbsp;&nbsp;&nbsp;&nbsp; mov [previous], eax<br>
+		;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;<br>
+		<br>
+&nbsp;&nbsp;&nbsp;&nbsp; push edx<br>
+&nbsp;&nbsp;&nbsp;&nbsp; sidt [delayesp&#8722;2]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		;reads IDT into the stack<br>
+&nbsp;&nbsp;&nbsp;&nbsp; pop edx<br>
+&nbsp;&nbsp;&nbsp;&nbsp; add edx, (Interrupt*8)+4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		;reads the vector of the required interrupt<br>
+&nbsp;&nbsp;&nbsp;&nbsp; mov ebx,[edx]<br>
+&nbsp;&nbsp;&nbsp;&nbsp; mov bx,word ptr [edx&#8722;4]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		;reads the address of the old service of the <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		;required interrupt<br>
+&nbsp;&nbsp;&nbsp;&nbsp; lea edi,InterruptHandler<br>
+&nbsp;&nbsp;&nbsp;&nbsp; mov [edx&#8722;4],di<br>
+&nbsp;&nbsp;&nbsp;&nbsp; ror edi,16&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		;sets the new interrupt service<br>
+&nbsp;&nbsp;&nbsp;&nbsp; mov [edx+2],di<br>
+&nbsp;&nbsp;&nbsp;&nbsp; push ds&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		;saves registers for security<br>
+&nbsp;&nbsp;&nbsp;&nbsp; push es<br>
+&nbsp;&nbsp;&nbsp;&nbsp; int Interrupt&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		;jumps into Ring0 (a newly defined INT 5h service)<br>
+&nbsp;&nbsp;&nbsp;&nbsp; pop es&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		;restores the registers<br>
+&nbsp;&nbsp;&nbsp;&nbsp; pop ds<br>
+&nbsp;&nbsp;&nbsp;&nbsp; mov [edx&#8722;4],bx&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		;sets the original INT 5h interrupt service<br>
+&nbsp;&nbsp;&nbsp;&nbsp; ror ebx,16<br>
+&nbsp;&nbsp;&nbsp;&nbsp; mov [edx+2],bx<br>
+&nbsp;&nbsp;&nbsp;&nbsp; push eax&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		;saves the return value<br>
+		<br>
+		;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;<br>
+		;Sets the previous SEH service<br>
+		;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;<br>
+&nbsp;&nbsp;&nbsp;&nbsp; push dword ptr [previous]<br>
+&nbsp;&nbsp;&nbsp;&nbsp; call SetUnhandledExceptionFilter<br>
+		;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;<br>
+		<br>
+&nbsp;&nbsp;&nbsp;&nbsp; pop eax&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		;restores the return value<br>
+&nbsp;&nbsp;&nbsp;&nbsp; test eax,eax&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		;tests to see if eax=0<br>
+&nbsp;&nbsp;&nbsp;&nbsp; jnz jump&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		;if not, the program has found a debug <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		;breakpoint and it ends<br>
+		<br>
+		continue:<br>
+&nbsp;&nbsp;&nbsp;&nbsp; call MessageBoxA,0, offset message2,\<br>
+&nbsp;&nbsp;&nbsp;&nbsp; offset message1,0<br>
+&nbsp;&nbsp;&nbsp;&nbsp; call ExitProcess, &#8722;1<br>
+		<br>
+		jump:<br>
+&nbsp;&nbsp;&nbsp;&nbsp; call MessageBoxA,0, offset message3,\<br>
+&nbsp;&nbsp;&nbsp;&nbsp; offset message1,0<br>
+&nbsp;&nbsp;&nbsp;&nbsp; call ExitProcess, &#8722;1<br>
+		<br>
+		error:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		;sets a new SEH service if there is an error<br>
+&nbsp;&nbsp;&nbsp;&nbsp; mov esp, [delayESP]<br>
+&nbsp;&nbsp;&nbsp;&nbsp; push offset continue<br>
+&nbsp;&nbsp;&nbsp;&nbsp; ret<br>
+		<br>
+		;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;<br>
+		;Your new service INT 5h (runs in Ring0)<br>
+		;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;<br>
+		InterruptHandler:<br>
+&nbsp;&nbsp;&nbsp;&nbsp; mov eax, dr0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		;reads a value from the DR0 debug register<br>
+&nbsp;&nbsp;&nbsp;&nbsp; test ax,ax&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		;tests to see if a breakpoint was set<br>
+&nbsp;&nbsp;&nbsp;&nbsp; jnz Debug_Breakpoint&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		;if so, the program jumps<br>
+&nbsp;&nbsp;&nbsp;&nbsp; mov eax,dr1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		;reads a value from the DR1 debug register<br>
+&nbsp;&nbsp;&nbsp;&nbsp; test ax,ax&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		;tests to see if a breakpoint was set<br>
+&nbsp;&nbsp;&nbsp;&nbsp; jnz Debug_Breakpoint&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		;if so, the program jumps<br>
+&nbsp;&nbsp;&nbsp;&nbsp; mov eax,dr2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		;reads a value from the DR2 debug register<br>
+&nbsp;&nbsp;&nbsp;&nbsp; test ax,ax&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		;tests to see if a breakpoint was set<br>
+&nbsp;&nbsp;&nbsp;&nbsp; jnz Debug_Breakpoint&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		;if so, the program jumps<br>
+&nbsp;&nbsp;&nbsp;&nbsp; mov eax,dr3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		;reads a value from the DR3 debug register<br>
+&nbsp;&nbsp;&nbsp;&nbsp; test ax,ax&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		;tests to see if a breakpoint was set<br>
+&nbsp;&nbsp;&nbsp;&nbsp; jnz Debug_Breakpoint&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		;if so, the program jumps<br>
+&nbsp;&nbsp;&nbsp;&nbsp; iretd&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		;if a breakpoint was not set the program will<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		;return 0 into eax<br>
+		<br>
+		Debug_Breakpoint:<br>
+&nbsp;&nbsp;&nbsp;&nbsp; mov eax,1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		;sets the value 1 into eax to show that <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		;breakpoints are active<br>
+&nbsp;&nbsp;&nbsp;&nbsp; iretd&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		;jump back into Ring3<br>
+		<br>
+		ends<br>
+		end Start</font></p>
+		<p>This technique is one of the few ways to discover debug breakpoints, 
+		and it makes possible to delete them without stopping the application 
+		in the debugger. However, rather than delete them, usually the 
+		application goes to 
+		an incorrect ending. Unfortunately, the trick (and all the other similar 
+		ones) works only 
+		in Windows 9x because of the need to switch over into ring0. </p>
+		<p>Generally speaking the Cerven's book mentioned describes three ways 
+		to switch a normal program running in ring3 into ring0, but only in 
+		Windows 9x. Windows NT, 2000, and XP systems were secured against these 
+		methods because of the prevalence of viruses that take advantage of 
+		them. (Older Windows NT versions did allow this switch, but after it was 
+		misused a few times, the possibility was removed from the system). <br>
+		One still good way to 
+		implement these tests in Windows NT, Windows 2000, and Windows XP is to 
+		place them into a 
+		Sys driver running in ring0.</p><hr>
+		<p><u><b>Update: changing debug registers in ring3 code<br>
+		</b></u>According to experiments it's not completely true that you have 
+		to switch to ring0 to change the debug registers value. Programs running 
+		as debuggers, can do calls to system API's such as GetThreadContext() 
+		and SetThreadContext(). These APIs will be executed by the NTDLL.DLL 
+		becoming so a system call (an interrupt 2E) causing then the processor 
+		to switch to ring0 and run the code. </p>
+		<p>You can also experiment on your own using the following simple ASM 
+		code (also compiled and included into this archive) which uses the SEH 
+		mechanism to erase the debug registers and then return to the normal 
+		excution. See for example the code here attached, (many thanks a lot to 
+		Neitsa for writing it). The structure is very simple, try to place an 
+		hardware breakpoint in one of the NOP in the example and then place a 
+		normal BP into the first instruction of the SEH handler, and follow what 
+		happens.</p>
+		<p><font face="Courier New" color="#FFFFFF" size="2">.686<br>
+		.model flat, stdcall ;32 bit memory model<br>
+		option casemap :none ;case sensitive<br>
+		assume fs:nothing ;MASM feature (otherwise FS assumed to be ERROR)<br>
+		include EraseDrx.Inc<br>
+		<br>
+		.code<br>
+		<br>
+		start:<br>
+&nbsp;&nbsp;&nbsp;&nbsp; ; ### set the S.E.H ###<br>
+&nbsp;&nbsp;&nbsp;&nbsp; push offset mySEH<br>
+&nbsp;&nbsp;&nbsp;&nbsp; push dword ptr fs:[0]<br>
+&nbsp;&nbsp;&nbsp;&nbsp; mov dword ptr fs:[0],esp<br>
+		<br>
+&nbsp;&nbsp;&nbsp;&nbsp; ;*** now everything will be covered by our SEH ***<br>
+&nbsp;&nbsp;&nbsp;&nbsp; ; raise an invalid opcode exception<br>
+&nbsp;&nbsp;&nbsp;&nbsp; UD2<br>
+		<br>
+		@@SafeOffset: ; this is where we can safely return from our SEH<br>
+&nbsp;&nbsp;&nbsp;&nbsp; fnop<br>
+		<br>
+&nbsp;&nbsp;&nbsp;&nbsp; ;try to hardware BP one of those NOP<br>
+&nbsp;&nbsp;&nbsp;&nbsp; nop<br>
+&nbsp;&nbsp;&nbsp;&nbsp; nop<br>
+&nbsp;&nbsp;&nbsp;&nbsp; nop<br>
+&nbsp;&nbsp;&nbsp;&nbsp; nop<br>
+		<br>
+&nbsp;&nbsp;&nbsp;&nbsp; ;*** now this is this end of the SEH ***<br>
+&nbsp;&nbsp;&nbsp;&nbsp; pop dword ptr fs:[0]<br>
+&nbsp;&nbsp;&nbsp;&nbsp; add esp,4<br>
+&nbsp;&nbsp;&nbsp;&nbsp; ret ;return to ExitThread<br>
+		<br>
+		;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;<br>
+		; OUR SEH handler, which erases the debug registers<br>
+		;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;&#8722;<br>
+		mySEH proc C lpExcept:DWORD, lpFrame:DWORD, lpContext:DWORD, 
+		lpDispatch:DWORD<br>
+		<br>
+&nbsp;&nbsp;&nbsp;&nbsp; mov ecx,[lpContext]<br>
+		<br>
+&nbsp;&nbsp;&nbsp;&nbsp; ; push all linear addresses of drx (from Dr0 to Dr3)<br>
+&nbsp;&nbsp;&nbsp;&nbsp; ; you should see your hardware BP there (just to 
+		demonstrate where they are)<br>
+&nbsp;&nbsp;&nbsp;&nbsp; push [ecx][CONTEXT.iDr0]<br>
+&nbsp;&nbsp;&nbsp;&nbsp; push [ecx][CONTEXT.iDr1]<br>
+&nbsp;&nbsp;&nbsp;&nbsp; push [ecx][CONTEXT.iDr2]<br>
+&nbsp;&nbsp;&nbsp;&nbsp; push [ecx][CONTEXT.iDr3]<br>
+&nbsp;&nbsp;&nbsp;&nbsp; add esp,4*4 ; skip them<br>
+		<br>
+&nbsp;&nbsp;&nbsp;&nbsp; ;erase DR0 to DR3<br>
+&nbsp;&nbsp;&nbsp;&nbsp; push 0<br>
+&nbsp;&nbsp;&nbsp;&nbsp; push 0<br>
+&nbsp;&nbsp;&nbsp;&nbsp; push 0<br>
+&nbsp;&nbsp;&nbsp;&nbsp; push 0<br>
+		<br>
+&nbsp;&nbsp;&nbsp;&nbsp; pop [ecx][CONTEXT.iDr0]<br>
+&nbsp;&nbsp;&nbsp;&nbsp; pop [ecx][CONTEXT.iDr1]<br>
+&nbsp;&nbsp;&nbsp;&nbsp; pop [ecx][CONTEXT.iDr2]<br>
+&nbsp;&nbsp;&nbsp;&nbsp; pop [ecx][CONTEXT.iDr3]<br>
+		<br>
+&nbsp;&nbsp;&nbsp;&nbsp; ;erase also DR7<br>
+&nbsp;&nbsp;&nbsp;&nbsp; push 0<br>
+&nbsp;&nbsp;&nbsp;&nbsp; pop [ecx][CONTEXT.iDr7]<br>
+		<br>
+&nbsp;&nbsp;&nbsp;&nbsp; ;now set EIP to our SafeOffset<br>
+&nbsp;&nbsp;&nbsp;&nbsp; push offset @@SafeOffset<br>
+&nbsp;&nbsp;&nbsp;&nbsp; pop [ecx][CONTEXT.regEip]<br>
+		<br>
+&nbsp;&nbsp;&nbsp;&nbsp; mov eax,FALSE<br>
+&nbsp;&nbsp;&nbsp;&nbsp; ret<br>
+		<br>
+		mySEH endp<br>
+		<br>
+		end start</font></p><hr>
+		<p>Concluding this section, then theoretically in order for a debugger to be invisible it needs to recognize 
+		the instructions for reading the flags register, emulate their execution 
+		and return always zero as value of the trap flags. Not that easy to be 
+		done indeed!</p>
+		<p>There's nothing much than this to say about Hardware breakpoints 
+		indeed..so let move on on the more complex software breakpoint ..</p>
+		<p>&nbsp;</p>
+    </td>
+  </tr>
+</table>
+</div>
+<p>&nbsp;</p>
+<div align="center">
+<table width="75%" height="118" border="1" cellspacing="0" bordercolor="#3D486E" bordercolorlight="#3D486E" bordercolordark="#3D486E" background="/images/table.gif" style="border-collapse: collapse" bgcolor="#C0C0C0" id="table2" cellpadding="5">
+  <tr>
+    <td width="100%" background="images/table.gif">
+    <p align="center"><b><u> Software Breakpoints:</u></b></p></td>
+  </tr>
+  <tr>
+    <td width="100%" height="92" valign="top" background="images/table.gif" align="justify">
+      <p>A Software Breakpoint is the only type of breakpooints that cannot be 
+		hidden without writing a full-scale processor emulator. If you place 
+		this one byte of code -- 0xCC at the beginning of an instruction, it 
+		will cause an INT 0x3 exception when an attempt is made to execute it.<p>
+		The handler of INT 0x3 gains control and can do whatever it wishes with 
+		a program. However, before the interrupt handler is called, the current 
+		values of the flags register, the pointer of the code segment (the CS 
+		register), and the instruction pointer (the IP register) are placed onto 
+		the stack. In addition, the interrupts are disabled (the IF flag is 
+		cleared), and the trap flag is cleared. Therefore, a call of the debug 
+		interrupt does not differ from a call of any other interrupt.<p>To learn 
+		the point of the program in which the halt has occurred, the debugger 
+		pulls the saved values of registers off the stack, taking into account 
+		that CS:IP points to the next instruction to be executed.<p>So generally 
+		it is complex to set a breakpoint in an arbitrary place of the program. 
+		The debugger should save the current value of the memory location at the 
+		specified address, then write the code 0xCC there. Before exiting the 
+		debug interrupt, the debugger should return everything to its former 
+		place, and should modify IP saved in the stack so that it points to the 
+		beginning of the restored instruction. (Otherwise, it points to its 
+		middle.)<p align="center">
+		<img border="0" src="images/stack.gif" width="350" height="224"><p>
+		<u><b>Considerations<br>
+		</b></u>What are the drawbacks of the breakpoint mechanism of the 8086 
+		processor? The most unpleasant is that the debugger must modify code 
+		directly when it sets the breakpoints. It should be self evident that 
+		modifying the memory of a process (the 0xCC is written) is something 
+		that a program can easily detect and avoid in different ways. There are 
+		plenty of tutorials describing more or less smart ways to avoid a 
+		program from being &quot;breakpointed&quot;. Common actions are to alterate the 
+		program's flow consequently or simply rewrite the 0xCC byte with the 
+		original value (the debugger will not stop).<p>For a program bein 
+		debugger a possible solution to discover whether at least one point has 
+		been set, is to count its checksum. To do this, it may use MOV, MOVS, 
+		LODS, POP, CMP, CMPS, or any other instructions.<p>For example let's 
+		take a look to the following simple protection scheme (from Karsperky 
+		Book, Haker Disassembling Uncovered), using the XOR trick to decrypt a 
+		string.<p><font face="Courier New" color="#FFFFFF" size="2">int main(int argc, 
+		char* argv[])<br>
+		{<br>
+&nbsp;&nbsp;&nbsp; // The ciphered string &quot;Hello, Free World!&quot;<br>
+&nbsp;&nbsp;&nbsp; char s0[]=&quot;\x0C\x21\x28\x28\x2B\x68\x64\x02\x36\<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		\x21\x21\x64\x13\x2B\x36\x28\x20\x65\x49\x4E&quot;;<br>
+&nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp; __asm<br>
+&nbsp;&nbsp;&nbsp; {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; BeginCode:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ; The beginning of the code being debugged<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pusha&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ; All general-purpose registers are saved.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; lea ebx, s0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ; ebx=&amp;s0[0]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GetNextChar:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ; do<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; xor eax, eax&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;; eax = 0;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; lea esi, 
+		BeginCode&nbsp;; esi = &amp;BeginCode<br>
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; lea ecx, 
+		EndCode&nbsp;&nbsp;&nbsp;; The length of code<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sub ecx, esi&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;; being debugged is computed.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; HarvestCRC:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;; do<br>
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; lodsb&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;; The next byte is loaded into al.<br>
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		add eax, eax&nbsp;&nbsp;&nbsp;; The checksum is computed.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; loop 
+		HarvestCRC&nbsp;&nbsp;&nbsp;&nbsp;; until(--cx&gt;0)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; xor [ebx], ah&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;; The next character is decrypted.<br>
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; inc ebx&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;; A pointer to the next character<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cmp [ebx], 0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;; Until the end of the string<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;jnz 
+		GetNextChar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ; Continue decryption<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; popa&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ; All registers are restored.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; EndCode:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ; The end of the code being debugged<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; nop&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ; A breakpoint is safe here.<br>
+&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; printf(s0);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //The string is diplayed.<br>
+&nbsp;&nbsp;&nbsp; return 0;<br>
+		}</font><br>
+&nbsp;<p>After starting the program normally, the line &quot;Hello, Free World!&quot; 
+		should appear on the screen. But when the program is run under the 
+		debugger, even with at least one breakpoint set within the limits of 
+		BeginCode and EndCode, senseless garbage like &quot;Jgnnm.&quot;Dpgg&quot;Umpnf#0&quot; will 
+		show up on the screen. Protection can be strengthened considerably if 
+		the procedure computing the checksum is placed into a separate thread 
+		engaged in another useful process, making the protective mechanism as 
+		unobtrusive as possible.<p>&nbsp;
+		
+		<table border="0" bgcolor="black" cellspacing="0" cellpadding="1" width="90%" align="center"><tr><td><table bgcolor="white" width="100%" border="0" cellspacing="0" cellpadding="6"><tr>
+		<td width="60" valign="top" background="images/Background.gif" align="justify"><img src="images/tip_yellow.gif" width="50" height="54"></td>
+		<td valign="top" background="images/Background.gif" align="justify">
+		The above code uses a property of thre XOR operator you might have 
+		forgotten, which is A &lt;XOR&gt; B &lt;XOR&gt; A = B. That is why it's often used 
+		for weak data encoding. If you XOR a plaitext data with a key, you get 
+		&quot;ciphertext&quot; back. If you XOR the &quot;ciphertext&quot; with the key, you get the 
+		plaintext back. And if you know the ciphertext and the plaintext, you 
+		get the key back.</td></tr></table></td></tr></table></P><br>
+
+		<p>If the above case the key used is directly obtained 
+		from the code among the BeginCode and the EndCode addresses<p>Let see it 
+		directly into Olly (using the supplied main.exe into this archive).<p>
+		
+		<p align="center">
+		<img border="0" src="images/Olly1.jpg"><p>
+		<p>You can find again what we just wrote in the C code above. Try 
+		excercising yourself with this protection, it's not so uncommon to find 
+		it in weak protected programs in real life...if you excercise here, 
+		you'll be ready to recognize it whenever you'll find it..<p>Of course 
+		the above sample is simple, consider that the code might be complicated 
+		using exception, thread and other amenities to complicate lifes of who, 
+		like us, likes to follow the ASM code..<p><u><b>Note for those of you 
+		who read the Shub-Nigurrath Oraculum's tutorial<br>
+		</b></u>For those of you which have read the ARTeam's Oraculum Tutorial 
+		you should also wonder that the &quot;EBFE&quot; trick used there is somehow 
+		similar to the memory breakpoints described here. Well the mechanism is 
+		similar just for the fact that it writes a value in memory in the place 
+		where we want the break to occour. The difference is that there's no 
+		exception raising and that the check to suspend the program is simply 
+		made looking at the EIP being constant. 
+		<p>This will overcome those protections only checking the exception 
+		status or the 0xCC value being present, but not those doing complex 
+		checksums on memory.<p>&nbsp;</td>
+  </tr>
+</table>
+</div>
+<div align="center">
+    <p>&nbsp;</p>
+	<table border="1" width="75%" background="/images/table.gif" bordercolor="#3D486E" cellspacing="0" bordercolorlight="#3D486E" bordercolordark="#3D486E" style="border-collapse: collapse" id="table3" cellpadding="5">
+		<tr>
+			<td width="100%" background="images/table.gif">
+			<p align="center"><u><b>References</b></u><b><u>:</u></b></p></td>
+		</tr>
+		<tr>
+			<td width="100%" background="images/table.gif">
+			<p>As you can see there are different usages for breakpoints just 
+			because they are implemented differently, but consider that none of 
+			them is undetectable, thus do not rely, once a breakpoint is set, on 
+			your program to stop on it. Always be aware that the program can 
+			detect it's presence and delete it or modify itself behaviour to 
+			counteract an attack.</p>
+			<p>Combining these two tecniques lead to conceptually&nbsp; simple 
+			routines useful to erase all the breakpoints placed in &quot;sensitive&quot; 
+			peices of code, either hardware and software breakpoints.&nbsp; </p>
+			<p>I suggest the following further readings from now on to complete 
+			this argument..</p>
+			<ol>
+				<li>Kris Karspersky, <i>Hacking Disassembling Uncovered</i>, 
+				a-List Press</li>
+				<li>Pavol Cerven, <i>Crackproof your software</i>, No Starch 
+				Press </li>
+				<li>Shub-Nigurrath, <i>Oraculum Tutorial With Framework Src V11</i>, 
+				ARTeam</li>
+				<li>Shub-Nigurrath, Gabri3l, <i>Serial Fishing And Oraculum For 
+				Weblink</i>, ARTeam</li>
+				<li> Gabri3l, <i>Writing A Loader 4 Softwrap 6.1.1</i>, ARTeam</li>
+			</ol>
+			<p>and essentially all the tutorials seens around (also others on 
+			our tutorials page) which always make use of breakpoints..<p>&nbsp;</td>
+		</tr>
+	</table>
+		<p>&nbsp;</p>
+<div align="center"><center>
+	<table border="1" width="75%" background="/images/table.gif" bordercolor="#3D486E" cellspacing="0" bordercolorlight="#3D486E" bordercolordark="#3D486E" style="border-collapse: collapse">
+		<tr>
+			<td width="100%" background="images/table.gif">
+			<p align="center"><b><u>Conclusion:</u></b></p></td>
+		</tr>
+		<tr>
+			<td width="100%" background="images/table.gif">
+			<p><center>Thanks to the whole ARTeam:<br>[<span class="style16">Nilrem</span>] [<span class="style16">JDog45</span>] [<span class="style16">Shub - Nigurrath</span>] [<span class="style16">MaDMAn_H3rCuL3s</span>] [<span class="style16">Ferrari</span>] [<span class="style16">Kruger</span>] [<span class="style16">Teerayoot</span>] [<span class="style16">R@dier</span>] [<span class="style16">ThunderPwr</span>] [<span class="style16">Eggi</span>] [<span class="style16">EJ12N</span>] 
+			<br>
+			[<span class="style16">Stickman 373</span>] [<span class="style16">Bone Enterprise</span>]
+        	</center><br>Thanks to all the people who take time to write tutorials. 
+			<br>Thanks to all the people who continue to develop better tools. 
+			<br>Thanks to Exetools, Woodmann, SND, TSRH, MP2K and all the others for being a great place of learning.<br>Thanks also to The Codebreakers Journal, and the Anticrack forum.</p>
+			<p>If you have any suggestions, comments or corrections contact me 
+			in usual places..</p></td>
+		</tr>
+	</table></center></div>
+
+</body>
+
+</html>

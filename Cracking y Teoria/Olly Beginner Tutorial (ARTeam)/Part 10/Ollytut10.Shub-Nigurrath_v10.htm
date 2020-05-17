@@ -1,0 +1,1091 @@
+<html>
+
+<head>
+<STYLE>@page Section1 {size: 612.0pt 792.0pt; margin: 70.85pt 2.0cm 2.0cm 2.0cm; mso-header-margin: 36.0pt; mso-footer-margin: 36.0pt; mso-paper-source: 0; }
+P.MsoNormal {
+	FONT-SIZE: 12pt; MARGIN: 0cm 0cm 0pt; FONT-FAMILY: "Times New Roman"; mso-style-parent: ""; mso-pagination: widow-orphan; mso-fareast-font-family: "Times New Roman"
+}
+LI.MsoNormal {
+	FONT-SIZE: 12pt; MARGIN: 0cm 0cm 0pt; FONT-FAMILY: "Times New Roman"; mso-style-parent: ""; mso-pagination: widow-orphan; mso-fareast-font-family: "Times New Roman"
+}
+DIV.MsoNormal {
+	FONT-SIZE: 12pt; MARGIN: 0cm 0cm 0pt; FONT-FAMILY: "Times New Roman"; mso-style-parent: ""; mso-pagination: widow-orphan; mso-fareast-font-family: "Times New Roman"
+}
+SPAN.SpellE {
+	mso-style-name: ""; mso-spl-e: yes
+}
+SPAN.GramE {
+	mso-style-name: ""; mso-gram-e: yes
+}
+DIV.Section1 {
+	page: Section1
+}
+</STYLE>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Beginner Tutorial #10 Anti-tampering Techniques Theory</title>
+<style type="text/css">
+<!--
+body {
+background-image: url(images/Background.gif);
+}
+div#side {
+	height: 7000;
+}
+.style6 {
+	font-size: 12px;
+	font-style: italic;
+}
+.style16 {color: #FFFFFF}
+.style17 {color: #FFFF00}
+-->
+</style>
+</head>
+
+<body style="background-attachment: fixed; text-align:center" behavior="fixed" text="#C0C0C0" link="#FFFFFF" vlink="#FFFFFF" alink="#FFFFFF" lang="IT">
+ <div style="position:absolute; overflow:hidden; left:0px; top:0px; width:90px; height:90px; z-index:14; filter:Alpha(Opacity=40); -moz-opacity:0.50;"><img width=90 height=90  border=0 src="images/corner.jpg"></DIV> 
+  <div style="position:absolute; overflow:hidden; left:3px; top:-1px;"></div>
+  <center><div align = "center">
+    <table align = "center" border="1" width="554" bgcolor="#336699" height="382" bordercolor="#3D486E" cellspacing="0" cellpadding="2" background="images/table.gif" bordercolordark="#3D486E" bordercolorlight="#3D486E" style="border-collapse: collapse">
+      <tr>
+        <td width="100%" height="19" align="center" bordercolor="#3D486E" bordercolorlight="#3D486E" bordercolordark="#3D486E" background="images/ARTeam.gif"><p>
+		<span class="style16"><u><b>Beginner Tutorial #10 </b></u><br>
+        By: Shub-Nigurrath /ARTeam<br>
+  <a href="http://cracking.accessroot.com">
+  http://cracking.accessroot.com</a></span></p>
+        <p class="style16">Anti-tampering Techniques Theory <font size="2">v1.0</font></td>
+      </tr>
+      <tr>
+        <td width="100%" height="19" align="left"><b><u>The Target:</u></b><br> 
+          none</td>
+      </tr>
+      <tr>
+        <td width="100%" height="23" align="left"><b><u>The Tools:</u></b><br>
+       Ollydbg 1.10</td>
+      </tr>
+      <tr>
+        <td width="100%" height="62" align="left" background="images/table.gif"><b><u>The Protection:</u></b><br>
+      	none</td>
+      </tr>
+      <tr>
+        <td width="100%" height="98" align="left"><p><b><u>Other Information:</u></b><br>
+        This tutorial will cover some basic concepts about attacking 
+		applications in general and anti-tampering 
+		techniques. Explicit aim of this tutorial is to help making a clear 
+		understanding and classification of concepts seen in the beginners 
+		tutorials on this series. </p></td>
+      </tr>
+    </table>
+</div></center>
+    <p align="center" class="style6">Best viewed in Firefox at 1280x1024</p>
+    <div align="center"> 
+    <center>
+<div align="center">
+<table width="75%" height="118" border="1" cellspacing="0" bordercolor="#3D486E" bordercolorlight="#3D486E" bordercolordark="#3D486E" background="/images/table.gif" style="border-collapse: collapse" bgcolor="#C0C0C0" id="table1" cellpadding="5">
+  <tr>
+    <td width="100%" background="images/table.gif">
+    <p align="center"><b><u>1. Introduction</u></b></p></td>
+  </tr>
+  <tr>
+    <td width="100%" height="92" valign="top" background="images/table.gif">
+		<p align="justify">This tutorial is meant to cover a topic that is 
+		usually just slightly pointed in common tutorials. The argument is the 
+		anti-tampering techniques used by programs to counteract the 
+		modifications of their code. Told this way, it could seem something you 
+		never seen around, but this is the name of techniques such as CRC 
+		self-checking of an application, MD5, SHA1, and so on. Did you realize 
+		it? </p>
+		<p align="justify">Self-checking (also called self-validation or 
+		integrity checking) is a technique in which a program, while running, 
+		checks itself to verify that it has not been modified. Usually it's 
+		useful to distinguish between <i>static</i> self-checking, in which the 
+		program checks its integrity only once, during startup, and <i>dynamic
+		</i>self-checking, in which the program repeatedly verifies its 
+		integrity, as it is running. While self-checking alone is not sufficient 
+		to robustly protect software, is nowadays one of the most easier 
+		protections to implement and widely used either in commercial or custom 
+		protections.</p>
+		<p align="justify">To correctly discuss this issue I'll resemble some 
+		things coming from different sources and some contributions on my own. As usual the distinction between my original work and 
+		what is coming from another source is left intentionally hidden.</p>
+		<p align="justify">This tutorial presents the anti-tampering problem and some details of the 
+		CPU memory management which will help understanding the whole thing. An 
+		example in C is then built and debugged as a proof of concetpts.</p>
+		<p align="justify">have phun.<p align="justify">&nbsp;</td>
+  </tr>
+</table>
+</div>
+    <br>
+    <div align="center">
+<table width="75%" height="118" border="1" cellspacing="0" bordercolor="#3D486E" bordercolorlight="#3D486E" bordercolordark="#3D486E" background="/images/table.gif" style="border-collapse: collapse" bgcolor="#C0C0C0" id="table7" cellpadding="5">
+  <tr>
+    <td width="100%" background="images/table.gif">
+    <p align="center"><u><b>2. Classification of Attacks</b></u></p></td>
+  </tr>
+  <tr>
+    <td width="100%" height="92" valign="top" background="images/table.gif">
+		<p align="right"><i>&quot;The security of a cypher scheme shouldn't rely on 
+		keeping secret the algorithm.<br>
+		The security depends only on keeping the used key secreted&quot;<br>
+		Auguste Kerckhoffs, La Cryptographie Militaire, <br>
+		Journal des Sciences Militaires, vol.9, February 1883.</i></p>
+		<p align="justify">Before starting to discuss the argument it is better 
+		to introduce a classification of attacks types, which helps keeping 
+		ideas clear.</p>
+		<p align="justify">Broadly speaking the attacks to a system (software or 
+		not) can be classified into three categories based on the nature of 
+		malicious agent.</p>
+		<ul>
+			<li>
+			<p align="justify">The first one, the simplest to detect and handle 
+			is when the perpetrator breaches communications access controls to 
+			attack the system. The malicious agent is still under the 
+			restrictions of the communication protocol. A good example of this 
+			genre would be a standard hacker type attack. Robust access control 
+			mechanism that isolates the system hardware and software totally 
+			form the user is enough to counter this attack.</li>
+			<li>
+			<p align="justify">The second, comparatively more serious attack 
+			would be like a computer virus. Such attacks originate as software 
+			running on the platform. Thought the attackers have breached the 
+			communications, they must still depend on the BIOS and OS 
+			interfaces. Such attacks are generally the aftermath of a class I 
+			attack, and forebode class 3 attacks. Detection of these types of 
+			attacks is facilitated by the fact that the perpetrators attack 
+			classes of files.</li>
+			<li>
+			<p align="justify">Class 3 attacks are the most difficult to resolve 
+			and detect as the perpetrator is an insider. The perpetrator may 
+			modify software or hardware for the system at will. The only form of 
+			prevention for this type of attacks is to raise the technological 
+			bar to such an extent that the perpetrator would end up wasting so 
+			much time and resources that it would be a poor investment. The 
+			technical bar could be varied from no-specialized-analysis-tools to 
+			specialized-hardware-analysis tools.</li>
+		</ul>
+		<p align="justify">Under the heading of software protection, there is 
+		another little classification to discuss. The techniques for protecting 
+		programs can be distinguished rougly into </p>
+		<ul>
+			<li>
+			<p align="justify">techniques for protecting for protecting software 
+			from reverse engineering (by obfuscation), </li>
+			<li>
+			<p align="justify">modification (by software tamper resistance),
+			</li>
+			<li>
+			<p align="justify">program-based attacks (by software diversity),
+			</li>
+			<li>
+			<p align="justify">and BORE &#8211; Break-Once Run Everywhere &#8211; attacks 
+			(by architectural design).</li>
+		</ul>
+		<p align="justify">&nbsp;</td>
+  </tr>
+</table>
+</div>
+    <p>&nbsp;</p>
+  </center>
+</div>
+<div align=n "center">
+<div align="center">
+<table width="75%" height="183" border="1" cellspacing="0" bordercolor="#3D486E" bordercolorlight="#3D486E" bordercolordark="#3D486E" background="/images/table.gif" style="border-collapse: collapse" bgcolor="#C0C0C0" cellpadding="5">
+  <tr>
+    <td width="100%" background="images/table.gif">
+    <p align="center"><u><b>3. Tamper Resistance Techniques and Checksumming</b></u></td>
+  </tr>
+  <tr>
+    <td width="100%" height="157" valign="top" background="images/table.gif" align="justify">
+		<p><u><b>Introduction.<br>
+		</b></u>Software tamper resistance is the art of crafting a program such that 
+		it cannot be modified by a potentially malicious attacker without the 
+		attack being detected. In some respects, it is similar to fault-tolerant 
+		computing, in that potentially dangerous changes in program state are 
+		detected at runtime. For tamper resistance, however, it is assumed that 
+		intelligent, malicious attackers (rather than hardware flaws or software 
+		errors) may be responsible for such changes. Self-checking tamper 
+		resistance is distinguished in its ability to run on current unmodified 
+		commodity hardware without requiring third parties, because all the 
+		tests are performed by the application on its own code/data. </p>
+		<p>There are of course different techniques for self-checking software 
+		(e.g. program or result checking and generation of the correct 
+		executable or part of code on the fly, decryption according to a 
+		calculated digest) partially derived from asimmetric signature 
+		algorithms, but we'll focus more on checksumming.</p>
+		<p>The standard threat model for software tamper resistance is the <i>
+		hostile host </i>model. The challenge is to protect an application 
+		running on a system controlled by a malicious, intelligent user. Because 
+		such a user can in theory change any code on the computer, other 
+		software on such a system, including the operating system, is untrusted; 
+		in the case of particularly determined adversaries, even the hardware is 
+		untrusted. This situation is in contrast with the <i>hostile client </i>
+		problem in which we assume a trusted host and untrusted application. The
+		<i>hostile client </i>problem appears to be an easier problem to solve; 
+		numerous solutions have been developed, e.g. sandboxing and is typical 
+		of mobile agents such as smartphones or PDAs.</p>
+		<p>Since a single checksum is relatively easy for an attacker to 
+		disable, stronger proposals rely on a network of inter-connected 
+		checksums, all of which must be disabled to defeat tamper resistance. A 
+		tester reads the area of memory occupied by code and readonly data, 
+		building up a checksum result based on the data read. A subsequent 
+		section of the code may operate on the checksum result, affecting 
+		program stability or correctness in a negative way if a checksum result 
+		is not the same as a known good value pre-computed at compile time. The 
+		sections of code which perform the checksumming operations may be 
+		further hidden using code obfuscation techniques to prevent static 
+		analysis. Ideally the effects of a bad checksum result in the program 
+		are subtle (e.g. causing mysterious failures much later in execution) 
+		thus making it much more difficult for an attacker to locate the 
+		checksum code.</p>
+		<p align="center">
+		<img border="1" src="images\Ollytut1.gif"><br>
+		<i>Figure 1 - A good distribution of checksum blocks within a code 
+		segment.</i></p>
+		<p>Figure 1 gives a simplified view of a typical distribution 
+		of checksum code within an application. In practise, there may be 
+		hundreds of checksum blocks hidden within the main application code. 
+		Each allows verification of the integrity of a predetermined section of 
+		the code segment. The read-only data segment may also be similarly 
+		checked. </p>
+		<p>The checksumming code is inserted at compile time and integrated with 
+		regular execution code. The application also requires a correct checksum 
+		result for each block in order to work properly.<br>
+		The resulting scheme is an <i>Interlocking Trust Model</i>, for which 
+		each segment not only on itself but also on other segments to 
+		effectively perform its task. Thus each segment of code would be made 
+		responsible for maintaining and verifying the integrity of other 
+		segments</p>
+		<p><u><b>High level view of how the protection works, Testers and Guards</b></u><br>
+		The overall protection works like this: at runtime, a large number of 
+		embedded code fragments called <i>&nbsp;testers</i> test small segments 
+		of code for integrity (using a linear hash function and an expected has 
+		value); if integrity fails, an appropriate response is pursued. The 
+		peices of code called on check failures are called <i>guards</i> and can 
+		be programmed to carry out arbitrary tasks (for example common guards 
+		are peices of code repairing the code,&nbsp; erasing the breakpoints or 
+		downloading a fresh copy of the application). </p>
+		<p>Two of the most common guards are checksumming and repairing.</p>
+		<ul>
+			<li><b>Checksum Guards:</b> The checksum guards are programmed to 
+			check a code fragment within the software. If this code is tampered 
+			with in any way the guard takes action. The type of action the guard 
+			takes can vary in degree from logging the infraction to halting the 
+			program.</li>
+			<li><b>Repair Guards:</b> The repair guards can fix a tampered 
+			section of code. Thus, the changes an attacker made are wiped out 
+			and the program remains secure. The repair can be made by storing a 
+			clean copy of the segment of code the guard is protection somewhere, 
+			and then replacing the dirty copy with the clean one.</li>
+		</ul>
+		<p>The security of the guards actually comes from guards watching each 
+		other's backs. Each guard protects fragments of code, and that includes 
+		protecting other guards. Figure 1.1 shows an example of a possible 
+		network of guards.</p>
+		<p align="center"><img border="1" src="images\Ollytut1a.gif"></p>
+		<p align="center">
+		<i>Figure 1.1 - A possible distribution of cross-checking guards of an 
+		application's integrity.</i></p>
+		<p>A group of guards working together implement a sophisticated 
+		protection scheme that is more resilient against attacks than a single 
+		guard. These schemes are used by the most modern protectors, such as 
+		Armadillo also: the nanomities trick is just a way to implements a Guard 
+		scheme and an interlocking scheme, made of two processes, controlling 
+		one each other.<br>
+		In order to perform their duties, a network of guards is placed into the 
+		program and hooked to its execution flows in proper ways, before of the 
+		controlled code goes into execution: a repairing guard has to be 
+		inserted into a point in the control flow that is to be reached before 
+		guarded code (in execution order). In other words the guard has do <i>
+		dominate </i>the guarded code. Guards can also be controlled by other 
+		guards too. Figure 1.2 reports another real more sophisticated example 
+		where a network of Guards (G) and Guarded Code (C) is presented beside 
+		it's distribution into the real application's memory.</p>
+		<p align="center"><img border="0" src="images\Ollytut1b.gif"><br>
+		<i>Figure 1.2 - A Guards graph and the corresponding memory layout of 
+		the guarded program.</i></p>
+		<p>Defeating complex Guard Networks can be, generally speaking, a 
+		nightmare.</p>
+		<p><u><b>Anti-Tampering details<br>
+		</b></u>There are several aspects of such checksumming which an attacker must 
+		keep in mind:</p>
+		
+		<ol>
+			<li>Because of the overlapping network of testers, almost every 
+		checksumming block must be disabled at the same time in order for a 
+		tampering attack to be successful.</li>
+			<li>The resulting value from a checksum block must remain the 
+		same as the original value determined during compilation (or all 
+		uses of the checksum value must be determined and adjusted 
+		accordingly), if the results of a checksum are used during standard 
+		program execution.</li>
+			<li>The checksum values are only computed for static (i.e. 
+			runtime invariant) sections of the program. </li>
+			<li>Checksumming code is obfuscated, hard to find, and the use of 
+		checksum results is also hidden.</li>
+		</ol>
+		
+		<p><b>Note</b> that a critical (implicit) assumption of checksumming
+		algorithms is that <i>D(x) = I(x)</i>, where <i>D(x)</i>
+		is the bit-string result of a &#8220;data read&#8221; from memory
+		address <i>x</i>, and <i>I(x) </i>is the bit-string result of an &#8220;instruction
+		fetch&#8221; of corresponding length from <i>x</i>. In&nbsp; the 
+		practical everyday cases this is the situation, because <i>D(x) </i>and
+		<i>I(x) </i>are the same portion of memory &quot;read as data and as 
+		instructions&quot;. <br>
+		If <i>I(x)</i>
+		were different from <i>D(x)</i>, then the checksumming code
+		would always check using <i>D(x)</i> while the processor
+		would always execute <i>I(x)</i>. <br>
+		Checksumming aims to verify
+		that the code the processor executes is the original
+		code, and thus assumes that the code it reads is the code
+		the processor executes. </p>
+		<p>While current checksumming proposal critically rely on this 
+		assumptions there are opportunities to violate this assumption on 
+		several modern processors..</p>
+		<p>&nbsp;</p>
+    </td>
+  </tr>
+</table>
+</div>
+<p>&nbsp;</p>
+<div align="center">
+<table width="75%" height="118" border="1" cellspacing="0" bordercolor="#3D486E" bordercolorlight="#3D486E" bordercolordark="#3D486E" background="/images/table.gif" style="border-collapse: collapse" bgcolor="#C0C0C0" id="table2" cellpadding="5">
+  <tr>
+    <td width="100%" background="images/table.gif">
+    <p align="center"><u><b>4. CPU Support for Virtual Memory</b></u></td>
+  </tr>
+  <tr>
+    <td width="100%" height="92" valign="top" background="images/table.gif" align="justify">
+      <p>This section provides background information for those less familiar 
+		with the virtual memory subsystems of modern processors, including 
+		translation look-aside buffers (TLBs). Thos of you already familiar with 
+		processor architecture can jump directly to the next section.<p>Modern 
+		processors do much more than execute a sequence of instructions. 
+		Advances in processor speed and flexibility have resulted in a very 
+		complex architecture. A significant part of this complexity comes from 
+		mechanisms designed to efficiently support virtual memory. Virtual 
+		memory, first introduced in the late 1950&#8217;s, involves splitting main 
+		memory into an array of frames (<i>pages</i>) which can be subsequently 
+		manipulated. <i>Virtual</i> addresses used by an application program are 
+		mapped into <i>physical </i>addresses by the virtual memory system.<p align="center">
+		<img border="1" src="images\Ollytut2.gif"><br>
+		<i>Figure 2 - Translation of Virtual Address into a Physical Address</i><p>
+		Even though the page table translation algorithmmay vary slightly 
+		between processors and may sometimes be implemented in software, modern 
+		processors all use roughly the same method for translating a virtual 
+		page number to a physical frame number. Specifically, this translation 
+		is performed through the use of page tables, which are arrays that 
+		associate a selected number of virtual page numbers with physical frame 
+		numbers.<p>
+		Because the virtual address spaces of most processes are both large and 
+		sparse, page table entries are only allocated for the portions of the 
+		address space that are actually used. To determine the physical address 
+		corresponding to a given virtual address, the appropriate page table, 
+		and the correct entry within that page table must be located. 
+		<p>
+		For systems that uses 3-level page tables, a virtual address is divided 
+		into four fields, <i>x1</i> through <i>x4</i>. The <i>x1</i> bits (the 
+		directory offset) specify an entry in a perprocess page directory. The 
+		entry contains the address of a page map table. The <i>x2</i> bits (the 
+		map offset) are used as an offset within the specified page map table, 
+		giving the address of a page table. The <i>x3 </i>bits (the table 
+		offset) index into the chosen page table, returning the number of a 
+		physical page frame. <i>x4</i>, then, specifies the offset within a 
+		physical frame that contains the data referred to by the original 
+		virtual address. 
+		<p>
+		This resolution process is illustrated in Figure 3. Note that if memory 
+		segments are used, segment translation typically occurs before 
+		operations involving the page table.<p align="center">
+		<img border="1" src="images\Ollytut3.gif"><br>
+		<i>Figure 3 - Translation of a Virtual to Physical Address through Page 
+		Tables</i><p>
+		<u><b>TLB Translation look Aside Buffer<br>
+		</b></u>Because multiple memory locations must be accessed to resolve 
+		each virtual memory address, virtual address translation using page 
+		tables is a relatively expensive operation. To speed up these mappings, 
+		a specialized high-speed associative memory store called a <i>
+		translation look-aside buffer (TLB)</i> is used. 
+		<p>
+		A TLB caches recently used mappings of virtual page numbers to physical 
+		page frames. On every virtual memory access, all entries in a TLB are 
+		checked to see whether any of them contain the correct virtual page 
+		number. If an entry is found for the virtual page number, a TLB <i>hit
+		</i>has 
+		occurred, and the corresponding physical page frame is immediately 
+		accessed. Otherwise, we have a TLB <i>miss</i>, and the appropriate page tables 
+		are consulted in the fashion<br>
+		discussed previously. The mapping so determined is then added to the TLB 
+		by replacing the mapping that was least recently used. Figure 4 
+		illustrates what happens on a TLB hit.<p align="center">
+		<img border="1" src="images\Ollytut4.gif"><br>
+		<i>Figure 4 - Address Translation using a TLB</i><p>
+		Because of the principal of locality, TLB translation works very well in 
+		practise. System designers have noticed, however, that code and data 
+		exhibit different patterns of locality. To prevent interference between 
+		these patterns, caches of code and data are often separated; for similar 
+		reasons, most modern CPUs have separate code and data TLBs. <br>
+		CPU caches mark referenced memory as code or data depending upon whether 
+		it is sent to an instruction decoder. Whenever an instruction is fetched 
+		from memory, the instruction pointer is translated via the <i>
+		instruction </i>TLB into a physical address. When data is fetched or 
+		stored, the processor uses a separate <i>data </i>TLB for the 
+		translation. Using different TLB units for code and data allows the 
+		processor to maintain a more accurate representation of recently used 
+		memory. Separate TLB&#8217;s also protect against frequent random accesses of 
+		code (data) overwhelming both TLB&#8217;s. Because most code and data 
+		references exhibit high degrees of locality, a combination of small 
+		amounts of fast storage (e.g. onchip memory caches) and more plentiful 
+		slower storage (DRAM memory) can together approximate the performance of 
+		a larger amount of fast storage.<p>
+		<u><b>Page swapping<br>
+		</b></u>Because the memory management unit presents a virtual address 
+		space to the application running, the application need not be aware of 
+		the physical sections of memory which it actively uses. Thus even though 
+		the virtual address space of a program is contiguous, the physical 
+		regions of memory it uses may not be. This presents a great opportunity 
+		for the operating system. Not only does it allow multiple applications 
+		to be run on the system (each with its own unique virtual address space, 
+		mapping to different physical pages), but it allows the operating system 
+		to only keep in physical memory those parts of each application required 
+		at the current time. 
+		<p>
+		Since not all pages of virtual memory may map to a physical page, there 
+		must be some way for the processor to inform the OS when a virtual 
+		address does not have a physical mapping. The processor does this 
+		through the use of a page fault interrupt. The processor will store the 
+		virtual address which caused the page fault in a register, and then 
+		signal the operating system through an interrupt handler. The operating 
+		system updates the mapping of virtual to physical addresses, so that the 
+		requested virtual address can be mapped to a physical address. 
+		<p>
+		This may mean bringing the section of the program into physical memory 
+		from disk or some other external storage. The OS then signals the 
+		processor to retry the instruction by returning from the interrupt. The 
+		OS also has the choice of aborting execution of the application if it 
+		determines that the virtual address is invalid, e.g. if the virtual 
+		address refers to memory that has not been allocated.<p>
+		<u><b>Access Controls on Memory.<br>
+		</b></u>Along with the translation of a virtual to physical address, the 
+		processor may implement access protection on memory regions. Since the 
+		virtual memory subsystem already splits physical memory into small areas 
+		(frames), it makes sense that the same memory management unit would also 
+		implement access control on a per-frame basis. The most important 
+		protection is that only pages that an application is allowed to access 
+		are mapped into its page table. To prevent an application from manually 
+		mapping a page into its address space, the page directory base pointer 
+		is stored in a read-only register, and the frames containing a process&#8217;s 
+		page table are themselves not accessible by the process. 
+		<p>
+		In addition, there are protection mechanisms for pages which are in a 
+		process&#8217;s address space. Each mapped page is restricted in the types of 
+		operations that may be performed on its contents: <i>read, write, </i>
+		and <i>instruction fetch </i>(also called <i>execute</i>). Permitted 
+		operations are specified using control bits associated with each page 
+		table entry. Read and write are common operations on data pages, while 
+		executing code is commonly associated with a page containing executable 
+		code.<p>
+		Modern operating systems take advantage of the protection mechanisms 
+		implemented by the processor to distinguish various types of memory 
+		usage.<br>
+&nbsp;<p>
+		The ability to set no-execute permission on a per-page basis produces 
+		the restriction that many programs are confined to executing code from 
+		their code segment, unless they take specific action to make their data 
+		executable. 
+		<p>
+		Although such changes can interfere with systems that generate machine 
+		code at runtime (e.g. modern Java Virtual Machines), many types of code 
+		injection attacks can be defeated by nonexecutable data pages<p align="center">
+		<img border="1" src="images\Ollytut5.gif"><br>
+		<i>Table 1 - Separation of access control privileges for different page 
+		types</i><p>
+		Table 1 shows the ideal separation of privileges for different sections 
+		of an application. This separation of privileges is currently assumed in 
+		executable file formats. All processors implementing page level access 
+		controls must check for disallowed operations and signal the operating 
+		system appropriately. Most often, the operating system is signalled 
+		through the <i>page fault </i>interrupt, which indicates the memory 
+		reference that caused the invalid operation.</td>
+  </tr>
+</table>
+</div>
+<div align="center">
+    <p>&nbsp;</p>
+<div align="center">
+<table width="75%" height="118" border="1" cellspacing="0" bordercolor="#3D486E" bordercolorlight="#3D486E" bordercolordark="#3D486E" background="/images/table.gif" style="border-collapse: collapse" bgcolor="#C0C0C0" id="table5" cellpadding="5">
+  <tr>
+    <td width="100%" background="images/table.gif">
+    <p align="center"><u><b>5. The memory model of the x86 architecture, the 
+	segments</b></u></td>
+  </tr>
+  <tr>
+    <td width="100%" height="92" valign="top" background="images/table.gif" align="justify">
+      In addition to supporting memory pages, the x86 can also manage memory in 
+		variable sized chunks known as <i>segments</i>.<p>Associated with each 
+		segment is a base address, size, permissions, and other meta-data. 
+		Together this information forms a <i>segment descriptor</i>. To use a 
+		given segment descriptor, its value is loaded into one of the segment 
+		registers. Other than segment descriptor numbers, the contents of these 
+		registers are inaccessible to all software. In order to update a segment 
+		register, the corresponding segment descriptor must be modified in 
+		kernel memory and then reloaded into the segment register.</p>
+		<p>A logical address consists of a segment register specifier and 
+		offset. To derive a <i>linear address</i>, a segment register&#8217;s segment 
+		base (named by the segment specifier) is added to the segment offset. An 
+		illustration of the complete translation mechanism for the x86 
+		architecture is shown in Figure 6. Code reads are always relative to the 
+		code segment (CS) register, while normally, if no segment register is 
+		specified data reads use the data segment (DS) register. Through segment 
+		overrides a data read can use any segment register including CS. After 
+		obtaining a linear address, normal page table translation is done as 
+		shown in Figure 6 and Figure 7.</p>
+		<p align="center"><img border="1" src="images\Ollytut6.gif"><br>
+		<i>Figure 6 - Translation from virtual to physical addresses on the x86</i></p>
+		<p align="center"><img border="1" src="images\Ollytut7.gif"><br>
+		<i>Figure 7 - Translation of a get using segment overrides</i></p>
+		<p>Unlike pages on the x86, segments can be set to only allow 
+		instruction reads (execute-only). Data reads and writes to an 
+		execute-only segment will generate an exception. This execute-only 
+		permission can be used to detect when an application attempts to read 
+		memory relative to CS. As soon as the exception is delivered to an OS 
+		modified for our attack, the OS can automatically modify the memory map 
+		(see Figure 7) to make it appear as if the unmodified data was present 
+		at that memory page. 
+		<p>Most operating systems for x86, however, now implement a <i>flat memory 
+		model</i>. This means that the base value for the CS and DS registers are 
+		equal; an application need not use the CS register to read its code. A 
+		flat memory model will ensure that both linear addresses are the same, 
+		resulting in the same physical address (see the dash-dot-dot line in Figure 
+		7).<p>&nbsp;</td>
+  </tr>
+</table>
+</div>
+	<p>&nbsp;</p>
+<div align="center">
+<table width="75%" height="118" border="1" cellspacing="0" bordercolor="#3D486E" bordercolorlight="#3D486E" bordercolordark="#3D486E" background="/images/table.gif" style="border-collapse: collapse" bgcolor="#C0C0C0" id="table4" cellpadding="5">
+  <tr>
+    <td width="100%" background="images/table.gif">
+    <p align="center"><u><b>6. Writing and debugging a selfchecking program in C</b></u></td>
+  </tr>
+  <tr>
+    <td width="100%" height="92" valign="top" background="images/table.gif" align="justify">
+      Reasuming what we said till now it can be stated that: <i>&quot;detecting 
+		whether portions of a binary have been modified is essentially an 
+		error-detection problem; therefore, a checksum algorithm such as CRC32, 
+		MD5, or SHA1 can be used to generate a signature for an arbitrary block 
+		of code or data. This signature can then be checked at runtime to 
+		determine whether any modification has taken place.&quot;<br>
+&nbsp;</i><table bgcolor="white" width="100%" border="0" cellspacing="0" cellpadding="6" id="table8"><tr>
+		<td width="60" valign="top" background="images/Background.gif" align="justify"><img src="images/tip_yellow.gif" width="50" height="54"></td>
+		<td valign="top" background="images/Background.gif" align="justify">
+		I have chosen the CRC32 algorithm both for its ease of implementation 
+		and for its speed. It is ideal for detecting changes to short sequences 
+		of bytes; however, because there are only 2<sup>32</sup> possible 
+		checksum values, and because it is not cryptographically secure, the 
+		likelihood of a collision is high, giving the attacker a realistic 
+		chance to replace code without changing the checksum.</td></tr></table><p>
+		<u><b>Implementation of a checksum API in C<br>
+		</b></u>Here, first of all, I included a classical implementation of a 
+		CRC32 API, which I found to be very compact and useful. This is an 
+		implementation of CRC32, which consists of macros for marking the start 
+		and end of the block to be checked, as well as a function to calculate 
+		the checksum of the block. The function <tt>crc32_calc( )</tt> is used 
+		to compute the checksum of a buffer.</p>
+		<p><font face="Courier New" color="#FFFFFF" size="2">#define 
+		CRC_START_BLOCK(label) void label(void) { }<br>
+		#define CRC_END_BLOCK(label) void _##label(void) { }<br>
+		#define CRC_BLOCK_LEN(label) (int)_##label - (int)label<br>
+		#define CRC_BLOCK_ADDR(label) (unsigned char *)label<br>
+		<br>
+		static unsigned long crc32_table[256] = {0};<br>
+		<br>
+		#define CRC_TABLE_LEN 256<br>
+		#define CRC_POLY 0xEDB88320L<br>
+		<br>
+		static int crc32(unsigned long a, unsigned long b) {<br>
+&nbsp;&nbsp;&nbsp; int idx, prev;<br>
+		<br>
+&nbsp;&nbsp;&nbsp; prev = (a &gt;&gt; 8) &amp; 0x00FFFFFF;<br>
+&nbsp;&nbsp;&nbsp; idx = (a ^ b) &amp; 0xFF;<br>
+&nbsp;&nbsp;&nbsp; return (prev ^ crc32_table[idx] ^ 0xFFFFFFFF);<br>
+		}<br>
+		<br>
+		static unsigned long crc32_table_init(void) {<br>
+&nbsp;&nbsp;&nbsp; int i, j;<br>
+&nbsp;&nbsp;&nbsp; unsigned long crc;<br>
+		<br>
+&nbsp;&nbsp;&nbsp; for (i = 0; i &lt; CRC_TABLE_LEN; i++) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; crc = i;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for (j = 8; j &gt; 0; j--) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (crc &amp; 1) 
+		crc = (crc &gt;&gt; 1) ^ CRC_POLY;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else crc &gt;&gt;= 
+		1;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; crc32_table[i] = crc;<br>
+&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; return 1;<br>
+		} <br>
+		<br>
+		unsigned long crc32_calc(unsigned char *buf, int buf_len) {<br>
+&nbsp;&nbsp;&nbsp; int x;<br>
+&nbsp;&nbsp;&nbsp; unsigned long crc = 0xFFFFFFFF;<br>
+		<br>
+&nbsp;&nbsp;&nbsp; if (!crc32_table[0]) crc32_table_init( );<br>
+&nbsp;&nbsp;&nbsp; for (x = 0; x &lt; buf_len; x++) crc = crc32(crc, buf[x]);<br>
+&nbsp;&nbsp;&nbsp; return crc;<br>
+		}</font><br>
+		<br>
+		The following program demonstrates the use of the checksum 
+		implementation. Note that the program is first compiled with a <tt>
+		printf( )</tt> in <tt>main( )</tt> that will print the checksum to <tt>
+		stdout</tt>. As long as <tt>main( )</tt> is linked into the program 
+		after the buffer being checked, this <tt>printf( )</tt> can be removed 
+		and the program recompiled without the value of the checksum changing. 
+		Once the checksum is known, a hex editor can be used to patch the 
+		checksum value into the location <tt>crc32_stored</tt>. In this example, 
+		the four bytes of the checksum are stored between two <tt>0xBAADF00D</tt> 
+		markers that should be overwritten with random bytes before the binary 
+		is distributed. Note that the markers will be stored in little-endian 
+		order in the binary, hence the reversed ordering of the bytes in the C 
+		source.</p>
+		<p><font face="Courier New" color="#FFFFFF" size="2">#include &lt;stdio.h&gt;<br>
+		<br>
+		/* warning: replace &quot;crc32_stored&quot; with the real checksum! */<br>
+		asm(&quot;.long 0x0DF0ADBA \n&quot; /* look for 0xBAADF00D markers */<br>
+&nbsp;&nbsp;&nbsp; &quot;crc32_stored: \n&quot;<br>
+&nbsp;&nbsp;&nbsp; &quot;.long 0xFFFFFFFF \n&quot; /* change this in the binary! */<br>
+&nbsp;&nbsp;&nbsp; &quot;.long 0x0DF0ADBA \n&quot; /* end marker */<br>
+		);<br>
+		<br>
+		CRC_START_BLOCK(test)<br>
+		int test_routine(int a) {<br>
+&nbsp;&nbsp;&nbsp; while (a &lt; 12) a = (a - (a * 3)) + 1;<br>
+		return a;<br>
+		}<br>
+		CRC_END_BLOCK( test )<br>
+		<br>
+		int main(int argc, char *argv[ ]) {<br>
+&nbsp;&nbsp;&nbsp; unsigned long crc;<br>
+		<br>
+&nbsp;&nbsp;&nbsp; crc = crc32_calc(CRC_BLOCK_ADDR(test), CRC_BLOCK_LEN(test));<br>
+&nbsp; #ifdef TEST_BUILD<br>
+&nbsp;&nbsp;&nbsp; /* This printf( ) displays the CRC value that needs to be 
+		stored in the program.<br>
+&nbsp;&nbsp;&nbsp;&nbsp; * The printf( ) must be removed, and the program 
+		recompiled before distribution.<br>
+&nbsp;&nbsp;&nbsp;&nbsp; */<br>
+&nbsp;&nbsp;&nbsp; printf(&quot;CRC is %08X\n&quot;, crc);<br>
+&nbsp; #else<br>
+&nbsp;&nbsp;&nbsp; if (crc != crc32_stored) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf(&quot;CRC32 %#08X does not match 
+		%#08X\n&quot;, crc, crc32_stored);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return 1;<br>
+&nbsp;&nbsp;&nbsp; }<br>
+&nbsp;&nbsp;&nbsp; printf(&quot;CRC32 %#08X is OK\n&quot;, crc);<br>
+&nbsp; #endif<br>
+		return 0;<br>
+		}</font><br>
+		<br>
+		You should compile this program with <tt>TEST_BUILD</tt> defined, then 
+		execute it to obtain the CRC value that needs to be replaced for <tt>
+		crc32_stored</tt> in the binary. Then rebuild the program with <tt>
+		TEST_BUILD</tt> undefined, and modify the binary with the proper CRC 
+		value from the first run. To calculate the CRC32 of a program you can 
+		use the CRC_calculator given with this tutorial, just drag &amp; drop the 
+		executable over to ge the CRC value.</p>
+		<p>It is tempting to generate a checksum of the entire program and use 
+		this to determine whether any bytes have been changed; however, this 
+		causes a loss of granularity for the checksum and can degrade 
+		performance. Instead, as explained in previous sections is always better 
+		to generate multiple checksums for vital sections of code. These 
+		checksums can be encrypted, and they can even be supplemented with 
+		checksums of trivial blocks of code to disguise which portions of code 
+		are significant.</p>
+		<p><u><b>Notes about compiling the example1 with VisualC++ 6.0<br>
+		</b></u>The code relative to this example is included into the example1 
+		folder. If&nbsp; you open it you might notice some differencies with 
+		what I just written above. These differencies are because of not 
+		complete compliance to standard C of Visual C++ 6.0. With respect to the 
+		code explained above, there are some differencies, just because the 
+		Visual C++ 6.0 I used doesn't support the standard asm C operator. I had 
+		to use instead the Microsoft specific __asm operator which has some 
+		clearly documented limitations. First of all is not possible to directly 
+		define variables using the DB directive. I have to use instead the 
+		pseudoinstruction _emit which force the compiler to emit the specified 
+		bytes, simulating so the DB directive. The ASM part is also modified to 
+		copy the address of the crc value to a local variable usable by the C 
+		code.<br>
+		To make things shorter I'll not include this code here too, look the 
+		file for further comments and clarifications.</p>
+		<p>To compile use &quot;<tt>cl crc1.c /DTEST_BUILD</tt>&quot; or &quot;<tt>cl crc1.c</tt>&quot; <br>
+		&nbsp;</p>
+		<table bgcolor="white" width="100%" border="0" cellspacing="0" cellpadding="6" id="table10"><tr>
+		<td width="60" valign="top" background="images/Background.gif" align="justify"><img src="images/tip_yellow.gif" width="50" height="54"></td>
+		<td valign="top" background="images/Background.gif" align="justify">
+		Note that the programs are console based, they will just close and exit 
+		when double clicking them. You need to run them from within a DOS box, 
+		to see the printed messages..</td></tr></table>
+		<p>
+		<br>
+		<u><b>Looking the example1 into OllyDbg</b></u><br>
+		Open with ollydbg the crc1.exe file inside example1 folder of the 
+		present tutorial's archive. Hit CTRL-B to open the Binary Search dialog 
+		and search for <tt>0xBAADF00D</tt> hex value. You should land here:</p>
+		<p align="center"><img border="1" src="images\Ollytut8.gif"></p>
+		<p>&nbsp;I properly placed the comments to help you find the 
+		correspondence with the written code (refers to the modified code used 
+		for the example1 and not to the code above).</p>
+		<p>Place a Breakpoint with F2 at the <tt>JMP</tt> at <tt>0x0040114C</tt> and press F9 to 
+		reach the breakpoint. First of all if you step with F8 the program at 
+		<tt>0x00401180</tt> you can see that the real CRC just-in-time calculated is 
+		<tt>0x6C8673E6</tt> (it's in <tt>ECX</tt>).</p>
+		<p>Well you have the opportunity then to run again the application from 
+		the beginning and to stop again the application at <tt>0x0040114C</tt>. Now go to 
+		location <tt>0x401152</tt> and select &quot;Follow in dump&quot; option to let you view in 
+		Ollydbg the memory at that location.</p>
+		<p>Now insert the real CRC value you've just seen before (<tt>0x6C8673E6</tt>), 
+		remember to insert it as <tt>0xE673866C</tt>.</p>
+		<p><img border="1" src="images\Ollytut9.gif" align="left">Now save the 
+		modifications to a new executable and run from outside Ollydbg, the 
+		application runs perfectly. I saved this second executable into 
+		crc1_ok.exe</p>
+		<p>Weel, obviouslly the markers are not mandatory and are useful only to 
+		easily find the proper point where to insert the real CRC value, the 
+		whole routine can be more efficiently hidden and the check can be made 
+		less evident.</p>
+		<p><u><b>Analizying a more more complex example, example2</b></u><br>
+		Generally speaking to fool the protection you only have to change the
+		<tt>JE</tt> jump (opcode <tt>0x74</tt>) at offset <tt>0x401183</tt> to a
+		<tt>JMP</tt> instruction (opcode <tt>0xEB</tt>). The generated checksum 
+		should never be checked against a valid one; instead, the generated 
+		checksum should be used as a source of information that the program 
+		requires to execute properly. A byte within the checksum could be used 
+		as an index into a jump table, for example, or the checksum itself could 
+		be used as a key to decrypt critical code or data.</p>
+		<p>The next program demonstrates how to use a table of function pointers 
+		to test the value of a checksum. Each nibble or half-byte in the 
+		checksum is used as an index into a 16-entry table of function pointers; 
+		only the correct table entry calls the function to check the next 
+		nibble. This method requires 8 tables of 16 function pointers so that 
+		one table is used for each nibble in the checksum.<br>
+		<br>
+		<font face="Courier New" color="#FFFFFF" size="2">#include &lt;stdio.h&gt;<br>
+&nbsp;&nbsp; <br>
+		CRC_START_BLOCK(test)<br>
+		int test_routine(int a) {<br>
+&nbsp; while (a &lt; 12) a = (a - (a * 3)) + 1;<br>
+&nbsp; return a;<br>
+		}<br>
+		CRC_END_BLOCK(test)<br>
+&nbsp;&nbsp; <br>
+		typedef void (*crc_check_fn)(unsigned long *);<br>
+&nbsp;&nbsp; <br>
+		static void crc_good (unsigned long *crc); <br>
+		static void crc_check(unsigned long *crc); <br>
+		static void crc_nib2 (unsigned long *crc); <br>
+		static void crc_nib3 (unsigned long *crc); <br>
+		static void crc_nib4 (unsigned long *crc); <br>
+		static void crc_nib5 (unsigned long *crc); <br>
+		static void crc_nib6 (unsigned long *crc); <br>
+		static void crc_nib7 (unsigned long *crc); <br>
+		static void crc_nib8 (unsigned long *crc);<br>
+&nbsp;&nbsp; <br>
+		crc_check_fn b1[16] = {0,}, b2[16] = {0,}, b3[16] = {0,}, b4[16] = {0,},<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; b5[16] = {0,}, b6[16] = {0,}, b7[16] = {0,}, b8[16] = {0,};<br>
+&nbsp;&nbsp; <br>
+		#define CRC_TABLE_LOOKUP(table)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; index = *crc &amp; 0x0F; \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; crc_check_fn next = table[index]; \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; *crc &gt;&gt;= 4;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (*next)(crc)<br>
+&nbsp;&nbsp; <br>
+		static void crc_check(unsigned long *crc) { CRC_TABLE_LOOKUP(b1); }<br>
+		static void crc_nib2 (unsigned long *crc) { CRC_TABLE_LOOKUP(b2); }<br>
+		static void crc_nib3 (unsigned long *crc) { CRC_TABLE_LOOKUP(b3); }<br>
+		static void crc_nib4 (unsigned long *crc) { CRC_TABLE_LOOKUP(b4); }<br>
+		static void crc_nib5 (unsigned long *crc) { CRC_TABLE_LOOKUP(b5); }<br>
+		static void crc_nib6 (unsigned long *crc) { CRC_TABLE_LOOKUP(b6); }<br>
+		static void crc_nib7 (unsigned long *crc) { CRC_TABLE_LOOKUP(b7); }<br>
+		static void crc_nib8 (unsigned long *crc) { CRC_TABLE_LOOKUP(b8); }<br>
+&nbsp;&nbsp; <br>
+		static void crc_good(unsigned long *crc) {<br>
+&nbsp; printf(&quot;CRC is valid.\n&quot;);<br>
+		}<br>
+&nbsp;&nbsp; <br>
+		int main(int argc, char *argv[&nbsp; ]) {<br>
+&nbsp; unsigned long crc;<br>
+&nbsp;&nbsp; <br>
+&nbsp; crc = crc32_calc(CRC_BLOCK_ADDR(test), CRC_BLOCK_LEN(test));<br>
+		#ifdef TEST_BUILD<br>
+&nbsp; printf(&quot;CRC32 %#08X\n&quot;, crc);<br>
+		#else<br>
+&nbsp; crc_check(&amp;crc);<br>
+		#endif<br>
+&nbsp; return 0;<br>
+		}</font></p>
+	
+				<p class="docText">When this program is compiled with <tt>
+				TEST_BUILD</tt> defined, the resulting binary will print the 
+				CRC32 computed for the function <tt>test_routine( )</tt>. If the 
+				computed CRC32 is <tt>0xFFF7FB7C</tt>, the following table 
+				indices will represent valid function pointers: <tt>b1[12]</tt>,
+				<tt>b2[7]</tt>, <tt>b3[11]</tt>, <tt>b4[15]</tt>, <tt>b5[7]</tt>,
+				<tt>b6[15]</tt>, <tt>b7[15]</tt>, <tt>b8[15]</tt>. Each of these 
+				contains a pointer to the function that will process the next 
+				nibble in the checksum, except for <tt>b8[15]</tt>, which 
+				contains a pointer to the function that is called when the 
+				checksum has proven valid. The tables in the source can now be 
+				rewritten to reflect these correct values:</p>
+				<font face="Courier New" color="#FFFFFF" size="2">
+				crc_check_fn b1[16] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, crc_nib2, 0, 0, 0 }, /*C*/<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b2[16] = { 0, 0, 0, 0, 0, 0, 0, crc_nib3, 0, 0, 0, 0, 0, 0, 0, 0 }, /*7*/<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b3[16] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, crc_nib4, 0, 0, 0, 0 }, /*B*/<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b4[16] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, crc_nib5 }, /*F*/<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b5[16] = { 0, 0, 0, 0, 0, 0, 0, crc_nib6, 0, 0, 0, 0, 0, 0, 0, 0 }, /*7*/<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b6[16] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, crc_nib7 }, /*F*/<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b7[16] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, crc_nib8 }, /*F*/<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b8[16] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, crc_good }; /*F*/<br></font>
+				<p class="docText">Obviously, the <tt>NULL</tt> bytes will have 
+				to be replaced with other values to disguise the fact that they 
+				are invalid entries. They can be replaced with pointers to 
+				functions that handle incorrect checksums, or they can be filled 
+				with garbage values to make the program unstable. For example:</p>
+				<font face="Courier New" color="#FFFFFF" size="2">
+				crc_check_fn b8[16] = { crc_good - 64, crc_good - 60, crc_good - 56, crc_good - 52,<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;crc_good - 48, crc_good - 44, crc_good - 40, crc_good - 36,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;crc_good - 32, crc_good - 28, crc_good - 24, crc_good - 20,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;crc_good - 16, crc_good - 12, crc_good -  8, &nbsp;crc_good -  4,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;crc_good };<br></font>
+				<p class="docText">In this table, the use of incrementally 
+				increasing values causes the table to appear to be valid data, 
+				as opposed to addresses in the code segment
+				
+		<p><u><b>Notes about compiling the example1 with VisualC++ 6.0<br>
+		</b></u>This time the example doesn't have any specific modification to 
+		be compiled on VC++ 6.0. Follow the same commands as before to compile 
+		it.<br>
+		Into the example2 folder there are two sources, the first <tt>
+		crc2_step1.c</tt> must compiled using the <tt>TEST_BUILD</tt> define, 
+		because has an unitialized <tt>crc_check_fn </tt>matrix. The <tt>
+		crc2_step2.c</tt> instead has this matrix correctly initialized.</p>
+		<p class="docText">
+		<u><b>Looking the example2 into OllyDbg<br>
+		</b></u>If you compile the program <tt>crc2_step1.c</tt> using <tt>
+		TEST_BUILD</tt> you should get this value <tt>0X6C8673E6</tt>. According 
+		to what I just said before the crc_check_fn matrix should becomes:</p>
+		<p class="docText"><font face="Courier New" color="#FFFFFF" size="2">crc_check_fn b1[16] = { 0, 0, 0, 0, 0, 0, 
+		crc_nib2, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, /*6*/<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; b2[16] = { 0, 0, 0, 0, 0, 0, 0, 
+		0, 0, 0, 0, 0, 0, 0, crc_nib3, 0 }, /*E*/<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; b3[16] = { 0, 0, 0, 
+		crc_nib4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, /*3*/<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; b4[16] = { 0, 0, 0, 0, 0, 0, 0, crc_nib5, 0, 0, 0, 0, 0, 0, 0, 
+		0 }, /*7*/<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; b5[16] = { 0, 0, 0, 0, 0, 0, 
+		crc_nib6, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, /*6*/<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; b6[16] = { 0, 0, 0, 0, 0, 0, 0, 0, crc_nib7, 0, 0, 0, 0, 0, 0, 
+		0 }, /*8*/<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; b7[16] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, crc_nib8, 0, 0, 
+		0 }, /*C*/<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; b8[16] = { 0, 0, 0, 0, 0, 0, crc_good, 0, 0, 0, 0, 0, 0, 0, 0, 
+		0 }; /*6*/</font></p>
+		<p>If you try to open the crc2_step2 into Olly you can see that it is 
+		not a so trivial task to modify the code and still obtain a valid 
+		running program. Looking for the references to the string &quot;CRC is valid&quot; 
+		you should land at <tt>0x004012C4</tt>. If you place a breakpoint with 
+		F2 and press run to the program with F9 you land to the correct place. 
+		Now if you press CTRL-K to see the call stack you should easily see that 
+		this subroutine is called from the </p>
+		<p><font face="Courier New" color="#FFFFFF" size="2">004012BA |. FF55 F8 
+		CALL [LOCAL.2] ; crc2_ste.004012C4</font></p>
+		<p><img border="1" src="images\Ollytut10.gif"><br>
+		<br>
+		This local variable is a pointer to the selected address into the 
+		function pointer addresses contained into the <tt>b8[16]</tt> vector.</p>
+		<p><img border="1" src="images\Ollytut11.gif"></p>
+		<p>Well, indeed there's still space for a more intelligent reversing of 
+		this application. We will see now how crypto algorithms can be 
+		identified using the constants they use. CRC32 is a very easy algorithm 
+		but also all the other more complex are not so complex..we'll see it in the next, 
+		last, section! Have a little more patient, we arriving at the end ^_°<p>&nbsp;</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<div align="center">
+<table width="75%" height="118" border="1" cellspacing="0" bordercolor="#3D486E" bordercolorlight="#3D486E" bordercolordark="#3D486E" background="/images/table.gif" style="border-collapse: collapse" bgcolor="#C0C0C0" id="table9" cellpadding="5">
+  <tr>
+    <td width="100%" background="images/table.gif">
+    <p align="center"><u><b>7. Identifying self-checking algorithms into programs</b></u></td>
+  </tr>
+  <tr>
+    <td width="100%" height="92" valign="top" background="images/table.gif" align="justify">
+      <u><b>Breaking the example1 program</b></u><br>
+		To introduce you to the problem let approach to the program crc1_ok.exe 
+		inside the example1 folder in the classical way. First of all be sure to 
+		have PEiD with the KryptoAnalizer (aka KANAL) installed. Run PEiD and 
+		select the crc1_ok.exe program, then select plugins and run the plugin 
+		just mentioned.<p>You should obtain (I assume you are alredy expert on 
+		PEiD, otherwise return to Beginner tut #1) something like below:</p>
+		<p align="center"><img border="1" src="images\Ollytut12.jpg"></p>
+		<p>The plugin reports clearly an address at <tt>0x004010DF</tt>. Well, 
+		fire up Olly and go there to see what's happening there..</p>
+		<p align="center"><img border="1" src="images\Ollytut13.gif"></p>
+		<p>You landed here, to get the meaning of the place where you are move a 
+		little the cursors, to reallign to the actual real code (you landed in 
+		the middle of an instruction, why it will be clear in a moment). Your 
+		Olly then should show something like below:</p>
+		<p align="center"><img border="1" src="images\Ollytut14.gif"></p>
+		<p class="docText">Well, we were at the address of a constant, <tt>
+		0xEDB88320</tt> which was part of an instruction <tt>XOR ECX,EDB88320</tt></p>
+		<p class="docText">Now look the CRC32 implementation I did in Section 6, 
+		you can find this line:</p>
+		<p class="docText"><font face="Courier New" color="#FFFFFF" size="2">#define CRC_POLY 0xEDB88320L</font></p>
+		<p class="docText">This is the same constant KANAL plugin found. If you 
+		have the opportunity/time to see the sources of KANAL (freely available 
+		on PEiD site) you will realize that KANAL is doing nothing more than 
+		searching for specific constants in memory, any crypto algorithm (better 
+		hashing algorithm) uses some specific constants somewhere in the 
+		algorithm. </p>
+		<p class="docText">At this stage we then understood we landed in the 
+		middle of CRC32 algorithm implementation. What we should do is to go at 
+		the entrypoint of the CRC32 routine&nbsp; that is, in the example1 
+		sources, the <font face="Courier New" color="#FFFFFF" size="2">
+		crc32_calc() </font>function.</p>
+		<p class="docText">The function where we landed starts here: </p>
+		<p class="docText"><font face="Courier New" color="#FFFFFF" size="2">
+		0040108F /$ 55 PUSH EBP</font></p>
+		<p class="docText">and is called here:</p>
+		<p class="docText"><font face="Courier New" color="#FFFFFF" size="2">
+		00401016 |. E8 74000000 CALL crc1_ok.0040108F</font></p>
+		<p class="docText">which is inside a function which is called here:</p>
+		<p class="docText"><font face="Courier New" color="#FFFFFF" size="2">
+		00401172 |. E8 89FEFFFF CALL crc1_ok.00401000 ; \crc1_ok.00401000</font><br>
+		<br>
+		Now you arrived at destination. Look the code where you are now (at <tt>
+		0x00401172</tt>) and compare it with the code shown before in the 
+		debugging section of the example1, it's the same place. </p>
+		<p class="docText"><u><b>Breaking the example2 program<br>
+		</b></u>We are now using the method learnt for the easyer example1 with 
+		the more complex example2. Run KANAL on the file crc2_step2.exe into the 
+		example2 folder. You should obtain something like this:</p>
+		<p class="docText" align="center">
+		<img border="1" src="images\Ollytut15.jpg"></p>
+		<p class="docText">As done before go to the address shown by KANAL, go 
+		up to the entry point of the CRC32 function and you finally land here:</p>
+		<p class="docText"><font face="Courier New" color="#FFFFFF" size="2">
+		004012EA |. E8 11FDFFFF CALL crc2_ste.00401000 ; \crc2_ste.00401000</font><br>
+		<br>
+		Well, place a breakpoint at this specific address and run the program 
+		using F9. Execute the call at <tt>0x004012EA</tt><font face="Courier New" color="#FFFFFF" size="2">
+		</font>with F8, and you should have in EAX the real CRC32 value just 
+		calculated.</p>
+		<p class="docText">Well, here's how the program is compiled and I'll 
+		leave to you the opportunity to understand how to fix it when a change 
+		is done.</p>
+		<p class="docText" align="center">
+		<img border="1" src="images\Ollytut16.gif"></p>
+		<p class="docText">This is the routine into which the CRC32 calculation 
+		is performed. I commented it with reference to the sources we wrote in 
+		Section 6.</p>
+		<p class="docText">The <tt>crc_check()</tt> function is called at: </p>
+		<p class="docText"><font face="Courier New" color="#FFFFFF" size="2">
+		004012F9 |. E8 09000000 CALL crc2_ste.00401307 ; \call crc_check(&amp;crc)</font><br>
+		<br>
+		and it's body is the following one:</p>
+		<p class="docText" align="center">
+		<img border="1" src="images\Ollytut17.gif"></p>
+		<p class="docText">The function elaborates a bit the CRC32 value 
+		computed and uses it to call the next correct function here:</p>
+		<p class="docText"><font face="Courier New" color="#FFFFFF" size="2">
+		00401336 |. FF55 F8 CALL [LOCAL.2] ; call the function returned at 
+		address b1[6], where 6 is the value found at 00401312</font><br>
+		<br>
+		If you step with F8 and follow this call, you will see that the called 
+		function is another one, almost identical . These functions are the 
+		functions responsible to extract from the <tt>b1[]</tt>; <tt>b8[]</tt> 
+		vectors the correct function pointers, which finally will lead you to 
+		the end of the program.</p>
+		<p class="docText">For example the sequence of calls with a correct&nbsp; 
+		CRC32 is: </p>
+		<p class="docText"><font face="Courier New" color="#FFFFFF" size="2">
+		00401307 -&gt; 00401135 -&gt; 0040116E -&gt; 004011A7 -&gt; 004011E0 -&gt; 00401219 -&gt; 
+		00401252 -&gt; 0040128B -&gt; 004012C4 </font><br>
+		<br>
+		Think of this example mixed with an obfuscator or compressor like 
+		AsProtect or Armadillo with a more complex hashing algorithm than CRC32 
+		and you will get how it would be easy to write less easily crackable 
+		programs. </p>
+		<p class="docText">&nbsp;</td>
+  </tr>
+</table>
+</div>
+	<p>&nbsp;</div>
+<div align="center">
+<table width="75%" height="118" border="1" cellspacing="0" bordercolor="#3D486E" bordercolorlight="#3D486E" bordercolordark="#3D486E" background="/images/table.gif" style="border-collapse: collapse" bgcolor="#C0C0C0" id="table6" cellpadding="5">
+  <tr>
+    <td width="100%" background="images/table.gif">
+    <p align="center"><u><b>Conclusions</b></u></td>
+  </tr>
+  <tr>
+    <td width="100%" height="92" valign="top" background="images/table.gif" align="justify">
+      What I shown here is a long journey on self-checking programs and the 
+		anti-tampering techniques programs uses. I also shown the theoretical 
+		assumptions that are behind these solutions and two practical examples. 
+		You should have realized how easy is to build custom protections for 
+		programs, that combined with known commercial protectors give extra 
+		barrires to crackers. Fortunately on the other hand much programmers do 
+		not ever consider them doing our cracking-lifes much of the time easy.<p>&nbsp;</td>
+  </tr>
+</table>
+</div>
+	<p>&nbsp;</p>
+	<table border="1" width="75%" background="/images/table.gif" bordercolor="#3D486E" cellspacing="0" bordercolorlight="#3D486E" bordercolordark="#3D486E" style="border-collapse: collapse" id="table3" cellpadding="5">
+		<tr>
+			<td width="100%" background="images/table.gif">
+			<p align="center"><u><b>References</b></u></p></td>
+		</tr>
+		<tr>
+			<td width="100%" background="images/table.gif">
+			<p>I suggest the following further readings from now on to complete 
+			this argument..</p>
+			<ol>
+				<li>O'Reilly - Secure Programming Cookbook for C and C++</li>
+				<li>There a lot of tutorials on
+				<a href="http://tutorials.accessroot.com">
+				http://tutorials.accessroot.com</a> which fool anti-tampering 
+				protections involving hashing.</li>
+				<li>Intel - IA-32 Intel Architecture Software Developer's 
+				Manual, volume 3: System Programming Guide</li>
+			</ol>
+			<p>..and essentially all the tutorials seens around (also others on 
+			our tutorials page) which often target checksummed applications..<p>&nbsp;</td>
+		</tr>
+	</table>
+		<p>&nbsp;</p>
+<div align="center"><center>
+	<table border="1" width="75%" background="/images/table.gif" bordercolor="#3D486E" cellspacing="0" bordercolorlight="#3D486E" bordercolordark="#3D486E" style="border-collapse: collapse">
+		<tr>
+			<td width="100%" background="images/table.gif">
+			<p align="center"><b><u>Greetings</u></b></p></td>
+		</tr>
+		<tr>
+			<td width="100%" background="images/table.gif">
+			<p><center>Thanks to the whole ARTeam:<br>[<span class="style16">Nilrem</span>] [<span class="style16">JDog45</span>] [<span class="style16">Shub - Nigurrath</span>] [<span class="style16">MaDMAn_H3rCuL3s</span>] [<span class="style16">Ferrari</span>] [<span class="style16">Kruger</span>] [<span class="style16">Teerayoot</span>] [<span class="style16">R@dier</span>] [<span class="style16">ThunderPwr</span>] [<span class="style16">Eggi</span>] [<span class="style16">EJ12N</span>] 
+			<br>
+			[<span class="style16">Stickman 373</span>] [<span class="style16">Bone Enterprise</span>]
+        	</center><br>Thanks to all the people who take time to write tutorials. 
+			<br>Thanks to all the people who continue to develop better tools. 
+			<br>Thanks to Exetools, Woodmann, SND, TSRH, MP2K and all the others for being a great place of learning.<br>Thanks also to The Codebreakers Journal, and the Anticrack forum.</p>
+			<p>If you have any suggestions, comments or corrections contact me 
+			in usual places..</p></td>
+		</tr>
+	</table></center></div>
+
+</body>
+
+</html>

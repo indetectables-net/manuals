@@ -1,0 +1,229 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Gabri3l Tutorial #3</title>
+<style type="text/css">
+<!--
+
+.style1 {
+	font-size: smaller;
+	font-style: italic;
+}
+body {
+background-image: url('images/Background.gif');
+}
+div#side {
+	height: 7000;
+}
+.style2 {
+	color: #C0C0C0;
+	font-weight: bold;
+}
+.style3 {color: #C0C0C0}
+.style4 {font-size: smaller}
+.style5 {
+	color: #FFFFFF;
+	font-weight: bold;
+}
+.style6 {
+	font-size: 12px;
+	font-style: italic;
+}
+.style7 {color: #FF0000}
+-->
+</style>
+</head>
+
+<body style="background-attachment: fixed;" behavior="fixed" text="#C0C0C0" link="#FFFFFF" vlink="#FFFFFF" alink="#FFFFFF">
+<div style="position:absolute; overflow:hidden; left:0px; top:0px; width:87px; height:98px; z-index:14; filter:Alpha(Opacity=40); -moz-opacity:0.50;">&nbsp;&nbsp;&nbsp; <img width=86 height=98  border=0 src="images/corner2.gif"></DIV>
+<div id="side" style="background-image: url('images/side.gif'); position:absolute; overflow:auto; left:0px; top:98px; width:43px; z-index:14; filter:Alpha(Opacity=40); -moz-opacity:0.50"></DIV>
+
+
+<div align="center">
+  <center>
+  <table border="1" width="55%" bgcolor="#336699" height="123" bordercolor="#3D486E" cellspacing="0" cellpadding="2" background="images/table.gif" bordercolordark="#3D486E" bordercolorlight="#3D486E" style="border-collapse: collapse">
+    <tr>
+        <td width="100%" height="19" align="center" bordercolor="#3D486E" bordercolorlight="#3D486E" bordercolordark="#3D486E"><b><u>Gabri3l 
+          Tutorial #3</u></b>
+          <p>Beginner Tutorial: Unpacking and Patching</p>
+      </td>
+    </tr>
+    <tr>
+      <td width="100%" height="19" align="left"><b><u>The Target:</u></b><br> 
+      Lan Helper 1.40        <br>
+          <a href="http://www.hainsoft.com/en/index.htm">http://www.hainsoft.com/en/index.htm</a></td>
+    </tr>
+    <tr>
+      <td width="100%" height="23" align="left"><b><u>The Tools:</u></b><br>
+          OllyDbg 1.09d (HideDebug Plugin and Ollydump plugin), Import Reconstructor 1.6, Diablos2oo2 Universal Patcher</td>
+    </tr>
+    <tr>
+      <td width="100%" height="20" align="left" background="images/table.gif"><b><u>The Protection:</u></b><br>
+ Aspack 2.12, Serial Protection</td>
+    </tr>
+    <tr>
+      <td width="100%" height="20" align="left"><p><b><u>Other Information:</u></b><br>
+            This is a tutorial to introduce the beginner to packing protections and 
+          slightly more advanced patching. This will take you through the steps of unpacking the program, fixing the Import Address Table using ImpRec, and finding and patching the serial check routine. Finally creating a patch for the original packed file.</p>
+        <p><strong><u>Updated:</u></strong><br>
+          LanHelper 1.41 was recently released. At the end of this tutorial is information on how to dump and patch the new version. </p></td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p align="center" class="style6">Best viewed at 1280x1024 </p>
+<div align="center">
+  <center>
+    <table width="75%" border="1" cellspacing="0" bordercolor="#3D486E" bordercolorlight="#3D486E" bordercolordark="#3D486E" background="images/table.gif" style="border-collapse: collapse">
+      <tr>
+      <td width="100%">
+        <p align="center"><b><u>Intro:</u></b></p>
+      </td>
+    </tr>
+    <tr>
+        <td width="100%" height="201" valign="top"> 
+          <p>All the tools you will need can be found online:<br>
+            <a href="http://navig8.to/diablo2oo2"><br>
+http://navig8.to/diablo2oo2</a><br>
+<a href="http://mackt.cjb.net/">http://mackt.cjb.net/</a><br>
+<a href="http://home.t-online.de/home/Ollydbg/">http://home.t-online.de/home/Ollydbg/</a></a><br>
+          Olly Plugins:<br>
+          <a href="http://cracklab.ru/f/files/_1144129978__HideDebugger1.2.1.rar">http://cracklab.ru/f/files/_1144129978__HideDebugger1.2.1.rar</a><br>
+          <a href="http://dd.x-eye.net/file/">http://dd.x-eye.net/file/</a><br>
+          </p>
+          <p> As usual first get your program set up and ready to crack. Make 
+          a quick backup so we don't screw anything up when working on the file.</p>
+          <p>            Begin by opening LanHelper.exe in PEID to see if it is packed 
+            or protected. The result: AsPack 2.12. Okay our first packed file. What does it mean when an executable is packed? Just as we pack files using Winzip or Winrar we can pack executables to protect them and conserve space. You can't open a zip file without a program to unpack it. The same is true for packed executables; except the program that unpacks it is part of the executable. The unpacker program is called a STUB. When you run a packed EXE the STUB first decrypts/unpacks the original EXE into memory. Then it executes the original program. The beginning of the original program is called the Original Entry Point &quot;OEP&quot;. What we want to do is wait until the program is decrypted into memory, find the OEP and then dump the decrypted file to our hard drive. However, the OEP does not mean the beginning of a &quot;working&quot; EXE. We may have the programs code but an executable can have many different sections outside of the code. One very important section is called the Import Address Table &quot;IAT&quot;. The Import Address Table allows a program to use functions stored outside of the program. A Messagebox from the Windows API (covered in tutorial #2) is an example of an outside function. When a program wants to use an outside function Windows loads the DLL with that function into memory address space and then gives the IAT the code location for the desired functions. A table is created with called functions, and addresses of those functions within the DLL's; hence the Import Address Table.</p>
+          <p>Note: <span class="style1">I used three seperate computers to create this tutorial. This is why my serial changes halway through. It is also why my Addresses in Olly change. If your Addresses in Olly do not match mine, it is not a problem. The code will be the same.</span></p></td>
+    </tr>
+  </table><br><br>
+  </center>
+</div>
+
+<table width="75%" height="5144" border="1" align="center" cellspacing="0" bordercolor="#3D486E" bordercolorlight="#3D486E" bordercolordark="#3D486E" background="/images/table.gif" style="border-collapse: collapse">
+  <tr>
+    <td width="100%" background="images/table.gif">
+    <p align="center"><b><u>Body:</u></b></p></td>
+  </tr>
+  <tr>
+    <td width="100%" height="5119" valign="top" background="images/table.gif">
+      <p>Before we unpack the file we will examine its protection scheme. Open LanHelper.exe. After it is loaded we are presented with a box telling us that we &quot;are on day 1 of our 30 day trial&quot;. We then have an option to enter a registration code. Let's try it out. A box comes up asking for our name and registration code. Enter anything and press OK. A box pops up telling us that &quot;The registration code you have entered is not correct&quot;. Notice that the box that the box that pops up looks very much like a messagebox that we covered in the previous tutorial. That is something to keep in mind when we are trying to crack the program. <br>
+      </p>
+      <p><u><b>Unpacking:</b></u> <br>
+        Unpacking is becoming a bigger part of reverse engineering. Many companies are choosing to pack or protect their programs to discourage people from reversing them. Because the packer used for this program is so popular, the method we are going to use to unpack it is not exclusive to this tutorial. In fact look for a tutorial by Ferrari on System Mechanic for more information on this method.</p>
+      <p>As a precursor to unpacking any program I usually use the hidedebugger plugin. Many packers and protectors are detecting whether or not you are debugging their program, and will quit if it detects that you are. Download the HideDebugger DLL using the selected link and place it in the same folder as Olly. Do the same for the Ollydump plugin as we will use it later.</p>
+      <p>We are going to begin by opening up LanHelper.exe in Ollydbg. You will be presented with a box about the program having an entry point outside of code. Click Okay. Another box will pop up asking if you want to analyze the code. Click Yes. You should find yourself here: <br>
+                   <img src="images/Olly1.gif" width="400" height="126"> <br>
+        Press the Step Into button once <img src="images/stepinto.gif" width="20" height="18">. Now look at your registers. Understanding the registers is an integral part to learning how to reverse programs. Think of registers as 32 bit memory reserves. Information can be stored, modified, and accessed in registers. The registers are part of the processor so you can perform calculations without having to use extra memory. This is why 64 bit processors are becoming more popular. They use 64 bit registers allocatting more memory at the processor level. </p>
+      <p><img src="images/Olly2.gif" alt="" width="189" height="103" align="left">With 32 bit registers you have General Registers: <span class="style2">EAX EBX ECX EDX.</span><span class="style3"> These are the most used by program calculations. You also have Index and Pointer Registers: <strong>ESI EDI EBP EIP ESP</strong>. These have a variety of functions most involve pointing to addresses that the program will use. The register we will use to unpack this program is ESP. ESP contains the top address of the stack (You will remember we covered the stack in tutorial #2). For more information on registers and their uses: </span><br><br>
+        <span class="style3"><a href="http://www.mujweb.cz/www/komsbomb/article/x86reg.htm">http://www.mujweb.cz/www/komsbomb/article/x86reg.htm</a> - basic information on registers<a href="http://www.swansontec.com/sregisters.html%20"><br>
+      http://www.swansontec.com/sregisters.html </a>- Information on how registers are used and what for.</span></p>
+      <p>Now take a look at the registers and then take a look at the stack window. 
+      <br>
+      <img src="images/Olly3.gif" width="320" height="103" align="left">You'll notice that the values of the registers have been pushed onto the Stack. This is the result of the <strong>PUSHAD</strong> function at the beginning of the program. PUSHAD pushes the values of the registers onto the stack in their respective order. You'll notice EAX went on first, then ECX, etc... This unique function is used when the program wants to modify these registers but leave no trace of their modification behind. Their initial values are saved and then restored later. This is a perfect function for a packer. It can run the STUB, unpack the program and then restore the registers as if the STUB never existed. What we want to do is find out where the registers are restored because then we will know where the OEP of our program is.</p>
+      <p>The function that POP's the register values from the stack is appropriately called <strong>POPAD</strong>. This will pop the values off of the stack and back into the registers. We know the order that the registers were PUSHed, which means we know what order they will be POPed. EDI was last and will be the first register removed from the stack.We also know EDI's location on the stack because our register ESP points to the top of the stack. (Your register values may be different than mine but the information still applies). </p>
+      <p><img src="images/Olly4.gif" align="left">Right click on the ESP register and choose Follow In Dump. You will see in the dump window, at the bottom of Olly, that you are at location 0012FFA4 (AKA the top of the stack). Highlight the first four Bytes and Right-Click. Select Breakpoint, then &quot;Hardware, On Access&quot;, and Dword. What we are doing is setting a breakpoint so that Olly will stop when the first four bytes (EDI) are accessed. The reason we choose Dword is becausewe highlighted 4 bytes: 2 Bytes are a Word and 2 Words are a Dword (DoubleWord)<br>Okay we are all set to stop when EDI is POPed. Press the RUN button. Assuming you did everything correctly you should stop on the instruction            <strong>JNZ SHORT LanHelpe.005533BA</strong>. Scroll up a bit and you will see directly above the JNZ is our POPAD function.</p>
+      <p>Now we are not at the OEP just yet. Our packer just needs to leave the decryption routine. Press the Step Into button 2 times and we will see how ASPack  jumps to the OEP without actually jumping. You will see that the program PUSHed a location onto the stack and then immediately follows it up with a RETN. The location pushed is our OEP and the program then executes the RETN thinking that the location on the stack is the location of the function that originally called it.<img src="images/Olly5.gif" align="left"><br>
+      
+      <p>Press Step Into one more time to execute the RETN and we are at the OEP. It looks wierd because the analysis of the program was done before the file was unpacked. Right click in the code window and select Analysis and then Analyse Code (or just press CTRL+A).</p>
+      <p>Our program is now unpacked into memory and we are sitting at the entry point. We are now able to dump the unpacked file from memory. Select the Plugins drop down list  at the top of the Ollydbg window. Choose Ollydump and then Dump Debugged Process. You will be presented with the following box: <img src="images/Olly7.gif" width="460" height="366" align="left"></p>
+      <p>Look at the button &quot;Get EIP as OEP&quot; We do not need to press this in this tutorial. However for future reference; The EIP register (or instruction pointer) can also be called &quot;program counter.&quot; It contains the offset of the next instruction to be executed. Pressing this button sets the OEP of the dump equal to the address stored in EIP. In this case they are both the same. <strong>We need to remember to write our OEP down</strong>. We will use the OEP address to rebuild our imports. </p>
+      <p>Now before continuing make sure that Rebuild Imports is UNchecked. Press Dump and then choose a name for your dumped executable. I chose LanDump.exe. Press the Save button and you can close Ollydbg. We now have a unpacked version of our executable. The only problem is: <strong>It won't run</strong>. </p>
+      <p>In the Introduction I gave you a brief overview of the Import Address Table (IAT). When a program is dumped from memory the IAT is not dumped along with it. We have to rebuild it ourselves and then attach it to our already dumped file. Sometimes this can be a very time consuming process because some protectors like to mess up the IAT in efforts to stop unpacking. However, this time we will find our IAT intact.</p>
+      <p><strong><u>Rebuilding the IAT:</u> </strong><br>
+      What we are going to do is use ImportReconstructor (ImpREC) and take the IAT from the original exe and attach it to our dumped file. Begin by running the original LanHelper.exe. Once LanHelper has started, open up ImportREC.exe and from the drop down menu choose the LanHelper process.<img src="images/Olly8.gif" width="480" height="463" align="left">
+      <p>ImportREC needs to know where to look for the IAT. Without knowing where the OEP is, ImpREC looks at the entry point of the STUB and cannot find an IAT. Remember writing down the OEP when you dumped the program? This is where we will use it.
+      <p>Enter the OEP in the bottom box labeled OEP. Then press &quot;IAT AutoSearch&quot;. ImpREC will pop up saying it found what it thinks to be an IAT. Press Okay. Now Press the &quot;Get Imports&quot; button and wait for the Imported functions list to populate.
+      <p>If the packer had messed up some of our functions, at the end of the lines you would see valid:NO. Press &quot;Show Invalid&quot; just to be safe. Okay nothing happened. We know that all our functions are valid. <em>(<span class="style4">I will cover fixing invalid functions at another time. If you are interested: Look for tutorials on AsProtect and/or rebuilding IAT's</span>) </em>
+      <p>Press the &quot;Fix Dump&quot; Button and choose our LanDump.exe file. (ImpREC will save the newly modified file as <em>FileName</em><strong>_</strong>.exe) Press Open and wait until the Log window of ImpREC says that LanDump_.exe was saved successfully. You can now close ImpREC and LanHelper. Okay let's open up LanDump_.exe and test it out. It Runs! You have successfully fixed the IAT and now have a working unpacked version! The only problem is: It's still not registered.
+      <p><strong><u>Patching the Registration Function:</u> </strong><br>
+        Now that we have an unpacked executable we can figure out how to register it. To do this we are going to use the Attach feature of Olly. The reason we are going to attach to the process is One: because you will learn how to debug processes that are already running and Two: The dumped exe throws an exception in Olly and the program enters an endless loop that cannot be terminated outside of restarting the computer. (<em>If anyone has more knowledge as to why this happens please email me *address at bottom*</em>) So begin by running LanDump_.exe. Then run Ollydbg and open the File Menu, choose Attach. Find the LanDump_.exe process in the list of processes running and press Attach.<img src="images/Olly9.gif" width="535" height="242" align="left">
+      <p>Once you attach you will find yourself in module ntdll. You know this because the titlebar of Ollydbg displays what module you are currently in. We need to get ourselves back in the main process and then continure running the program. Select the <strong>View</strong> drop down list. And then select <strong>Executable Modules</strong>. A list of all the executable modules for this program is displayed. At the top you will see LanDump_. Select that line and then Right-Click. From the menu choose Follow Entry. This will put you back into the main thread.       
+      <p>      
+      <p>
+      <p><br><img src="images/Olly10.gif" align="left">      
+      
+      <p>      
+      <p>Press RUN to continue running the program. (<em>If you get an error about suspended threads: Close  Ollydbg. Then restart LanDump_.exe and Ollydbg. You only get one chance to attach with Ollydbg before having to close it and open it back up</em>)      
+      
+      <p>Now we are attached to the process and can go about reversing it's protection scheme. Remember the error message that came up when we entered an incorrect serial? It looked very much like a messagebox. So we are going to start by setting a breakpoint on every call to a message box.      
+      <p>Right-Click and choose Search For, and then choose All Intermodular Calls.You now have a list of all the calls made by the program to other modules. Press the Destination bar at the top to sort alphabetically by destination. Scroll down until you find a bunch of calls to User32.MessageBoxA. Select one of the calls and Right-Click. Choose Set Breakpoint on Every Call to MessageBoxA.<br>
+        <img src="images/Olly11.gif"><br>
+        Now go to LanDump_.exe and enter your name with any serial and press Okay. Olly will pop up and you should have broken on CALL &lt;JMP.&amp;user32.MessageBoxA&gt;. Scroll the code window up a little bit and then press CTRL+A. This will analyze the code again giving us more information of what the program is doing. <br>
+        <img src="images/Olly12.gif" align="left">In the image you can see I circled an <span class="style5">&gt;</span>. The &gt; represents an entry point for this function. If we locate the code that jumped to this entry point we may find where the program compares our serial. Olly makes finding the jump to this function very easy. Highlight the LEA ECX,DWORD PTR SS:[EBP-10] line that has the &gt; in front of it and then Right-Click. From the menu select Go-To and at the bottom of the menu select   go to <strong>JE from 004DB6CE</strong>. This is the location of the JE that took us to this messagebox code.
+      <p>By selecting Go-To JE from 004DB6CE we find ourselves directly below a TEST AL,AL. This checks to see if AL = 1. If AL does not equal 1 then it will jump to the messagebox telling us we entered an incorrect registration code. We could patch the jump but that will not help us if the registration is checked on startup. (<em>Which in this case it is. You can try patching it and then restarting the program to verify for yourself.</em>)
+What we want to do is patch the routine that checks the serial. What happens is our name and serial are passed to a function. I will call it CheckSerial(). The function checks our serial code and then sets AL equal to 1 or 0 depending on whether the serial is correct or not. Many times a developer will use the same function in different areas of the program. He call the CheckSerial() function on startup, and to verify the registration code when it is entered, even see if you are trying to access a disabled feature. If we patch the function to always set AL=1 then we do not have to search through the program trying to change every JE to JNE.<img src="images/Olly13.gif" align="left">
+      <p>Looking directly above the TEST AL, AL we can see the CheckSerial() function. Highlight the line and set a breakpoint on it by pressing F2. We are going to break on this function and then trace into it to find out where the value for AL is set. Press RUN and go back to LanDump_.exe. 
+      <p>Go ahead and try entering your name and any serial in LanDump_.exe again. Press Okay and we will find ourselves at our breakpoint in Olly at  CALL LanDump.004C4BFC. Press the Step Into button <img src="images/stepinto.gif" width="20" height="18"> and we will be inside the registration scheme of LanHelper. Rather then step through all this code looking for where the value for AL is determined. We are going to jump right to the end because we know that setting AL equal to 1 or 0 is one of the last things the function will do before returning. Press the Execute Till Return button <img src="images/Execute.gif" width="19" height="20">. This will run the code until it reaches a RETN. You should end up at the following place in code. <img src="images/Olly14.gif" width="601" height="127" align="left"><br>
+        But looking at the stack we see that the RETN we are on will only move us down to 004C511A. That happens to be exactly where we want to go. At that location we can see that AL is being set equal to [EBP-9]. We can find out what EBP-9 is by Right-Clicking on EBP in the registers window and then choosing Follow in Dump. Count back 9 bytes from where you start in the dump and you will end up at 0012EE73 which contains 00. 
+      <p>To fix this program we are going to change the line  so that AL always equals 1.  Now select <strong>MOV AL,BYTE PTR SS:[EBP-9]</strong> and press Spacebar to edit it. In the window that pops up change MOV AL,BYTE PTR SS:[EBP-9] to MOV AL,1. Make sure Fill With NOP's is checked and press Assemble. Close the editing box and press RUN. If you have not removed your MessageBoxA breakpoints you will break on a call to a messagebox. By looking at the stack we can see that it is thanking us for registering LanHelper. Success! But will it work when we restart the program? 
+      <p>To make sure our program works when we restart it we need to save our changes to a new executable. Right-Click in the code window and choose <strong>Copy to Executable</strong> then All Modifications. A box will pop up asking if you want to copy the selected modification to the executable file; choose Copy All. A new window will open up with our modified program in it. Right-Click in the window and choose Save File. Pick a name for your file (I choose LanFixed.exe) and press Save. You can now close Olly.
+      <p><img src="images/Olly15.gif" width="302" height="58" align="left">Time to test it. Open up your newly saved file and... It works! No nag screen. Choose Help and then About from the menu and you will see that the program is now registered to your name.<br><br><br><strong><u>Creating a Patch:</u></strong><br>
+      The final thing we are going to cover is how to create a patch for a packed file. This is useful because it is much easier to send a patch out rather than a large modified executable. Once again I am going to use Diablos2oo2 Universal Patcher, or DUP. We used this patcher before to create an offset patch but this time we are going to use it to create a patch based on virtual offsets.
+A nice thing about this patcher is the fact that it supports packed files. 
+      <p>Begin by opening up DUP. You start in the Patcher Settings. Enter LanHelper in the Application Name. Click the browse button next to the Target Filename box and browse to LanHelper.exe. The other boxes are optional, under Release Info you may want to give a little description on how to use the patch. You can customize the About Box and the Icon and add your own skin and other options, by pressing the Options button.     
+      <p><img src="images/Olly16.gif" width="540" height="541" align="left">Once you have filled in the boxes, choose the Offset Patch tab at the top. First check the box that says Virtual Address Mode this allows us to patch the executable based on the offsets of the program when it is loaded into memory. For the original file choose our unpacked LanDump_.exe and for the Patched File choose LanFixed.exe. Press the Compare button and it will fill our list with the modified bytes. Now we need to give the patcher the information of our original packed executable. Press the Get It... button under Target File: Filesize + CRC32. Choose LanHelper.exe and then Open. Once dUP has the target file information press Create Patch and choose a name for your patch.       
+      <p>You are done! Backup LanHelper.exe and run the patch. Now run the patched LanHelper and it will show you as registered! To test registering it again, delete the values from the <strong>sn</strong> and <strong>user</strong> keys under HKEY_LOCAL_MACHINE\SOFTWARE\LanHelper. You have successfully  unpacked a packed executable and have patched a registration scheme at the deepest level. You can now take whet you used here and apply it to other targets.       
+      <p><strong><span class="style7"><u>UPDATED FOR 1.41:</u></span></strong>      
+      <p> <strong>Dumping:</strong><br>
+1. Follow the same steps under Dumping  except you will break on a JMP after the POPAD.<br>
+2. Follow that JMP to get to the OEP.<br>
+3. Fix the IAT in the same way as above, using your newly discovered OEP.<br>
+<br>
+<strong>Patching:</strong><br>
+1. Load newly dumped executable in Olly<br>
+2. You are going to encounter a few exceptions. So in Olly's Debugging Options check Ignore memory access violations in Kernel32, and INT 3 breaks. Also, check the Ignore Custom Exceptions box. In the custom exceptions add the range (00000005 to &lt;Same as Above&gt;) and the range (C0000005 (Access Violation) to &lt;Same as Above&gt;).<br>
+3. If play around with the executable for awhile you will notice that setting a Breakpoint on MessageBox in the intermodular calls does not work.<br>
+-Instead-<br>
+4. Use the command bar plugin and type "BP MessageBoxA" without the quotes.<br>
+5. Try and register the program: type in any name and serial and press Okay. You will break on MessageboxA in the user32 module.<br>
+6. Look at the top line of the stack to see where the Call to messageboxA came from. In my case it was 4D5C1C.<br>
+7. Right click in Olly and choose Go-To-&gt;Expression. Type in 4D5C1C, or whatever address your call occured at, and press Okay. You will be at the call to messageboxa<br>
+8. Scrolling up in Olly's you will see code that is very similar to the code that calls the messagebox in version 1.40. However it is missing that nice little &gt; that tells us what called this code. <br>
+-No Problem-<br>
+9. Remember w32dasm? Hope so! Leave Olly open, but also open up your dumped executable in w32dasm. Wait for it to analyze the file.<br>
+10. When you have the executable loaded into w32dasm. Choose GoTo at the top and choose Code Location on the drop down menu. Type in 4D5C1C, or whatever your call location was, and press Okay<br>
+11. You will see that you are at the call to messageboxA, scroll up a little until you see <br>
+<em>Referenced by a (U)nconditional or (C)onditional Jump at Address:<br>
+4D571E(C) &lt;-**This number may be different**</em><br>
+12. That address is where the Jump to the messagebox is made. Write it down and close out w32dasm.<br>
+13. Back in olly right-click and choose Go-to-&gt;Expression. Type in the address you just found and press Okay. You will find yourself just below a CALL and TEST. Just as in version 1.40. <br>
+14. Fixing the call and patching the program is just the same as in 1.40.</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<div align="center">
+  <center>
+  <table border="1" width="75%" background="/images/table.gif" bordercolor="#3D486E" cellspacing="0" bordercolorlight="#3D486E" bordercolordark="#3D486E" style="border-collapse: collapse">
+    <tr>
+      <td width="100%" background="images/table.gif">
+        <p align="center"><b><u>Conclusion:</u></b></p>
+      </td>
+    </tr>
+    <tr>
+      <td width="100%" background="images/table.gif">I used this particular program purely as a demonstration
+        for unpacking and patching. If like the program and are going to
+        use it please purchase it. 
+        <p>Thanks to all the people who take time to write tutorials. <br>
+          Thanks to all the people who continue to develop better tools. <br>
+    Thanks to Exetools, Woodmann, and Arteam for being a great place of learning.<br>
+    Thanks also to The Codebreakers Journal, and the Anticrack forum.</p>
+        <p>*<em>This tutorial seems to be close to the same steps that Team LUCiD took to reverse this program. However their crack was released before this tutorial and uses a slightly different method to patch the registration routine. </em> </p>
+        <p>If you have any suggestions, comments or corrections email me:
+        Gabri3l2003[at]yahoo.com&nbsp; 
+      </td>
+    </tr>
+  </table>
+  </center>
+</div>
+
+<p align="center"><img border="0" src="images/ENTER.JPG"></p>
+
+</body>
+
+</html>

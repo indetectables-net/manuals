@@ -1,0 +1,193 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>ARTeam Beginner Tutorial #5</title>
+<style type="text/css">
+<!--
+body {
+background-image: url(images/Background.gif);
+}
+div#side {
+	height: 7000;
+}
+.style6 {
+	font-size: 12px;
+	font-style: italic;
+}
+.style7 {color: #FFFFFF}
+.style8 {font-size: smaller}
+-->
+</style>
+</head>
+
+<body style="background-attachment: fixed;" behavior="fixed" text="#C0C0C0" link="#FFFFFF" vlink="#FFFFFF" alink="#FFFFFF">
+  <div style="float:left; position:absolute; left:0px; top:0px"><img src="images/corner.png" width="86" height="98"></div>
+  <div align = "center">
+    <table align = "center" border="1" width="554" bgcolor="#336699" height="428" bordercolor="#3D486E" cellspacing="0" cellpadding="2" background="images/table.gif" bordercolordark="#3D486E" bordercolorlight="#3D486E" style="border-collapse: collapse">
+      <tr>
+        <td width="100%" height="100" align="center" background="images/ARTeam.gif"bordercolor="#3D486E" bordercolorlight="#3D486E" bordercolordark="#3D486E"><span class="style7"><b><u>ARTeam Beginner Tutorial #5</u></b><br>
+      By: Gabri3l /ARTeam<br>
+      <a href="http://cracking.accessroot.com" class="style8">http://cracking.accessroot.com</a>        </span>          <p class="style7">Beginner Tutorial: Inline Patching</p></td>
+      </tr>
+      <tr>
+        <td width="100%" height="19" align="left"><b><u>The Target:</u></b><br>
+      Universal Desktop Ruler 2.5.872 </td>
+      </tr>
+      <tr>
+        <td width="100%" height="23" align="left"><b><u>The Tools:</u></b><br>
+      PEID, Ollydbg 1.10</td>
+      </tr>
+      <tr>
+        <td width="100%" height="62" align="left" background="images/table.gif"><b><u>The Protection:</u></b><br>
+      Serial</td>
+      </tr>
+      <tr>
+        <td width="100%" height="20" align="left"><p><b><u>Other Information:</u></b><br>
+        This tutorial will probably be the last one concerning packers. It builds on both  tutorial #3 and Shub-Nigurrath's tutorial #4.  In this tutorial we will learn how to inline patch a packed executable. This is a broad topic and will cover code caves and basic assembly. We will also learn about the registers. The registers are not only  important  to know when reversing the serial protection of this application, they will help you improve as a reverser. We will take this tutorial in steps. First we will learn about the x86 registers. We will then learn how to patch this applications serial checking routine. Finally we will learn about code caves and use them to patch the packed executable.</p></td>
+      </tr>
+    </table>
+</div>
+    <p align="center" class="style6">Best viewed in Firefox at 1280x1024</p>
+    <div align="center"> 
+    <center>
+    <table width="75%" height="227" border="1" cellspacing="0" bordercolor="#3D486E" bordercolorlight="#3D486E" bordercolordark="#3D486E" background="images/table.gif" style="border-collapse: collapse">
+      <tr>
+        <td width="100%" height="24"><p align="center"><b><u>Intro:</u></b></p></td>
+      </tr>
+      <tr>
+        <td width="100%" height="201" valign="top"><p>All the tools you will need can be found online:<br>
+                <a href="http://navig8.to/diablo2oo2">http://navig8.to/diablo2oo2</a><br>
+                <a href="http://home.t-online.de/home/Ollydbg/">http://home.t-online.de/home/Ollydbg/</a><br>
+                <br>
+        As usual first get your program set up and ready to crack. Make a quick backup so we don't screw anything up when working on the file. Now begin by opening Udruler.exe in PEID to see if it is packed. The result:<br>
+        <img src="images/PEID.gif" align="left"></p>
+          <p>I recommend reading tutorials #3 and #4 before starting this one.  I and Shub-Nigurrath have taught you two ways to unpack packed executables. Because of this I will only quickly cover finding the OEP. </p>
+          <p>However, before we begin even working with this executable we will first cover the Registers. If you think you already have a good grasp on x86 registers you can go ahead and skip to <strong><u>Unpacking</u></strong>. </p></td>
+      </tr>
+    </table>
+    <br>
+    <br>
+  </center>
+</div>
+<div align=n "center">
+<table width="75%" height="4553" border="1" align="center" cellspacing="0" bordercolor="#3D486E" bordercolorlight="#3D486E" bordercolordark="#3D486E" background="/images/table.gif" style="border-collapse: collapse">
+  <tr>
+    <td width="100%" background="images/table.gif">
+    <p align="center"><b><u>Body:</u></b></p></td>
+  </tr>
+  <tr>
+    <td width="100%" height="4528" valign="top" background="images/table.gif">
+      <p><strong><u>The Registers: </u></strong><br>
+        To get any further in reversing it is important to understand all the information you have available to you. The registers are the primary information holders when using a debugger. So, we are going to learn what the registers are, and what information they can hold.</p>
+      <p>The registers are small areas of memory that programs  use to store information. I am sure you have heard that Windows is built on x86 architecture. And that the x86 architecture has 32-bit registers. This means that the registers we are looking at can only hold 32-BITS. A BIT is either a 1 or a 0. So a register can only hold a binary value between 00000000000000000000000000000000 - 11111111111111111111111111111111. That means that a register can hold 
+  4,294,967,295
+   possible combinations. Okay, Why is it when we see the registers in Olly they only hold 8 characters between 0 and F? Because in Olly, we are used to seeing BYTES. BYTES are eight BITS grouped together. And can hold a value from 0 to 255. However to make it easier, instead of writing 8 BITS every time we want to write a BYTE. We use the Hexadecimal format to write a BYTE.</p>
+      <p>Hexadecimal format is based on the number 16. Now, if you are unfamiliar with the different based number systems pay attention! We use the decimal system which is based on the number 10. That means that whenever we hit  the magical increment of 10: we add 1 to the space to the left and start over at zero in the right space. That's all you need to know for Hexadecimal. Just count in increments of the base number. And only add one to the left space when you hit another increment of the base number. Sound confusing? It's not. Example: Start counting from 1 in Hex, 1,2,3,4,5,6,7,8,9,A,B,C,D,E,and F is 15 so 10 is 16. So we count again. 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 1A, 1B, 1C, 1D, 1E, and hit 1F which is 31. Well we are going to get to another increment of 16 again so add 1 to the left space and start over at zero. 1 + 1 = 2 and start over at zero so we are at 20 in hexadecimal which in decimal is 36. This works for any based number system.</p>
+      <p><img src="images/Binary.gif" width="300" height="200" align="left">Binary for example. Counting in binary: 0 = 0, 1 = 1, okay we are going to hit 2 so add one to the left digit and start at zero in the right: 10 = 2, 11 = 3, Okay another increment of two so add 1 to the left digit and start at zero. Oops, Not 20, instead notice that by adding 1 to the left digit it has reached an increment of two as well. So add 1 to the left again and start at zero. Now we are at 100 = 4, 101 = 5. Keep this in mind for every base system. When you add 1 to the left digit, if that digit reaches an increment of the base number, add one to the <strong>farther left</strong> digit and start over at zero for the left hand digit. </p>
+      <p>I understand that this is a lot to comprehend but it is good to at least understand hexadecimal  the farther along you get in reversing. </p>
+      <p>Okay back to Registers: BYTES are 8 BITS written in hexadecimal. A Register contains 32 BITS which is 4 BYTES.  So a register can only hold a value between 00000000 and FFFFFFFF. That's not a lot of room when it comes to memory. Many times the register is broken down into 2 BYTES, and sometimes again into only 1 BYTE.<img src="images/RegisterA.gif" width="300" height="100" align="right"></p>
+      <p><br>
+      The general purpose registers are: EAX, EBX, ECX, and EDX. Think of these as REGISTERS A, B, C, and D. When you see EAX  in a program they are referring to all 4 bytes of REGISTER A. What if we want to only use half of the register? Well then drop the E and we have AX which is the last 2 BYTES of REGISTER A. To use half of that we have AL and AH. These are one BYTE each, and are the LOW and HIGH bytes of AX. So if you see: <br>
+      POP EAX<br>
+      ADD AL,1<br>
+      The two instructions are referencing the same register. the first one POP's 4 BYTES off of the stack and puts them in REGISTER A. The second instruction adds one to the last BYTE in REGISTER A. So now we understand how to break down the registers. Let's see what they are commonly used for:</p>
+      <p><u><strong>EAX</strong>:</u> Known as the Accumulator Register. This register is probably the most popular register. It is used for general calculations and intel has programmed  many special assembly instructions that just use EAX. Functions like 
+LODS, STOS, IN, OUT, INS, OUTS, SCAS, and XLAT  are used to specifically move memory in and out of the EAX register. Also API functions almost always return their values through EAX.</p>
+      <p><u><strong>EDX</strong></u>: Known as the Data Register. This register is traditionally used in conjunction with the EAX register. The EAX register may hold the data to be written and the EDX register may hold the address to write the data to. EDX also often holds the result of mathematical functions. The EDX and EAX registers also can also be used in conjunction to hold 64 bits of information by using EDX:EAX</p>
+      <p><u><strong>ECX</strong></u>: Known as the Count Register. This register is true to it's name. As it is often used as a counter for LOOP and REP (<em>repeat</em>) functions. It also has assembly functions written specifically for it. Example: JECXZ jumps if the ECX register equals zero.</p>
+      <p><u><strong>EBX</strong></u>: Known as the Base Register. This register used to be the only register that could be used to hold a memory address for access. Memory access occurs when the register is put between square brackets. <strong>Example</strong>: MOV EAX, EBX moves the value of EBX into EAX. where MOV EAX, [EBX] moves the value <strong>stored at the memory address</strong> in EBX into EAX. Now Intel has made it so any register can be used as an address for memory access. So EBX is usually used for general purposes.</p>
+      <p>Hopefully this gives you an idea of the uses of the general purpose registers.We can move on to unpacking this program</p>
+      <hr noshade>      
+      <p><u><strong>Unpacking:</strong></u><br>
+        <span class="style7"><em>**I created this tutorial using Windows 2000, so your offsets may be different than mine. Do not rely on my addresses to guide you, instead rely on the code you see in the pictures.**</em></span><br>
+        <br>
+        Unpacking this program is very similar to unpacking Aspack. However, because we are going to inline patch the program we are not going to dump the executable. Instead we only want to find the OEP of the program. That way we can look through the unpacked program and find the address of registration scheme we need to patch. <p>Let's begin. Open udruler.exe in Olly. You should be here:<br>
+        <img src="images/Olly1.gif" align="left">In tutorial #3 we learned what the PUSHAD does and why the unpacking routine uses it. UPX uses the PUSHAD instruction for the same purpose as ASpack. This means we can unpack it the same way.</p>
+      <p>&nbsp;</p>
+        <img src="images/Olly2.gif" width="318" height="149" align="left">Press the Step Over button once <img src="images/Step.gif" width="18" height="18">. Now that we have executed the PUSHAD, our registers are on the stack. We need to break  when the registers are POPed off the stack. So  Right-Click on the ESP register (Which we know contains the address to the top of the stack) and Follow in Dump. In the Dump window highlight the first four bytes and Right-Click -&gt;Breakpoint -&gt;Hardware, On Access -&gt; DWORD.</p>
+        <p>Now all we have to do is Press RUN. Wait for the program to be unpacked and we will break on a JMP. Looking at the JMP we see that it jumps to address 004BE9DC. 004E9DC is a completely different part of memory than the one we are in. Maybe it is our OEP! Press Step Into button <img src="images/stepinto.gif" width="20" height="18"> to follow the Jump.<br> <img src="images/Olly3.gif" width="396" height="59"></p>
+        <p>Looking at the code we see that we are at the beginning of the UDruler executable. (<em>How exactly do I know that this is the beginning? Well, sometimes you aren't 100% sure. But the more experienced you become with unpacking executables you begin to learn what the code at the beginning of a program looks like</em>) <br>
+          <br>
+          Before continuing on, remember to remove the Hardware Breakpoint we set. You can do so by choosing the Debug menu. Then Hardware Breakpoints from the drop down menu. A box will open with the hardware breakpoints you set. Press the Delete Button beside the breakpoint to remove it.</p>
+        <p><u><strong>Defeating the Protection:</strong></u><br>
+      We are now inside the unpacked executable. We could use Ollydump and dump the program then patch it that way. But we already learned how to do that in tutorials #3 and #4. Instead, we are going to browse the executable while it is in memory and find where we need to patch the program.</p>
+      <p><img src="images/Olly5.gif" width="508" height="164">So to begin, let's check the Strings. Right-Click and choose Search for-&gt;All referenced Text Strings. Scroll up to the top of the page. One of the first couple strings you see is &quot;REGISTERED VERSION&quot; followed by &quot;UNREGISTERED VERSION&quot;. This looks like a very interesting place to start. Double Click &quot;REGISTERED VERSION&quot; you will find yourself here:<br><img src="images/Olly6.gif" width="576" height="82"><br>
+      Looking at the code we see that a CALL is made to 004BAFF8. The program then tests to see if AL is zero. If AL is zero then it jumps to 004A93AF. What we are going to do is fix the program so that AL is always 1. This will be similar to the approach we took to fix the registration of Lanhelper in Tutorial #3. </p>
+      <p>Select line 004A9394 (The Call to UDRULER.004BAFF) and Right-Click. Choose Follow from the menu. By following this call we put ourselves in the routine that checks to see if the program is registered. You should currently be here:  <img src="images/Olly7.gif" width="253" height="30" align="left"></p>
+      <p>This is the beginning of the registration checking function. We want to break here and then follow the code until we see AL being set. Press F2 to set a breakpoint. Now, press Run and UDruler will begin loading. </p>
+      <p>As UDruler appears in your taskbar Olly will break at the breakpoint we just set. We are now inside the Registration Check for this program. Look at the stack and we will find out where we will return from this registration check. In my case the top of the stack says: <strong>  RETURN to UDRuler.004BEC6E from UDRuler.004BAFF8</strong>. This means that when we are done checking if we are registered, the function will return to 0004BEC6E. The program will then test if AL is 0 and continue accordingly. </p>
+      <p>Before we go any further select line 004BAFF8 (where we set out breakpoint) and press F2 again to remove the breakpoint. Now, onto fixing the registration check.</p>
+      <p> To fix this registration check we want to find out where AL is being set. We know that it will probably be one of the last things the function will do before returning to 004BEC6E. Rather then step through all this code we can speed things up by pressing the Execute Till Return button. Go ahead and press it once, give Olly a few seconds and you will break here:<br>
+        <img src="images/Olly8.gif" width="752" height="173"><br>
+        Look at the stack and you can see by following this return we will only return 3 lines down to 004BB330.</p>
+      <p> Press Step Over to follow the RETN to 004BB330. Continue to press the Step Over button until you reach the next RETN. Looking at the stack again we see that we will RETN to 004BB36D. </p>
+      <p>Press Step Over one more time until you are at 004BB36D: <br><img src="images/Olly8b.gif" width="530" height="211" align="left">This is the code that sets AL. How do I know? Look at the picture and see if it helps you follow along. We see that the first instruction sets EAX equal the the value in EBX. We know that AL is the LOW byte of EAX that means AL will be the same as the LOW byte of EBX. Looking at EBX we see that the LOW byte is 00. </p>
+      <p> Next there are some POPs. We then reach an instruction that moves the value from EBP into ESP. We know that ESP always points to the top of the stack, so if we move another value into ESP we also change the top of the stack. Look at EBP, in my case the value was 0012FF80. Looking at the stack we see that the line directly below 0012FF80 is the same line we saw when we entered the registration routine. This means that when we hit the RETN we will  leave the registration function.</p>
+      <p>This is the code we will need to patch in order to register our program. </p>
+      <p>To change the registration check  we want to move a 1 into AL. Select line 004BB36D MOV EAX,EBX and press SPACE to Assemble the line. In the box that comes up type MOV AL,01 and press Assemble. Our code should now look like the following: <br><img src="images/Olly9.gif" width="227" height="64"><br>
+        Pay attention to the code location, and the BYTES that were written into that location. Write down all this information, we will need it when we create our patch.:<br>
+        004BB36D: B0<br>
+      004BB36E: 01</p>
+      <p>Well we patched the registration routine to always return registered. So let's test it out. Press RUN and lets see what happens... After the program loads, Right-click on the UDruler tray icon and choose ABOUT. The About box says we are registered! But what about the rest of the program? If you played around with the program before-hand you would have noticed that some of the functions were limited as a trial version. Example: You were not allowed to find the area and perimiter for the whole screen. So right-click the UDruler tray icon and choose Area+Permiter. The program now allows us to measure the whole screen. We have successfully patched the registration check!</p>
+      <hr noshade>      
+      <p><u><strong>Creating an Inline Patch: </strong></u><br>
+        The final step we are going to take is to create an inline patch for this program. <br>
+      <img src="images/inline.gif" width="280" height="230">An Inline Patch can be used when a program is packed. We modify the program so that at the end of the unpacking routine, instead of jumping to the OEP, it jumps to our own section of code. We put that code section into a code cave. Our added code  patches the now unpacked executable. And, after the executable is patched we jump to the OEP and run our modified program. So the first thing we want to do is find a place in the packed program to insert our own code. This is called a code cave, it is a section of memory in the packed executable that is empty. A code cave may sound like it is going to be hard to find but they are actually pretty easy.</p>
+      <p>Restart  UDruler.exe in Olly. Do not run it, just let it load itself into memory. Now choose VIEW and then Memory from the drop down menu. You should see the following:<br> <img src="images/Olly10.gif" width="292" height="39"><br>We are looking at the sections of memory that make up our executable. Doing the math we see that each section's beginning is at the other sections end. In executable files, often  the code inside a section doesn't take up all of the section. That means there is often space at the end of sections that can be used to write code in. We are going to look for a code cave within the last section of this program. </p>
+      <p>The .rsrc section starts at 00526000 for me. So I'm going to close the Memory window and in the CPU window Right-Click and Go-To -&gt;Expression. Type in 00526000 and press OK. You should end up here: <br>
+        <img src="images/Olly11.gif" width="395" height="49" align="left"><br>
+      Now we are going to scroll down until we do not see anymore instructions. Just keep scrolling... When you continuosly see ADD BYTE PTR DS:[EAX],AL you are near the bottom of the section. Scroll back up until you see the last intruction for this section.  I found mine here: <br>
+      <img src="images/Olly11b.gif" width="399" height="135" align="left">This means that all those 0000 instructions under the last instruction can be used for our code cave. I am going to start writing my code at 00528487. </p>
+      <p>Now before we begin writing code. We need to know what we are going to write. The instruction to overwrite code is a MOV instruction. We use it in the following way: <br>
+        MOV BYTE PTR DS:[ADDRESS], DATA<br>
+        That instruction will MOVE the BYTE whose value is DATA into location ADDRESS. 
+The DS in front of the ADDRESS just specifies the Data Segment. Each
+program in Windows memory has its own Data Segment to run in. We
+include it in front of the address so the program knows to write the
+information to the ADDRESS in this programs Data Segment.</p>
+      <p> Okay, remember the addresses and values you wrote down? This is where we use them. We changed the BYTE at ADDRESS 004BB36D to B0. So the first instruction we are going to write is: 
+        MOV BYTE PTR DS:[004BB36D], 0B0. (<em>We add the 0 in front of the B so Olly knows that it is a value and not an instruction</em>) Next, we changed the byte at address 004BB36E into 01. So the second instruction we are going to write is MOV BYTE PTR DS:[004BB36E], 01. The last instruction we want to write is a jump to the OEP. Look back at your notes to find the OEP. In my case, my OEP was 004BE9DC. So the last instruction we write is JMP 004BE9DC. When you are done it should look like this:<br> 
+        <img src="images/Olly12.gif" width="397" height="64" align="left"></p>
+      <p>Now, Select ALL THREE lines you changed and Right-Click. Choose Copy to Executable -&gt; Selection. A new window will open up. In that new window  Right-Click and choose Save File. Save the executable as any name you want.</p>
+      <p>The last thing we need to do is change the Jump at the end of the unpacking routine to jump to our code cave. So gp ahead and close UDRuler and Open up the modified executable you just saved. </p>
+      <p>Now we need to go to the end of the packing routine. If you have a good memory you will remember that it is at offset 0052553B. If you don't have a good memory you can Right-Click and Search-&gt;Command. Type in JMP 004BE9DC. That will search for the instruction that jumps to our OEP. Either way, you end up at 0052553B. We need to change this jump so instead of jumping to the OEP it jumps to the first instruction of our code cave. In my case the first instruction in my code cave is at address 00528487. (<em>Look at the picture above</em>). </p>
+      <p>To change the line Select it and press SPACE. In the Assemble box type JMP 00528487. Press Assemble. You should see the following:<br> 
+        <img src="images/Olly13.gif" width="364" height="38" align="left">We are almost done! We just need to save this modification to our file.</p>
+      <p> Right-Click and choose Copy to Executable. In the window that opens up Right-Click again and choose Save File. I saved mine as UDFinal.exe. Go ahead and close Olly. The last thing to do is test it out! Double-Click your UDFinal.exe and, if you did everything correctly... It Works!! </p>
+      <p>We learned about the x86 registers. We then applied that knowledge to reversing a registration check. We also learned about code caves and how to find them. Finally we used code caves to create an inline patch for a packed executable. Hopefully with everything you learned you will be able to apply it  to other reversing projects. </p></td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<div align="center">
+  <center>
+  <table border="1" width="75%" background="/images/table.gif" bordercolor="#3D486E" cellspacing="0" bordercolorlight="#3D486E" bordercolordark="#3D486E" style="border-collapse: collapse">
+    <tr>
+      <td width="100%" background="images/table.gif">
+        <p align="center"><b><u>Conclusion:</u></b></p>
+      </td>
+    </tr>
+    <tr>
+      <td width="100%" background="images/table.gif"><p>I used this particular program purely as a demonstration
+          for creating an inline patch. If like the program and are going to
+          use it please purchase it.</p>
+        <p align="center"> Thanks to the whole ARTeam:<br>
+[<span class="style16 style7">Nilrem</span>] [<span class="style16 style7">JDog45</span>] [<span class="style16 style7">Shub - Nigurrath</span>] [<span class="style16 style7">MaDMAn_H3rCuL3s</span>] [<span class="style16 style7">Ferrari</span>] [<span class="style16 style7">Kruger</span>] [<span class="style16 style7">Teerayoot</span>] [<span class="style16 style7">R@dier</span>] [<span class="style16 style7">ThunderPwr</span>] [<span class="style16 style7">Eggi</span>] [<span class="style16 style7">EJ12N</span>] [<span class="style16 style7">Stickman 373</span>] [<span class="style16 style7">Bone Enterprise</span>] [<span class="style16 style7">KaGra</span>] </p>
+        <p>Thanks to all the people who take time to write tutorials. <br>
+          Thanks to all the people who continue to develop better tools. <br>
+    Thanks to Exetools, Woodmann, MP2K, TSRH, and the ICU forums for being great places of learning.<br>
+          Thanks also to The Codebreakers Journal, and the Anticrack forum.</p>
+        <p>If you have any suggestions, comments or corrections email me:
+        Gabri3l2003[at]yahoo.com&nbsp;      </p>
+        </td>
+    </tr>
+  </table>
+  </center>
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,228 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>New Page 1</title>
+</head>
+
+<body style="background-attachment: fixed;" background="images/background.gif" behavior="fixed" text="#C0C0C0" link="#FFFFFF" vlink="#FFFFFF" alink="#FFFFFF">
+<div style="position:absolute; overflow:hidden; left:0px; top:0px; width:87px; height:98px; z-index:14; filter:Alpha(Opacity=40); -moz-opacity:0.50;"><img width=87 height=98  border=0 src="images/corner2.gif"></DIV>
+<div style="position:absolute; overflow:hidden; left:0px; top:98px; width:43px; height:3000px; z-index:14; filter:Alpha(Opacity=40); -moz-opacity:0.50;"><img width=43 height=3000  border=0 src="images/side.gif"></DIV>
+
+
+<div align="center">
+  <center>
+  <table border="2" width="55%" bgcolor="#336699" height="105" bordercolor="#3D486E" cellspacing="0" cellpadding="2" background="images/table.gif" bordercolordark="#3D486E" bordercolorlight="#3D486E">
+    <tr>
+      <td width="100%" height="19" align="center" bordercolor="#3D486E" bordercolorlight="#3D486E" bordercolordark="#3D486E"><b><u>Gabri3l Tutorial #1</u></b>
+        <p>Beginner Tutorial: Serial fishing</p>
+      </td>
+    </tr>
+    <tr>
+      <td width="100%" height="19" align="left"><b><u>The Target:</u></b><br>
+ WorldTV 7.1<br>
+        <a href="http://www.netfor2.com/WorldTV.html">http://www.netfor2.com/WorldTV.html</a></td>
+    </tr>
+    <tr>
+      <td width="100%" height="23" align="left"><b><u>The Tools:</u></b><br>
+ OllyDbg 1.09d, PEiD 0.92, W32dasm, HexWorkshop 4.1</td>
+    </tr>
+    <tr>
+      <td width="100%" height="20" align="left"><b><u>The Protection:</u></b><br>
+ Serial Protection</td>
+    </tr>
+    <tr>
+      <td width="100%" height="20" align="left"><b><u>Other Information:</u></b><br>
+ This is a tutorial to introduce the new crackers to serial fishing with Olly. I will take you through the steps that I took in cracking this program. This may help you get a better idea of how to approach new targets.
+      </td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p>&nbsp;</p>
+<div align="center">
+  <center>
+  <table border="1" width="75%" background="images/table.gif" bordercolor="#3D486E" cellspacing="0" bordercolorlight="#3D486E" bordercolordark="#3D486E">
+    <tr>
+      <td width="100%">
+        <p align="center"><b><u>Intro:</u></b></p>
+      </td>
+    </tr>
+    <tr>
+      <td width="100%">All the tools you will need can be found online:<br>
+        <a href="http://home.t-online.de/home/Ollydbg/odbg109d.zip">http://home.t-online.de/home/Ollydbg/odbg109d.zip</a><br>
+       <a href="http://peid.has.it/">http://peid.has.it/</a><br>
+        <a href="http://protools.cjb.net/">http://protools.cjb.net/</a>
+        <p>
+        Let us first get set up and ready to crack. I like to open the folder with my target in it. In this case c:\program files\worldtv\ and make a quick backup that we can work on without fear of screwing up the file. I named mine worldtv2.exe and I will refer to it as such through the tutorial.<br>
+        <br>
+        It has become habit to first examine a target with PEiD to determine the packer or protector. Open up PEiD and drag worldtv2.exe into it. The result: "Microsoft Visual C++ 5.0". Surprisingly, the target is not packed or protected. That will make it all the easier to crack.</p>
+      </td>
+    </tr>
+  </table>
+  </center>
+</div>
+
+<p>&nbsp;</p>
+<div align="center">
+  <center>
+  <table border="1" width="75%" background="images/table.gif" bordercolor="#3D486E" cellspacing="0" bordercolorlight="#3D486E" bordercolordark="#3D486E">
+    <tr>
+      <td width="100%">
+        <p align="center"><b><u>Body:</u></b></p>
+      </td>
+    </tr>
+    <tr>
+      <td width="100%">Knowing that we will not need to unpack the executable lets us do a little examination of the protection scheme. Open up worldtv. It goes directly into the nag screen letting us know that it is not registered. That is important to note because it lets us know that it is checking for a registration key (maybe a keyfile or registry key) before the program even loads. Try putting in a random key. Ahh, we get a nice little messagebox telling us "Invalid Registration Code". Let's write that little message down and save it. If you have read any previous tutorials you know that it may come in handy. Press Okay and the program quits.<br>
+        <p><u><b>Finding the Bytes:</b></u>
+        <br>
+        First we are going to try the easy way. We are going to patch the jump that returns the invalid registration box. Run w32dasm and use it to open up WorldTV.exe. We are opening the original WorldTV.exe file so we can work on the copy that we made. After the file has been
+        disassembled, we will look for the string from the messagebox. To do this click on the String References button at the top of w32dasm. A new window opens up with a list of all strings found in the file. Scroll down until you find "Invalid Registration Code" and double click it. You should now be at the following lines:<br><img border="0" src="images/Olly1.gif" width="508" height="232">
+        <br><br>Looking at the code we see a <b>test eax,eax</b> followed by a <b>jne
+        0041B54C</b><br><img border="0" src="images/Olly2.gif" width="533" height="63"><br><br>
+        We want to change the <b>jne (jump if not equal)</b> to <b>jmp (jump)</b>
+        that way the program will register when you use any serial. To do this
+        we will need to find where the <b>jne</b> instruction is located in
+        WorldTv.exe. That information is found at the bottom of the w32dasm
+        window. You should see:&nbsp;</p>
+        <p>
+        <b>Line:52558 Pg 657 and 658 of 1734 Code Data @:0041B521 @Offset
+        0001A915h in File WorldTV.exe</b>
+        </p>
+        <p>We are interested in the Offset value of <b>0001A915h</b>. Write this
+        number down; ignore the <b>h</b> at the end it just means that the value
+        is hexadecimal. </p>
+        <p>&nbsp; </p>
+        <p><u><b>Patching the Bytes:</b></u>
+       <br>
+        Begin by opening up WorldTV2.exe in HexWorkshop. Next press CTRL+G to
+        bring up the Goto dialog box, Goto can also be found under Edit. <img border="0" src="images/Hex1.gif" align="left" width="374" height="181">We
+        now want to type in the offset value that we wrote down, in this case <b>0001A915</b>.
+        Make sure the Hex option is checked and the Beginning of File option is
+        checked. When you are ready press the Go button.<p>This will take us to
+        the location of our <b>jne 0041B54C</b>. Now hopefully from previous
+        tutorials you know that <b>75</b> is the opcode for the instruction <b>JNE</b>
+        and <b>74</b> is the opcode for instruction <b>JE</b>. In this case
+        rather than jumping on bad serials we want the program to jump on ANY
+        serial. We will replace <b>75</b> with <b>EB</b> which is the
+        instruction for <b>JMP</b>.<br><img border="0" src="images/Hex2.gif" width="522" height="82"><br>Becomes<br>
+        <img border="0" src="images/Hex3.gif" width="523" height="79"><p>Save
+        WorldTV2.exe, I have made it a habit of choosing YES when asked if I
+        want to make a backup. Now, find your newly patched WorldTV2.exe and run
+        it.&nbsp;<p>It asks for a serial; give it any one you want, I will use <b>1234567</b>. Press
+        Validate Registration and... Success!&nbsp; <b>Registration Code
+        Accepted</b>. Are we done? No.<p>Close WorldTV2.exe and open it back up
+        again. It is still asking for a serial. Now, we could just put in a
+        serial every time we use it but that is annoying. Instead, we are going
+        to find a real serial. <p><p><b><u>Finding a Serial:</u></b><br>         
+        To begin, review what we know about the program so far:<br>         
+        <b>1.</b> It checks for a serial when starting up<br>
+        <b>2.</b> After registering with a bogus serial it is unregistered the next time you start it up<br>         
+        This means that before the program even completely loads it is checking
+        for the existence of a good serial. We need to find out where that
+        serial is being stored. There are usually two places a serial is stored;
+        the registry and in a file. We are going to start with checking the
+        registry. Start up WorldTV2.exe and put in <b>1234567</b> as the serial.
+        Validate the serial and then close WorldTV.&nbsp;<p>Go to your Start menu and find the Run command. A box will
+        open asking you to &quot;Type the name of a program, folder,
+        etc...&quot;. Type in &quot;regedit&quot;, without the quotes, and press
+        enter. You will now be in the regedit window and see a two pane window
+        with a list of folders in the left pane. Click on the plus sign in front
+        of HKEY_CURRENT_USER. It will open, you now have another list of
+        folders. Click the plus sign in front of Software. Scroll down until you
+        find WorldTV and click on the folder. Aha! In the right pane we have a
+        key called RegCode with our bogus key: <b>1234567</b> stored in it. We now know that
+        WorldTV checks the registry for a serial before loading.<p>We are going
+        to start by opening Ollydbg. I am using version 1.09d because I found 1.10 will
+        sometimes crash when setting a breakpoint.&nbsp;Using Ollydbg, open the original
+        WorldTV.exe. <br><img border="0" src="images/Olly3.gif" width="652" height="425"><br><br>        
+        You should see something similar to the image above. Before pressing the
+        Run key <img border="0" src="images/run.gif" width="18" height="17"> we
+        want to set some breakpoints first. Right-click in the Code window of
+        Olly and choose <b>Search For</b>, select <b>All Intermodular Calls</b>.
+        This will bring up the Calls window. Sort the calls by Destination.
+        Scroll down until you find <b>RegQueryValueExA</b>. Select it and
+        Right-Click; set a breakpoint on every call to <b>RegQueryValueExA</b>.<br><img border="0" src="images/Olly4.gif" width="651" height="423"><br><br>       
+        Now press the Run button <img border="0" src="images/run.gif" width="18" height="17">.
+        You will first break at&nbsp; <b>FF15 0C304400  CALL DWORD PTR DS:[&lt;&amp;ADVAPI32.RegQueryValueExA&gt;]</b>.
+        If you look at the Register's window on the right side of Olly, you will
+        see <b>EDI</b> is holding the <b>ASCII value &quot;Recordings&quot;</b>.
+        This is not the registry key we are looking for so press Run again. We
+        break again on the <b>Recordings</b> registry key so press Run again. We
+        will have to press Run 24 more times before we break here:<br><img src="images/Olly5.gif" width="615" height="33"><br><br>
+        Notice the Value of <b>EAX</b> is <b>ASCII &quot;RegCode&quot;</b>.
+        Press Run once more and we are now here:<br><img src="images/Olly6.gif" width="630" height="31"><br><br>
+        And <b>ECX</b> now holds the ASCII value <b>&quot;RegCode&quot;</b>. We
+        know we are getting close because WorldTV just looked for the
+        registration code. We are now going to step through <img border="0" src="images/Step.gif" width="18" height="18">
+        the code and pay attention to the Registers.&nbsp; After a few steps we
+        find that <b>ESI</b> is holding our bogus serial <b>1234567</b> and <b>EDI</b>
+        is holding <b>00000000-00000000-00000000-00000000</b>. This is
+        interesting, however I doubt that a bunch of zeros is the registration
+        code. Stepping through some more, we see that EDI is shortened to <b>-00000000-00000000-00000000.</b>
+        This still does not give us the serial. Continue to step through past
+        where <b>EDI</b> is replaced by <b>&quot;C:\Program
+        Files\WorldTV\Scheduler.txt.tmp&quot;. </b> You will find soon after that point that you come to here:<br><img border="0" src="images/Olly7.gif" width="446" height="110"><img border="0" src="images/registers.gif" width="141" height="75"><br><br>
+        Notice that <b>EAX</b>, <b>EBX</b>, and <b>EDX</b> were all zeroed out.
+        Also we see an ASCII value moved into EDI. It is here we are going to
+        start seeing our serial come together. After a little more stepping
+        through we find that we are in a loop. We can see that a serial is being
+        made and can be seen at this address: <b>MOV EDI,WorldTV.004C8950</b>.
+        Rather than stepping through the code line by line we are going to set a
+        breakpoint on <b>MOV EDI,WorldTV.004C8950</b> and watch our serial come
+        together. Select the line and press <b>F2 </b>to set a breakpoint. Now
+        press the Run button a few times and we can watch our serial build
+        itself.<br> <img border="0" src="images/Olly8.gif" width="596" height="53"><br><br>
+        Paying attention to <b>EDI</b> earlier we know that our serial is either
+        4 sets of 8 characters or 3 sets of eight characters. As you get near 3
+        full sets slow down or you will miss the serial. When you only have 2
+        characters left to go stop pressing the Run button and just step through
+        the code. When you step past the following line <b>REP MOVS BYTE PTR ES:[EDI],BYTE PTR
+        DS:[ESI]</b> you will see the last
+        two characters of your serial added on. <br><img border="0" src="images/Olly9.gif" width="606" height="123"><br><Br>
+        Go ahead and write this number down. Press Run again to see if there is
+        another set of characters to be added. Nope. Pressing Run again will
+        start you through another loop where a separate serial is calculated
+        (for what? I am not sure because it would not register the program).<p>Go
+        ahead and close Ollydbg. Open up the original WorldTV.exe and try
+        registering with the serial we wrote down. <b>Registration Code Accpeted</b>,
+        we have succesfully registered WorldTV with a real serial. No patching
+        invloved!
+        <br>
+      </td>
+    </tr>
+  </table>
+  </center>
+</div>
+
+<p>&nbsp;</p>
+<div align="center">
+  <center>
+  <table border="1" width="75%" background="images/table.gif" bordercolor="#3D486E" cellspacing="0" bordercolorlight="#3D486E" bordercolordark="#3D486E">
+    <tr>
+      <td width="100%">
+        <p align="center"><b><u>Conclusion:</u></b></p>
+      </td>
+    </tr>
+    <tr>
+      <td width="100%">I used this particular program purely as a demonstration
+        for finding a serial using Ollydbg. If like the program and are going to
+        use it please purchase it. 
+        <p>Thanks to all the people who take time to write tutorials. Without
+        the teaching's of others we would all lack knowledge. Thanks to Exetools, Woodmann, and Arteam for being a great place of learning. </p>
+        <p>If you have any suggestions, comments or corrections email me:
+        Gabri3l2003[at]yahoo.com&nbsp; 
+      </td>
+    </tr>
+  </table>
+  </center>
+</div>
+
+<p align="center"><img border="0" src="images/ENTER.JPG"></p>
+
+</body>
+
+</html>

@@ -1,0 +1,333 @@
+<html>
+
+<head>
+<STYLE>@page Section1 {size: 612.0pt 792.0pt; margin: 70.85pt 2.0cm 2.0cm 2.0cm; mso-header-margin: 36.0pt; mso-footer-margin: 36.0pt; mso-paper-source: 0; }
+P.MsoNormal {
+	FONT-SIZE: 12pt; FONT-FAMILY: "Times New Roman"; mso-style-parent: ""; mso-pagination: widow-orphan; mso-fareast-font-family: "Times New Roman"; margin-left:0cm; margin-right:0cm; margin-top:0cm; margin-bottom:0pt
+}
+LI.MsoNormal {
+	FONT-SIZE: 12pt; FONT-FAMILY: "Times New Roman"; mso-style-parent: ""; mso-pagination: widow-orphan; mso-fareast-font-family: "Times New Roman"; margin-left:0cm; margin-right:0cm; margin-top:0cm; margin-bottom:0pt
+}
+DIV.MsoNormal {
+	FONT-SIZE: 12pt; FONT-FAMILY: "Times New Roman"; mso-style-parent: ""; mso-pagination: widow-orphan; mso-fareast-font-family: "Times New Roman"; margin-left:0cm; margin-right:0cm; margin-top:0cm; margin-bottom:0pt
+}
+SPAN.SpellE {
+	mso-style-name: ""; mso-spl-e: yes
+}
+SPAN.GramE {
+	mso-style-name: ""; mso-gram-e: yes
+}
+DIV.Section1 {
+	page: Section1
+}
+</STYLE>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Olly Beginner Tutorial No.7 By MaDMAn_H3rCUL3s</title>
+<style type="text/css">
+<!--
+body {
+background-image: url('images/Background.gif');
+}
+div#side {
+	height: 7000;
+}
+.style6 {
+	font-size: 12px;
+	font-style: italic;
+}
+.style16 {color: #FFFFFF}
+.style17 {color: #FFFF00}
+-->
+</style>
+</head>
+
+<body style="background-attachment: fixed; text-align:center" behavior="fixed" text="#C0C0C0" link="#FFFFFF" vlink="#FFFFFF" alink="#FFFFFF" lang="IT">
+ <div style="position:absolute; overflow:hidden; left:0px; top:0px; width:90px; height:90px; z-index:14; filter:Alpha(Opacity=40); -moz-opacity:0.50;">
+   <img border="0" src="images/corner.gif" width="90" height="90"></DIV> 
+  <div style="position:absolute; overflow:hidden; left:3px; top:-1px;"></div>
+  <center><div align = "center">
+    <table align = "center" border="1" width="554" bgcolor="#336699" height="382" bordercolor="#3D486E" cellspacing="0" cellpadding="2" background="images/table.gif" bordercolordark="#3D486E" bordercolorlight="#3D486E" style="border-collapse: collapse">
+      <tr>
+        <td width="100%" height="19" align="center" bordercolor="#3D486E" bordercolorlight="#3D486E" bordercolordark="#3D486E" background="images/ARTeam.gif"><p>
+		<span class="style16"><u><b>Beginner Tutorial #7 </b></u><br>
+        By: MaDMAn_H3rCuL3s /ARTeam<br>
+  <a href="http://cracking.accessroot.com">
+  http://cracking.accessroot.com</a></span></p>
+        <p>
+		<img border="0" src="images/madman.jpg" width="284" height="92"></p>
+        <p class="style16"><font face="Verdana" size="2">Cracking Lost Marble's Moho v5.1 
+        using Memory BP's</font></td>
+      </tr>
+      <tr>
+        <td width="100%" height="19" align="left"><b><u>The Target:</u></b><br> 
+          Moho.exe</td>
+      </tr>
+      <tr>
+        <td width="100%" height="23" align="left"><b><u>The Tools:</u></b><br>
+       Ollydbg 1.10</td>
+      </tr>
+      <tr>
+        <td width="100%" height="62" align="left" background="images/table.gif"><b><u>The Protection:</u></b><br>
+      	nag, registration number</td>
+      </tr>
+      <tr>
+        <td width="100%" height="98" align="left"><p><b><u>Other Information:</u></b><br>
+        After reading this tutorial you should have a good understanding of how 
+        to implement memory breakpoints into your work.</p></td>
+      </tr>
+    </table>
+</div></center>
+    <p align="center" class="style6">Best viewed in Firefox at 1280x1024</p>
+    <div align="center"> 
+    <center>
+<div align="center">
+<table width="75%" height="118" border="1" cellspacing="0" bordercolor="#3D486E" bordercolorlight="#3D486E" bordercolordark="#3D486E" background="images/table.gif" style="border-collapse: collapse" bgcolor="#C0C0C0" id="table1">
+  <tr>
+    <td width="100%" background="images/table.gif">
+    <p align="center"><b><u>1. Introduction:</u></b></p></td>
+  </tr>
+  <tr>
+    <td width="100%" height="92" valign="top" background="images/table.gif">
+		Todays lesson is gonna be about using Memory Breakpoints to get the 
+        desired output we want from Lost Marble's Moho v5.1.&nbsp; This not a new 
+        concept, but is usually not used the way it should be.&nbsp; The target 
+        program is a very cool app. So like usual ...&quot;If you use the software 
+        you should buy it&quot;.&nbsp; Lets begin with the tutorial.<p>
+		&nbsp;</p>
+    </td>
+  </tr>
+</table>
+</div>
+    <br>
+    <br>
+  </center>
+</div>
+<div align=n "center">
+<div align="center">
+<table width="75%" height="183" border="1" cellspacing="0" bordercolor="#3D486E" bordercolorlight="#3D486E" bordercolordark="#3D486E" background="images/table.gif" style="border-collapse: collapse" bgcolor="#C0C0C0" cellpadding="5">
+  <tr>
+    <td width="100%" background="images/table.gif">
+    <p align="center"><u><b>2. Patching</b></u><b><u>:</u></b></p></td>
+  </tr>
+           <tr>
+              <td height="55" >
+              <p align="justify">We start out like usual.... The EP of the Program.
+              </p>
+              <p align="center"><img src="images/EP.bmp" border="0" width="522" height="339"></p>
+              <p align="justify">Now that we have that established... We need to figure out 
+              exactly what we are up against here.</p>
+              <p align="justify">So run the victim in Olly and see what kind of things the 
+              program will tell us about itself.&nbsp; First thing you see is this:</p>
+              <p align="center"><img src="images/nag.bmp" border="0" width="403" height="234"></p>
+              <p align="justify">K... so we need a registration code either for this new 
+              version, or from older version.&nbsp; Continue to hit F9 till you reach 
+              the fully loaded program by clicking on the &quot;DEMO&quot; button.&nbsp; You 
+              will be here soon:</p>
+              <p align="center">
+              <img src="images/main_screen.bmp" border="0" width="732" height="551"></p>
+              <p>&nbsp;</p>
+              <p align="justify">K.. now lets find out what some limitations are if we dont have 
+              a serial entered into program.</p>
+              <p align="justify">(this is from Help file, which is online)</p>
+              <p align="justify">&quot;If you haven't purchased a copy of Moho, then the program will 
+              be running in &quot;demo&quot; mode. While in demo mode, Moho still allows 
+              you access to all features of the program. Anything you can do in 
+              the full version you can do in the demo. Also, any files you 
+              create with the demo version of Moho will still work fine if you 
+              purchase the full version. </p>
+              <p class="indented" align="justify">The demo version has just two limitations: 
+              First, when you render your animation for final output, a &quot;DEMO&quot; 
+              watermark will appear on top of your animation. Second, if you 
+              export to the SWF (Flash) format, your animation will appear in 
+              black &amp; white. If you purchase a copy of Moho, the demo watermark 
+              will go away, and you will be able to export SWF files in full 
+              color.&quot;</p>
+              <p class="indented" align="justify">So our limitations are:</p>
+              <ol>
+				<li>
+				<p class="indented" align="justify">&quot;DEMO&quot; watermark on animations</p>
+				</li>
+				<li>
+				<p class="indented" align="justify">Animations will be Black &amp; White if output 
+              is in SWF format.</p></li>
+				</ol>
+              <p class="indented" align="justify">K so now we now what we have to do.&nbsp; We need 
+              to register the software.&nbsp; How you say?&nbsp; Well its very easy. :)</p>
+              <p class="indented" align="justify">Go ahead and restart the victim and when the 
+              nag screen comes up enter inthe serial number of your choice.&nbsp; I 
+              chose &quot;998899&quot;. and you will see another nag popup, saying &quot;we 
+              havent entered in a correct serial&quot;</p>
+              <p class="indented" align="center">
+              <img src="images/bad_serial.bmp" border="0" width="397" height="128"></p>
+              <p class="indented" align="justify">K.. good.&nbsp; Now we have something to go on 
+              here.&nbsp; Lets right click in Olly's main CPU window and select 
+              &quot;Search for&quot;, then &quot;All Referenced Text Strings&quot;</p>
+              <p class="indented" align="center">
+              <img src="images/start_search.bmp" border="0" width="491" height="253"></p>
+              <p class="indented" align="justify">Then once we are brought to the strings 
+              screen, scroll up to the top, and search for &quot;Registration&quot;.</p>
+              <p class="indented" align="center">
+              <img src="images/search_screen.bmp" border="0" width="328" height="137"></p>
+              <p class="indented" align="justify">Then we need to sit and think for a minute 
+              here.....&nbsp; Remember the nag at startup?&nbsp; Well.. what would cause 
+              that to popup.&nbsp; So our decision if &quot;REGGED/UNREGGED&quot; should take 
+              place there.&nbsp; Do you remember anything the nag said.&nbsp; It said 
+              something about entering serial, if you had old serial enter it 
+              now.&nbsp; Well instead of putting a BP on every REGISTRATION string, 
+              why not look for that?&nbsp; So continue to hit CTRL+L till you reach 
+              something that is almost like that, after 3 instances you do :) :</p>
+				<p class="indented" align="center"><br>
+              <img src="images/string_found.bmp" border="0" width="487" height="194"></p>
+              <p class="indented" align="justify">You see from above?&nbsp; Lets get into this 
+              section, hit &quot;Enter&quot; on any of the strings.&nbsp; I chose&nbsp; to hit Enter 
+              on REGISTRATION.&nbsp; </p>
+              <p class="indented" align="center">
+              <img src="images/reg_string.bmp" border="0" width="527" height="115"></p>
+              <p class="indented" align="justify">K... Now the idea is simple here.&nbsp; Somehow we 
+              reached this section, either by JMP or by Call.&nbsp; So scroll up till 
+              you reach the beginning of this section.</p>
+              <p class="indented" align="center">
+              <img src="images/beginning_section.bmp" border="0" width="557" height="203"></p>
+              <p class="indented">Now while on the PUSH -1 , you see in info 
+              box?&nbsp; We are called from another area.</p>
+              <p class="indented">
+              <img src="images/our%20caller.bmp" border="0" width="168" height="45"></p>
+              <p class="indented">So to find this place, right click on the PUSH 
+              -1, then &quot;go to&quot; , then &quot;CALL 00448FE8&quot;</p>
+              <p class="indented" align="center">
+              <img src="images/goto_call.bmp" border="0" width="468" height="215"></p>
+              <p class="indented" align="justify">Once there we will determine why we were 
+              called.&nbsp; Now pupils... we need to stop and really think about this 
+              (not too hard though), and figure this out.&nbsp; The main purpose of 
+              this tutorial is to show you how to use memory BP's.&nbsp; look below:</p>
+              <p class="indented" align="center">
+              <img src="images/there.bmp" border="0" width="530" height="209"></p>
+              <p class="indented">Our caller is highlighted in Blue.&nbsp; Above it 
+              we see 2 conditional jumps.&nbsp; The one of most interest to us is the 
+              TEST AL, AL</p>
+              <p class="indented"><font face="Courier New">JE SHORT moho.00449013</font></p>
+              <p class="indented" align="justify">The reason is simple.&nbsp; Since this is our first 
+              chance at jumping over nag, so why is it not doing it?&nbsp; Now you 
+              can see that it moves the value pointed by 0078058C to AL then 
+              tests this for a 0 or 1.&nbsp; So lets see what the offset 0078058C has 
+              stored, so we do the following.. right click the instruction, then 
+              &quot;follow in dump&quot;, then &quot;memory address&quot;:</p>
+              <p class="indented" align="center">
+              <img src="images/pointer_follow.bmp" border="0" width="674" height="278"></p>
+              <p class="indented">once there we can plainly see that it holds:</p>
+              <p class="indented">
+              <img src="images/value.bmp" border="0" width="126" height="24"></p>
+              <p class="indented" align="justify">hmm... theres our problem.. it is equalto 1, 
+              so we dont jump.&nbsp; W need to somehow make it equal 0.&nbsp; to do this 
+              we will use memory BP's.&nbsp; So we do the following... in dump&nbsp; hit 
+              CTRL+G, then enter in 0078058C, then restart the victim in Olly.&nbsp; 
+              Once we are ack at the EP, in dmp hit CTRL+G, then &quot;enter&quot; (cause 
+              offset should still be in popup in dump), then on that exact byte 
+              set a Memory BP on Write.:</p>
+              <p class="indented" align="center">
+              <img src="images/dump_goto.bmp" border="0" width="445" height="132"></p>
+              <p class="indented" align="justify">Now we restart it, (in dump) hit CTRL+G, then 
+              highlight this first byte, and select &quot;breakpoint&quot;, &quot;memory, on 
+              write&quot;</p>
+              <p class="indented" align="center">
+              <img src="images/dump_rstarted.bmp" border="0" width="134" height="38" align="left"></p>
+				<p class="indented" align="center">
+              &nbsp;</p>
+              <p class="indented" align="center">
+              <img src="images/mem_bp_restarted.bmp" border="0" width="411" height="306"></p>
+              <p class="indented">then we let the victim run with F9.&nbsp; You 
+              should break here:</p>
+              <p class="indented" align="center">
+              <img src="images/found.bmp" border="0" width="407" height="85"></p>
+              <p class="indented">Do you see anything interesting?&nbsp; hmm... The 
+              program moves a 1 to our magic pointer.&nbsp; so.. what do you think we 
+              can do ? Well?&nbsp; how about this:</p>
+              <p class="indented" align="center">
+              <img src="images/found_1.bmp" border="0" width="404" height="92"></p>
+              <p class="indented">Now we force a 0 upon this pointer.&nbsp; Now go 
+              ahead and let it run with F9, and you see something that is 
+              great... well nothing (no nag I mean), go ahead and test the 
+              limitations.&nbsp; it is fully working now.&nbsp; Only one byte needed.</p>
+              <p class="indented">&nbsp;</td>
+            </tr>
+
+    </td>
+  </tr>
+</table>
+</div>
+<p>&nbsp;</p>
+<div align="center">
+<table width="75%" height="118" border="1" cellspacing="0" bordercolor="#3D486E" bordercolorlight="#3D486E" bordercolordark="#3D486E" background="images/table.gif" style="border-collapse: collapse" bgcolor="#C0C0C0" id="table2" cellpadding="5">
+  <tr>
+    <td width="100%" background="images/table.gif">
+    <p align="center"><b><u> 3. Saving file, Renaming:</u></b></p></td>
+  </tr>
+          <tr>
+            <td >
+            <p align="justify">Okay now that we know what we need to patch let us save the file, 
+            lets say we use the saved name (for example) Moho_crk.exe (which is 
+            what i do to less confuse myself)
+            </p>
+            <p align="justify">So on the edited code we right click, then Copy to executable, 
+            all modifications.</p>
+            <p align="center"><img src="images/saving.bmp" border="0" width="584" height="344"></p>
+            <p align="center">
+            <img src="images/save_as.bmp" border="0" width="556" height="414"></p>
+            <p align="justify">Then click on save.</p>
+            <p align="justify">So now we have a cracked file, no limitations on it anymore.&nbsp; Go 
+            ahead and have fun with it :)</p>
+            <p align="justify">But keep the lesson in mind today.. Memory Breakpoints are our 
+            friends.</p>
+            <p>&nbsp;</td>
+          </tr>
+    </td>
+  </tr>
+</table>
+</div>
+<div align="center">
+    <p>&nbsp;</p>
+	<table border="1" width="75%" background="images/table.gif" bordercolor="#3D486E" cellspacing="0" bordercolorlight="#3D486E" bordercolordark="#3D486E" style="border-collapse: collapse" id="table3" cellpadding="5">
+		<tr>
+			<td width="100%" background="images/table.gif">
+			<p align="center"><u><b>References</b></u><b><u>:</u></b></p></td>
+		</tr>
+		<tr>
+			<td width="100%" background="images/table.gif">
+			<p align="justify">For further knowledge on subject refer to:</p>
+			<ol>
+				<li>
+				<p align="justify">Shub-Nigurrath, <i>Beginner Tutorial #8</i>, ARTeam</li>
+			</ol>
+			<p align="justify">and essentially all the tutorials seens around (also others on 
+			our tutorials page) which always make use of breakpoints..</td>
+		</tr>
+	</table>
+		<p>&nbsp;</p>
+<div align="center"><center>
+	<table border="1" width="75%" background="images/table.gif" bordercolor="#3D486E" cellspacing="0" bordercolorlight="#3D486E" bordercolordark="#3D486E" style="border-collapse: collapse">
+		<tr>
+			<td width="100%" background="images/table.gif">
+			<p align="center"><b><u>Conclusion:</u></b></p></td>
+		</tr>
+		<tr>
+			<td width="100%" background="images/table.gif">
+			<p><center>Thanks to the whole ARTeam:<br>
+			[<span class="style16">Nilrem</span>] [<span class="style16">JDog45</span>] 
+			[<span class="style16">Shub - Nigurrath</span>] [<span class="style16">MaDMAn_H3rCuL3s</span>] 
+			[<span class="style16">Ferrari</span>] [<span class="style16">Kruger</span>] 
+			[<span class="style16">Teerayoot</span>] [<span class="style16">R@dier</span>] 
+			[<span class="style16">ThunderPwr</span>] [<span class="style16">Eggi</span>] 
+			[<span class="style16">EJ12N</span>] <br>
+			[<span class="style16">Stickman 373</span>] [<span class="style16">Bone 
+			Enterprise</span>]
+        	<p>[TSRH] [some 0day grps] [BriteDream] [Exetools] [SnD]</p>
+        	</center></td>
+		</tr>
+	</table></center></div>
+
+</body>
+
+</html>

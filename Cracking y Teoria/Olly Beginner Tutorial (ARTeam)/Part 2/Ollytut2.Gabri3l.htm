@@ -1,0 +1,200 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Gabri3l Tutorial #2</title>
+<style type="text/css">
+<!--
+.style1 {
+	font-size: smaller;
+	font-style: italic;
+}
+-->
+</style>
+</head>
+
+<body style="background-attachment: fixed;" background="images/background.gif" behavior="fixed" text="#C0C0C0" link="#FFFFFF" vlink="#FFFFFF" alink="#FFFFFF">
+<div style="position:absolute; overflow:hidden; left:0px; top:0px; width:87px; height:98px; z-index:14; filter:Alpha(Opacity=40); -moz-opacity:0.50;"><img width=87 height=98  border=0 src="images/corner2.gif"></DIV>
+<div style="position:absolute; overflow:hidden; left:0px; top:98px; width:43px; height:7800px; z-index:14; filter:Alpha(Opacity=40); -moz-opacity:0.50;"><img width=43 height=7800 border=0 src="images/side.gif"></DIV>
+
+
+<div align="center">
+  <center>
+  <table border="1" width="55%" bgcolor="#336699" height="105" bordercolor="#3D486E" cellspacing="0" cellpadding="2" background="images/table.gif" bordercolordark="#3D486E" bordercolorlight="#3D486E" style="border-collapse: collapse">
+    <tr>
+        <td width="100%" height="19" align="center" bordercolor="#3D486E" bordercolorlight="#3D486E" bordercolordark="#3D486E"><b><u>Gabri3l 
+          Tutorial #2</u></b> 
+          <p>Beginner Tutorial: Internal Keygen and Patching</p>
+      </td>
+    </tr>
+    <tr>
+      <td width="100%" height="19" align="left"><b><u>The Target:</u></b><br>
+          LC 5<br>
+          <a href="http://www.atstake.com/products/lc/">http://www.atstake.com/products/lc/</a></td>
+    </tr>
+    <tr>
+      <td width="100%" height="23" align="left"><b><u>The Tools:</u></b><br>
+          OllyDbg 1.09d, HexWorkshop 4.1, Diablos2002 Universal Patcher</td>
+    </tr>
+    <tr>
+      <td width="100%" height="20" align="left"><b><u>The Protection:</u></b><br>
+ Serial Protection</td>
+    </tr>
+    <tr>
+      <td width="100%" height="20" align="left"><b><u>Other Information:</u></b><br>
+          This is a tutorial to introduce the beginner to internal keygens and 
+          introductory patching. This will take you through the steps of finding 
+          the serial and constructing an internal keygen and creating a patch 
+          for the original file. </td>
+    </tr>
+  </table>
+  </center>
+</div>
+<p>&nbsp;</p>
+<div align="center">
+  <center>
+    <table width="75%" border="1" cellspacing="0" bordercolor="#3D486E" bordercolorlight="#3D486E" bordercolordark="#3D486E" background="images/table.gif" style="border-collapse: collapse">
+      <tr>
+      <td width="100%">
+        <p align="center"><b><u>Intro:</u></b></p>
+      </td>
+    </tr>
+    <tr>
+        <td width="100%" height="201" valign="top"> 
+          <p>All the tools you will need can be found online:<br>
+            <a href="http://home.t-online.de/home/Ollydbg/odbg109d.zip">http://home.t-online.de/home/Ollydbg/odbg109d.zip</a><br>
+            <a href="http://navig8.to/diablo2oo2">http://navig8.to/diablo2oo2</a><br><a href="http://www.bpsoft.com">http://www.bpsoft.com</a></p>
+          <p> Let us first get set up and ready to crack. I like to open the folder 
+            with my target in it. In this case c:\program files\@stake\ and make 
+            a quick backup that we can work on without fear of screwing up the 
+            file. I named mine lc52.exe and I will refer to it as such through 
+            the tutorial.<br>
+            <br>
+            We will begin again by opening LC52.exe in PEID to see if it is packed 
+            or protected. The result: Microsoft Visual C++ 7.0. Good, we will 
+            not have to worry about unpacking this file before reversing it.</p>
+          <p>Note: <span class="style1">I used three seperate computers to create this tutorial. This is why my serial changes halway through. It is also why my Addresses in Olly change. If your Addresses in Olly do not match mine, it is not a problem. The code will be the same.</span></p></td>
+    </tr>
+  </table><br><br>
+  </center>
+</div>
+
+<table width="75%" height="5127" border="1" align="center" cellspacing="0" bordercolor="#3D486E" bordercolorlight="#3D486E" bordercolordark="#3D486E" background="images/table.gif" style="border-collapse: collapse">
+  <tr>
+    <td width="100%">
+      <p align="center"><b><u>Body:</u></b></p></td>
+  </tr>
+  <tr>
+    <td width="100%" valign="top">
+      <p>Knowing that we will not need to unpack the executable lets us do a little examination of the protection scheme. Open up LC52.exe. It goes directly into the nag screen. From the previous tutorial we know that it is checking for a registration key. Press Register and we are presented with a new window holding a unique serial number and a box asking for our unlock code. Enter anything in as the unlock code and press Okay. We get a message box saying "You have entered an invalid code. Please try again.". Remeber to write this message down as we will be searching for it later. Press Okay and the program returns to the window asking for our unlock code.<br>
+      </p>
+      <p><u><b>Searching For A Serial:</b></u> <br>
+        Rather than try and patch the registration  of this target, we are going to try and find a valid serial number. Close LC52.exe and open Ollydbg. In Olly, go to File, and open LC52.exe. It will take a second as Olly analyzes the code. We are going to start by looking for the string from the error message we recieved. To do this, right click on the code window and go to Search For, select All Referenced Text Strings.<br>
+                    <img src="images/Ollytut1.gif" width="627" height="374"> <br>
+                    <br>
+        A new window will open up with all the referenced strings in the executable. Scroll to the top of the page and select the first string. Right click and choose Search For Text. In the dialog box enter &quot;you have entered&quot; without the quotes. Make sure Case Sensitive in unchecked. You should end up here. <br>
+                    <img src="images/Ollytut2.GIF" width="637" height="31"> <br>
+                    <br>
+        Double click the selected line and you will be taken to this code in the program: <br>
+                    <img src="images/Ollytut3.GIF" width="627" height="424"> <br>
+        Scroll up a little and we can see that there are three different versions of the program you can register as. Basic, Professional, and Administrator. We see that there is a <strong>TEST EAX, EAX</strong> before each registration confirmation. The program first tests if you entered the Basic unlock code, then if you entered the Professional unlock code and, finally if you entered the Administrator code. We are going to try and register the Administrator version. Scroll back down until your Screen matches what is shown above. If we look closely we can see where the test is made to call the messagebox. <strong>0041082A . 85C0 TEST EAX,EAX</strong> followed by a push and then a Jump if Not Zero, <strong>JNZ 4108B2</strong>. 004108B2  is where our invalid message is created. Let's find out what is going on when the test is made. Select <strong>0041082A . 85C0 TEST EAX,EAX</strong> and press <strong>F2</strong>. This will set a breakpoint on the test. </p>
+      <p>Press the Run button. The LC5 nag screen pops up, press the Register button. In the window asking for our unlock code enter any serial. Let's try 1234567890. Press Okay. Olly breaks on our <strong>TEST EAX, EAX</strong>. First thing you notice is the registers on the right hand side. There are a string of numbers and letters in <strong>ECX</strong> and <strong>EDX</strong> that look suspiciously like an unlock code.<br>
+                    <img src="images/Ollytut4.GIF" width="190" height="88" align="left"> <br>
+                    Was it that easy? Well, try them and find out. Open the original LC5.exe and use the numbers to try and register. This is new, a license agreement opens up. After pressing Okay on the License Agreement, we are presented with the message that we have successfully registered the Administrator version of LC5. 
+      <p>It was that easy! <br>
+        So, are we done? <br>
+        No!
+      <p>Before we continue, return the program to the state of unregistered. Go the the START MENU in Windows and select the RUN command. Type in REGEDIT and press Okay. In REGEDIT's left window, click on the [+] in front of HKEY_CURRENT_USER. Then click on the [+] in front of SOFTWARE. Click on the [+] in front of @STAKE and then the [+] in front of LC5. Select the Registration folder. In the right hand window you will see Unlock Code. Double click it, and erase the Value Data in the new window. Press Okay and close REGEDIT. </p>
+      <p>&nbsp;</p>
+      <p><u><b>Creating An Internal Keygen:</b></u> <br>
+        Because the unlock code for this program is computed based on the unique serial of our computer, anyone who wants to register would have to find the unlock code for themselves. We are going to solve that problem by using the program as a personal keygen. This is not often considered good reversing because you do not understand how the key is generated. However, as a beginner it can be an valuable learning experience.           
+      <p>Before we begin let's evaluate what we need to do to create an internal keygen.<br>
+        1. We need to find where the unlock code is created and stored in memory<br>
+        2. We need to find someway to display the unlock code to the user<br>
+        3. We need to let the user know that they are seeing  the unlock code          
+      <p>We already know where to find the unlock code so we  need to solve how to display the code. A good idea would be, rather than displaying an error message, we display the unlock code. Let's reexamine the code where we see the test and where we see the &quot;You have entered an invalid...&quot; string pushed for the message box.<br>
+                    <img src="images/Ollytut5.GIF" width="627" height="440"> <br>
+      What we want to do is edit the code. Instead of pushing the error message onto the stack we can push our unlock code. There are a few things to consider when editing code. We need to make sure that what we change is not vital to the program's function. We are also restrained by how many bytes we can use to write new code. We can only overwrite current code. We cannot add our own. <em>(There are ways to add your own code but it is more advanced than this tutorial, search for &quot;code caves&quot; if interested )</em> The other thing we need to consider is the stack. The stack is a designated part of memory where you can save values and instructions to. The stack is true to it's name, values are stacked onto it as you would stack boxes. The first one on is at the bottom and the last one is on the top. Instructions are then removed from the stack in the order of top to bottom. Last one on is the first one off. <br>
+      <br>
+          <img src="images/Ollytut6.GIF" width="344" height="289" align="left"> You can view the stack in Ollydbg at the bottom right of the window. When modifying code we must make sure that nothing extra gets  added or removed from the stack. Otherwise our program will cease to function. 
+      <p>Now that we know what we need to consider, let's move onto how to implement the unlock code into the messagebox. We know where the error message is pushed onto the stack so let's start by changing the code to push our code instead. We can see our code in both the <strong>ECX</strong> and <strong>EDX</strong> registers. However before we get to the PUSH, EAX is zeroed out and our code is overwritten in memory. So let's address that issue first. We only need our code in one register so we can keep <strong>XOR EAX, EAX</strong>. To stop our code from being overwritten we need to change <strong> MOV DWORD PTR SS:[ESP+14],ECX, MOV DWORD PTR SS:[ESP+1C],ECX</strong> and,  <strong>MOV BYTE PTR SS:[ESP+24],CL</strong>. Select the first one with your mouse and right click. Choose <strong>Assemble</strong> from the menu. This will bring up a box where you can edit the code. <br>
+	    <img src="images/Ollytut7.GIF" width="325" height="101">We want to remove this code alltogether, so in the box type <strong>NOP</strong> and make sure that the Fill With NOP's is selected. NOP stands for No Operation and is written in hex as <strong>90</strong>. When the program runs it will just pass over these bytes. Press the Assemble button and your code is edited with <strong>NOP</strong>'s. Do the same for the other two lines that overwrite our unlock code. It should end up looking like this:<br>
+	    <img src="images/Ollytut8.GIF" width="587" height="157"> <br>
+      Okay, we have now succesfully stopped our code from being overwritten. Press RUN and make sure that the program still works. Excellent, we still see our error message box pop up. Press Okay on the error box, and Okay  on the Registration box so we will return to our breakpoint in Olly. At our breakpoint, begin pressing the Step Over button <img src="images/Step.gif" width="18" height="18">. Keep a watch on the registers where our serial is stored. As we get to the <strong>PUSH EBX</strong>, we see that our serial is still in register EDX. Keep stepping until you get to the <strong>NOP</strong> just above the <strong>PUSH lc5.004D62D4</strong>.       
+      <p>We are now going to make our messsage box display the unlock code. Select <strong>PUSH lc5.004D62D4</strong> and select Assemble. When the box comes up, enter <strong>PUSH EDX</strong> and press Assemble. Now press the Run button and...<br>
+        <img src="images/Ollytut9.GIF" width="120" height="118" align="left">                <br>
+                It works! We are now halfway finished. Before we continue we want to make sure we save our changes to a file. Return to the breakpoint in Olly and right click anywhere in the code section. Select <strong>Copy to Executable, </strong>and then <strong>All Modifications</strong>. A box pops up asking us if we want to copy the selction, choose <strong>Copy All</strong>. A new window will open with the program in it and our changes included. Right click and select<strong> Save File. </strong>Save it as LC5Modified.exe. You can now close Olly, though we will use it again in a few seconds. 
+      <p>
+      <p><strong><u>Modifying the Internal Keygen:</u></strong><br>
+      Because we made the keygen, we know that the messagebox is now displaying an unlock code. A normal person would not know what these letters and numbers represent. What we are going to do next is change the title of the window to inform the user that they are seeing  the unlock code for the Administrator version.
+      <p><strong>A Quick Overview of the Messagebox Function:</strong>
+      <li>The MessageBox function is an internal function in Windows. This means that a programmer can write a program and, instead of having to code his/her own message box,  they can use the one included with Windows.      
+      <li>The MessageBox function is called like any other function. When it is used you must pass it variables called Arguments. </li>
+      <li>The Arguments for MessageBox are <strong>HWND hWnd</strong>: handle of owner window, <strong>LPCTSTR lpText</strong>: address of text in message box, <strong>LPCTSTR lpCaption</strong>: address of title of message box, and <strong>UINT uType</strong>: style of message box.</li>
+        <p>Knowing how a MessageBox is created gives us the knowledge of how to manipulate it. (<em>For more information on internal functions of Windows research Win32 API</em>). What we want to do is find where the program calls MessageBox and where the Arguments are passed.</p>
+        <p>Open your new LC5modified.exe up in Ollydbg. Right click in the code area and choose Search For, select All Intermodular Calls. A new window opens up with all the functions called by the program. We will sort these by Destination by clicking the Destination bar at the top. As you can see they are now in alphabetical order. Scroll down until you find <strong>MessageBoxA</strong>. Select one of the MessageBoxA lines and right click. Now select Set Breakpoint On Every Call To MessageBoxA:<br>
+        <img src="images/Ollytut10.gif" width="632" height="134"><br>
+      Press the Run button to start the program. At the nag screen go through the registration process again. Remember to enter an invalid code. When you press Okay, to try and register with your code, you should break here:<br>
+    <img src="images/Ollytut11.gif" width="535" height="366" align="left"><br>
+    If you take a look at the Stack you can see the Arguments that were PUSHed for this MessageBox. The first one pushed on is at the bottom of the stack. So the first Argument is <strong>Window Style</strong>, the second is <strong>Title</strong>, the third is the <strong>Text</strong>, and the last is the <strong>Owner Window</strong>.        
+    <p>Our objective is to let the user know that the code they are seeing is the Unlock Code. A good place to do so would be in the Title of the message box. Let's examine how we are going to change the Title.    
+    <p>We need to find a place in code to create our new text string. Because we cannot write new code we are going to have to overwrite old code. We then need to change the code for the MessageBox call to PUSH our string as the Title Argument. Let's begin by creating a new string.    
+    <p>Because we have already modified this program, we know of a string that is not being used: &quot;You have entered an invalid code. Please try again&quot;. If we refer back to the original code of the serial test we can see this string being pushed onto the stack: <strong>PUSH lc5.004D63D4</strong>. We now know that the string is located at <strong>004D63D4</strong>. We will change it later, let's first try and get the program to actually push this value in.    
+    <p>Looking at the code we see that this part of the code jumps to MessageBoxA.<br>
+      <strong>74 05 | JE SHORT lc5modif.004BD576 :</strong> Jumps to GetModuleFileNameA<strong><br>
+      8B79 4C | MOV EDI,DWORD PTR DS:[ECX+4C] : </strong>Moves ECX+43 into EDI. EDI is where the Title is stored. <strong><br>
+      EB 1A | JMP SHORT lc5modif.004BD590 : </strong>Jumps to the MessageBoxA call    
+    <p>In the  Arguments for MessageBoxA we see EDI is pushed as the Title. And the value for Title is moved into EDI just before the call to the MessageBox. We need to  change the program to move our string into EDI rather than ECX+43. I am going to show you the very ugly, unaccepted, however it works, way to change the program.    
+    <p>Begin by selecting <strong>MOV EDI,DWORD PTR DS:[ECX+4C], </strong>select Assemble (or press spacebar), and in the box type <strong>MOV EDI, 4D63D4. </strong>Press Assemble. Do you see why this method is ugly and unaccepted? Because our code to move the string into EDI is longer than the original code, we have just overwritten our jump to MessageBox. &quot;Well, just write it underneath&quot;. That would seem the logical option, but we will be destroying the function call to GetModuleFileNameA. Let's find out how many times GetModuleFileName is called before we do any overwriting. Select the first line of the function: <strong>68 04010000    PUSH 104</strong>. At the bottom of the code window we see: <strong>Jump from 004BD56F. </strong>There is only one jump to this function and it is directly above our jump to MessageBoxA. Set a breakpoint on <strong>JE SHORT lc5modif.005BD576</strong> and press Run. Go through the registration process and when we reach our breakpoint (<em>do not step past it or the program will quit</em>) we see in the bottom code window that the Jump is not even taken. If we insert our new jump overtop of <strong>PUSH 104</strong> the program will call a MessageBox instead of GetModuleFileName but we do not even see the program calling GetModuleFileName anyway so let's try it out.    
+    <p>Select PUSH 104 and choose Assemble. Enter <strong>JMP SHORT 4BD590</strong> (<em>Your number may need to be different, check the Address of PUSH EBX, that is the Address you want to jump to</em>). Your code should look like this:<br>
+      <img src="images/Ollytut12.gif" width="513" height="165" align="left"> <br>
+      Go ahead and press Run to get to the MessageBoxA breakpoint. Press Run again and let's see if it worked.    
+    <p>It worked! Go through the registration process a few times to make sure that the program does not crash. <strong>For future information:</strong> The correct way to modify this program would be to jump to a code cave, move our serial into EDI and jump back to the MessageBox function. You can try it out on your own if you are interested, I may cover code caves in another tutorial.    
+    <p> Now we want to save our modifications before we do anything else. Just as before, select <strong>Copy to Executable, </strong>and then <strong>All Modifications</strong>. A box pops up asking us if we want to copy the selction, choose <strong>Copy All</strong>. A new window will open with the program in it and our changes included. Right click and select<strong> Save File. </strong>Save it as LC5Final.exe. You can close Olly, we are almost done. The last thing we need to do is change the text string &quot;You have entered...&quot;    
+    <p><strong><u>Changing The Text String:</u> </strong><br>
+      <img src="images/Ollytut13.gif" width="377" height="295" align="left">We want to change the text into something informative. To do this Open LC5Final.exe in Hex Workshop. You can do so by right clicking the actual file and choosing Hex Edit with Hex Workshop. With LC5final open, right click in Hex Workshop and choose <strong>Find.</strong> Select Text String from the drop down box and enter &quot;You have entered&quot; without the quotes. Make sure Match Case is unchecked and press Okay.    
+    <p>You will end up at 000D63D4. Sound familiar, that is the same value you pushed into EDI just a few minutes ago. We have found the correct string.     
+    <p>We can only overwrite the current string, we cannot use any more or any less space. By placing your cursor just before the <strong>Y</strong> in the right hand window you can type just as you would in any text editor. Experiment around until you find something that will completely overwrite the string. Keep in mind the string includes a period at the end. Here is my modified string:<br>
+    <img src="images/Ollytut14.gif" width="701" height="64"> <br>
+    Backup LC5final.exe and  then save the newly modified program. Close Hex Workshop and try out LC5Final. Go through the registration process and... Success! We now have a Title in our MessageBox that will let the user know what they are seeing.    
+    <p>    
+    <p><strong><u>Creating a Patch:</u></strong><br>
+      The final thing we are going to cover is how to create a patch. What happens when we reverse a program and want to share that new reversed program with other people? We can zip up the executable and send it to them, however some programs are very big. We can write a tutorial on it, however that takes time and assumes reversing knowledge of the other party. Or we can quickly create a small program that will automatically apply the changes we made to the file. That is what we are going to do here.    
+    <p>There are two ways to make a patch. Code it completely yourself, or use a program that will help you create it. There are many different patching programs to choose from. I am going to use Diablos2002 Universal Patcher, or DUP. It is newer, easy to use, and allows you to customize how and what you want to patch.    
+    <p><img src="images/Ollytut15.gif" width="381" height="179" align="left">Begin by opening up DUP. You start in the Patcher Settings. Click the browse button next to the Target Filename box and browse to lc5.exe. The other boxes are optional, under Release Info you may want to give a little description on how to use the patch. You can customize the About Box and the Icon and add your own skin as well as other options, by pressing the Options button.     
+    <p>Once you have filled in the boxes, choose the Offset Patch tab at the top. Select, for the Original File, LC5.exe and, for the Patched File, LC5Final.exe. Press the Compare button and it will create a list of the different bytes between the two.  Last thing you need to do is press the Create Patch button and choose a name for your patch.     
+    <p>You are done! Backup LC5.exe and run the patch. Then try registering with an invalid serial... It works! You have successfully modified a program to create an display a valid serial. You also learned how to create a patch so you can apply the modifications on other computers. You can now apply the techniques you learned to other reversing projects. </td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<div align="center">
+  <center>
+  <table border="1" width="75%" background="images/table.gif" bordercolor="#3D486E" cellspacing="0" bordercolorlight="#3D486E" bordercolordark="#3D486E" style="border-collapse: collapse">
+    <tr>
+      <td width="100%">
+        <p align="center"><b><u>Conclusion:</u></b></p>
+      </td>
+    </tr>
+    <tr>
+      <td width="100%">I used this particular program purely as a demonstration
+        for internal keygens and patching. If like the program and are going to
+        use it please purchase it. 
+        <p>Thanks to all the people who take time to write tutorials. Without
+        the teaching's of others we would all lack knowledge. Thanks to Exetools, Woodmann, and ARTeam for being a great place of learning.<br>
+        Thanks also to The Codebreakers Journal</p>
+        <p>If you have any suggestions, comments or corrections email me:
+        Gabri3l2003[at]yahoo.com&nbsp; 
+      </td>
+    </tr>
+  </table>
+  </center>
+</div>
+
+<p align="center"><img border="0" src="images/ENTER.JPG"></p>
+
+</body>
+
+</html>

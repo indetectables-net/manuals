@@ -1,0 +1,514 @@
+<html>
+
+<head>
+<STYLE>@page Section1 {size: 612.0pt 792.0pt; margin: 70.85pt 2.0cm 2.0cm 2.0cm; mso-header-margin: 36.0pt; mso-footer-margin: 36.0pt; mso-paper-source: 0; }
+P.MsoNormal {
+	FONT-SIZE: 12pt; MARGIN: 0cm 0cm 0pt; FONT-FAMILY: "Times New Roman"; mso-style-parent: ""; mso-pagination: widow-orphan; mso-fareast-font-family: "Times New Roman"
+}
+LI.MsoNormal {
+	FONT-SIZE: 12pt; MARGIN: 0cm 0cm 0pt; FONT-FAMILY: "Times New Roman"; mso-style-parent: ""; mso-pagination: widow-orphan; mso-fareast-font-family: "Times New Roman"
+}
+DIV.MsoNormal {
+	FONT-SIZE: 12pt; MARGIN: 0cm 0cm 0pt; FONT-FAMILY: "Times New Roman"; mso-style-parent: ""; mso-pagination: widow-orphan; mso-fareast-font-family: "Times New Roman"
+}
+SPAN.SpellE {
+	mso-style-name: ""; mso-spl-e: yes
+}
+SPAN.GramE {
+	mso-style-name: ""; mso-gram-e: yes
+}
+DIV.Section1 {
+	page: Section1
+}
+</STYLE>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>Beginner Tutorial #6 Packers</title>
+<style type="text/css">
+<!--
+body {
+background-image: url(images/Background.gif);
+}
+div#side {
+	height: 7000;
+}
+.style6 {
+	font-size: 12px;
+	font-style: italic;
+}
+.style16 {color: #FFFFFF}
+.style17 {color: #FFFF00}
+-->
+</style>
+</head>
+
+<body style="background-attachment: fixed; text-align:center" behavior="fixed" text="#C0C0C0" link="#FFFFFF" vlink="#FFFFFF" alink="#FFFFFF" lang="IT">
+ <div style="position:absolute; overflow:hidden; left:0px; top:0px; width:90px; height:90px; z-index:14; filter:Alpha(Opacity=40); -moz-opacity:0.50;"><img width=90 height=90  border=0 src="images/corner.jpg"></DIV> 
+  <div style="position:absolute; overflow:hidden; left:3px; top:-1px;"></div>
+  <center><div align = "center">
+    <table align = "center" border="1" width="554" bgcolor="#336699" height="382" bordercolor="#3D486E" cellspacing="0" cellpadding="2" background="images/table.gif" bordercolordark="#3D486E" bordercolorlight="#3D486E" style="border-collapse: collapse">
+      <tr>
+        <td width="100%" height="19" align="center" bordercolor="#3D486E" bordercolorlight="#3D486E" bordercolordark="#3D486E" background="images/ARTeam.gif"><p>
+		<span class="style16"><u><b>Beginner Tutorial #6 </b></u><br>
+        By: Shub-Nigurrath /ARTeam<br>
+  <a href="http://cracking.accessroot.com">
+  http://cracking.accessroot.com</a></span></p>
+        <p class="style16">Packers theory <font size="2">v1.1</font></td>
+      </tr>
+      <tr>
+        <td width="100%" height="19" align="left"><b><u>The Target:</u></b><br> 
+          none</td>
+      </tr>
+      <tr>
+        <td width="100%" height="23" align="left"><b><u>The Tools:</u></b><br>
+       Ollydbg 1.10</td>
+      </tr>
+      <tr>
+        <td width="100%" height="62" align="left" background="images/table.gif"><b><u>The Protection:</u></b><br>
+      	packers</td>
+      </tr>
+      <tr>
+        <td width="100%" height="98" align="left"><p><b><u>Other Information:</u></b><br>
+        This tutorial will cover some basic concepts about protectors packers, 
+		such as AsProtect and other, which have been left out of 
+		the previous beginner tutorials. I think that with this last beginner 
+		tutorials you will be ready to start cracking at a sufficient level and 
+		you'll be able one day to do the jump to another level... </p></td>
+      </tr>
+    </table>
+</div></center>
+    <p align="center" class="style6">Best viewed in Firefox at 1280x1024</p>
+    <div align="center"> 
+    <center>
+<div align="center">
+<table width="75%" height="118" border="1" cellspacing="0" bordercolor="#3D486E" bordercolorlight="#3D486E" bordercolordark="#3D486E" background="/images/table.gif" style="border-collapse: collapse" bgcolor="#C0C0C0" id="table1">
+  <tr>
+    <td width="100%" background="images/table.gif">
+    <p align="center"><b><u>Introduction:</u></b></p></td>
+  </tr>
+  <tr>
+    <td width="100%" height="92" valign="top" background="images/table.gif">
+		<p>
+		Reading a lot of tutorials I realized that some of them do not simply 
+		contains complex tricks and solutions, but also very elegant 
+		descriptions of some basic concepts. The problem is that these 
+		descriptions are not read often with the proper attention: beginners 
+		will not read those tutorials and experienced crackers most of the times 
+		already know those concepts. So, those little &quot;gems&quot; remains mostly 
+		unknown to who could benefits from them most.</p>
+		<p>
+		I then decided to collect some of these descriptions into an unique 
+		tutorial about the packing of exe application and the theory of what 
+		happens behind. Moreover this arguments perfectly fits into the secuence 
+		of the arguments already described in the previous beginner tutorials... 
+		so as usual fasten your seat belts..</p>
+		<p>
+		I integrated the text coming from different papers to make an organic 
+		text and I will cite the original sources only if needed and only in the 
+		final references section..</p>
+		<p>
+		&nbsp;</p>
+    </td>
+  </tr>
+</table>
+</div>
+    <br>
+    <br>
+  </center>
+</div>
+<div align=n "center">
+<div align="center">
+<table width="75%" height="183" border="1" cellspacing="0" bordercolor="#3D486E" bordercolorlight="#3D486E" bordercolordark="#3D486E" background="/images/table.gif" style="border-collapse: collapse" bgcolor="#C0C0C0">
+  <tr>
+    <td width="100%" background="images/table.gif">
+    <p align="center"><u><b>Description of a Packer</b></u><b><u>:</u></b></p></td>
+  </tr>
+  <tr>
+    <td width="100%" height="157" valign="top" background="images/table.gif" align="justify">
+		<p>
+		A packer is a program aimed to prevent somebody else from examining how 
+		our program works or from modifying it. Typically, the entry point of 
+		the protected program is diverted to run the packer first. When it runs, 
+		the packer will carry out the following (main) steps: </p>
+		<ul>
+			<li>Decrypt the sections of the target (target = packed program).</li>
+			<li>Rebuild its imports table. </li>
+			<li>Jump to the actual entry point of the target. </li>
+		</ul>
+		<p>
+		The first step, sections decryption, isn&#8217;t important for us. Normally, 
+		it doesn&#8217;t use to be much of a problem to await until they are decrypted 
+		in memory and simply dump them to a file and glue them up together. 
+		However, points 2 and 3 are crucial. The imports protection can be done 
+		with several degrees<br>
+		of sophistication, some of the implementations (in reallife packers) are 
+		quite weak and do not need at all our methods to be broken. We will 
+		always suppose that a strong protection has been applied to the IAT, 
+		meaning:</p>
+		<ol>
+			<li>The Imports Table has been removed, the packer saves only (in a 
+			secure place) the hashes of the API names and their addresses at the 
+			IAT.</li>
+			<li>The algorithm is well obfuscated and has lots of anti-debug, 
+			anti-trace...</li>
+			<li>The packer doesn&#8217;t use GetProcAddress. Instead, it implements 
+			its own algorithm to find the APIs at the exports&nbsp; table of the 
+			DLLs.</li>
+			<li>The IAT has been redirected</li>
+		</ol>
+		<p>It&#8217;s amazing to see how many &#8221;commercial&#8221; products don&#8217;t comply 
+		neither with (1) nor with (3). </p>
+		<p>What about 4 (API redirection)?. Let&#8217;s try to see what &#8221;API 
+		redirection&#8221; means: Open any application, it&#8217;s sure<br>
+		that it imports <font face="Courier New" size="2">kernel32.ExitProcess</font>. 
+		Now, look for a call to it, you will find something like the following:</p>
+		<p><font face="Courier New" size="2">&nbsp; call [XXXXXXXXh]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		; call to kernel32.ExitProcess XXXXXXXXh inside the IAT<br>
+&nbsp; ...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		;<br>
+&nbsp; XXXXXXXXh: YYYYYYYYh&nbsp; ; address of Kernel32.ExitProcess<br>
+&nbsp;</font></p>
+		<p>The other most common possibility is to have a call XXXXXXXXh 
+		instead, the argument would be the same. The Windows loader &#8221;sees&#8221; the 
+		imports table and fills the IAT with the addresses of the imported APIs. 
+		Packers destroy the information at the imports table of the protected 
+		program, therefore the IAT will have incorrect values when the packer 
+		yields control to the target. Then, the consequence is that the packer 
+		needs to fill the IAT of the target with the right values. </p>
+		<p>If you take a packed program, under a packer satisfying (4) - 
+		examples: Asprotect, Slovak Protector,...- the IAT looks like:</p>
+		<p><br>
+		<font face="Courier New" size="2">&nbsp; XXXXXXXXh: ZZZZZZZZh&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		; ZZZZZZZZh is inside a buffer dynamically<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		; allocated by the packer, so it will<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		; not exist if you remove the packer.<br>
+&nbsp; ZZZZZZZZh: push ebp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ; (*)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ror eax, 16h<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pushf<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; popf<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mov ebp, esp&nbsp;&nbsp;&nbsp; 
+		; (*)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; call @@1<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; db 68h<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; @@1:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; add eax, 134h<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ....<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; jmp 
+		ACTUAL_ENTRY_POINT_OF_API + k</font></p>
+		<p>The packer mixes the first instructions of the API with some garbage 
+		code (in the example, those instructions having a &#8221;*&#8221; beside were in the 
+		original API code), it can include some trivial anti-debug trick too, 
+		and finally writes a jump (or something similar) to the entry point of 
+		the API + k, where k is the number of original instructions already run 
+		among the garbage code. This way, it is essentially impossible to find 
+		the actual API called through ZZZZZZZZh or to hook it. </p>
+		<p>The imports table is not a straightforward structure, going into 
+		details is out of the scope of this tutorial, see [2] for more 
+		references.</p>
+		<p>Some programs, called import rebuilders, are able to emulate a few 
+		instructions to search for the address in the DLL we jump to. Then, you 
+		can retrieve the API name from the exports table. However, import 
+		rebuilders are usually very limited in what they can sniff and will not 
+		overcome the latest packers (which, obviously, are tested against them 
+		before their release). </p>
+		<p>Let&#8217;s see what&#8217;s the matter with the entry point. As we commented, 
+		the packer - once it has done its job (decrypted the target, reconstruct 
+		the IAT,...)- has to give control to the protected application. This can 
+		be done running it as a new thread, with
+		<font face="Courier New" size="2">kernel32.CreateThread</font>, or 
+		simply jumping to it in some exotic way. Running it as a new thread is 
+		not a good idea, the starting address of the thread will be too evident 
+		and so, we (again) suppose the worst case:<br>
+		The packer jumps to the entry point after a long time of well obfuscated 
+		and protected code, the jump is well hidden (self-modifying code, 
+		etc...). </p>
+		<p><u><b>Stolen Bytes<br>
+		</b></u>Another problem one usually has to deal with is &#8221;stolen bytes&#8221;: The 
+		packer takes a pre-defined set of APIs, a very common one is
+		<font face="Courier New" size="2">GetModuleHandleA</font>, and does the 
+		following:</p>
+		<ul>
+			<li>Calls <font face="Courier New" size="2">GetModuleHandleA</font> 
+			and stores the return.</li>
+			<li>Looks inside the protected app for patterns like:<br>
+			<font face="Courier New" size="2">&nbsp; call XXXXXXXXh<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ; call to kernel32.GetModuleHandleA<br>
+&nbsp; mov [handle], eax</font></li>
+		</ul>
+		<p>Now, it removes the call and, on every startup, substitutes the
+		<font face="Courier New" size="2">mov [handle], eax</font> by a simple
+		<font face="Courier New" size="2">mov [handle], harcoded_value</font>, 
+		where <font face="Courier New" size="2">hardcoded_value</font> was 
+		returned before by the packer&#8217;s call to
+		<font face="Courier New" size="2">GetModuleHandleA</font>.</p>
+		<p>If the cracker doesn&#8217;t detect this trick then the unpacked program 
+		will not run on all OS versions or will have another defect. These bytes 
+		the packer removes are called &#8221;stolen bytes&#8221;. A full description of a packer is well out 
+		the scope of this tutorial, please refer to [1] for a detailed 
+		explanation. </p>
+		<p><u><b>Understanding the problem of stolen bytes<br>
+		</b></u>As we briefly reviewed above, the packer will emulate the first 
+		k instructions of the API and will jump to the (k+1)-th. This k first 
+		instructions can be metamorphosed, for example, for k=2 we might have: </p>
+		<p><font face="Courier New" size="2">; not changed entry point of<br>
+		; kernel32.ExitProcess inside<br>
+		; KERNEL32.DLL.<br>
+		<br>
+		77E55CB5 kernel32.ExitProcess&nbsp;&nbsp;&nbsp; push ebp<br>
+		77E55CB6&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		mov ebp,esp<br>
+		77E55CB8&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		push -1</font></p>
+		<p><font face="Courier New" size="2">; example of instructions you could<br>
+		; find at the buffer:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; xchg eax, esp<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sub eax, 4<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; jmp @@1<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; db 68h<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; @@1:xchg eax, esp<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mov dword ptr 
+		[esp], ebp<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; push esp<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pop ebp<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; push 
+		(77E55CB8+RANDOM_VALUE)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sub dword ptr 
+		[esp], RANDOM_VALUE<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ret</font><br>
+		<br>
+		They both do the same, however the second one is not easy to follow. The 
+		longer and more difficult to emulate is the buffer the harder is to 
+		reconstruct the imports table. Now, observe that if you set a breakpoint 
+		on the entry point of kernel32.ExitProcess this will be easily bypassed 
+		by the packer. Of course, one can set this breakpoint later but then 
+		knowing the call parameters can be difficult (or impossible). <br>
+		<br>
+		Having the possibility of setting breakpoints on (suitable) places of 
+		the APIs is an important problem, control over their behaviour yields 
+		immediate control over the packer.</p>
+		<p>Packers are the preferred way to protect middle-price applications, 
+		virtually all shareware depends on their security. Thus, studying their 
+		advantages and disadvantages is an important field in RCE (Reverse Code 
+		Engineering)</p>
+		<p>&nbsp;</p>
+    </td>
+  </tr>
+</table>
+</div>
+<p>&nbsp;</p>
+<div align="center">
+<table width="75%" height="118" border="1" cellspacing="0" bordercolor="#3D486E" bordercolorlight="#3D486E" bordercolordark="#3D486E" background="/images/table.gif" style="border-collapse: collapse" bgcolor="#C0C0C0" id="table2">
+  <tr>
+    <td width="100%" background="images/table.gif">
+    <p align="center"><u><b>How AsProtect</b></u><b><u> works:</u></b></p></td>
+  </tr>
+  <tr>
+    <td width="100%" height="92" valign="top" background="images/table.gif" align="justify">
+      ASProtect, from ASPack Software (http://www.aspack.com), isn't just 
+		another commercial anti-cracking program; it is a truly revolutionary 
+		advance in software protection. It may be the prepackaged solution to 
+		software protection for those who don't want to spend long hours 
+		studying and programming custom protection for their own software.<p>
+		ASProtect's creator Alexey Solodovnikov learned a lot from his work on 
+		ASPack and applied that experience to ASProtect. He claims that because 
+		all anti-cracking defenses can be defeated, the only important thing is 
+		under what circumstances they can be broken.</p>
+		<p>While it was created especially for shareware developers, ASProtect 
+		can be used for professional software as well. While it's not as 
+		versatile as FLEXlm (discussed later in this chapter), and it works only 
+		under Windows, I daresay that it is currently the most difficult 
+		commercial software protection to break. Its only weakness is that it 
+		doesn't have the best anti-debugging tricks.</p>
+		<p>Compared to other commercial software protection, ASProtect is simple 
+		and well-programmed, reflecting the simple but wonderful idea behind it. 
+		Like similar programs, the original program is compressed and then 
+		uncompressed by ASProtect before it is run.</p>
+		<p>ASProtect's compression is based on the ASPack algorithm, which is 
+		among the best. While it adds about 60KB of code to the original 
+		program, this additional code doesn't matter at all, since the resulting 
+		compressed program is much smaller then the original one.</p>
+		<p>ASProtect's decompression routine checks to see whether there have 
+		been attempts to change the file, and it tries to prevent changes in 
+		memory. Naturally, without decompression, the original program can't be 
+		disassembled, and it isn't easy to decompress ASProtect because it tries 
+		to prevent memory dumps by programs like ProcDump. Once the import 
+		section has been dumped from memory, the PE file will not be correct. 
+		Still, there is a way to decompress ASProtect (not by just dumping), but 
+		ASProtect is still not defeated even after successful decompression.<br>
+		<br>
+		Like FLEXlm, ASProtect tries to prevent the use of certain functions in 
+		the protected program when it is unregistered, and it does so 
+		beautifully compared with other software. For example, if a programmer 
+		wants to disable Preview in the unregistered version, he need only 
+		encode this function with ASProtect (as shown in Figure 6.2). After 
+		registration, the disabled part is decoded using a constant from the 
+		registration key, and it is not possible to decode it without this 
+		registration key. ASProtect's exceptionally strong encoding prevents 
+		even direct (brute-force) attacks.</p>
+		<p>There are three ways to secure an application with ASProtect. The 
+		first way uses classic compression and<br>
+		is not recommended because it's relatively easy to decode.</p>
+		<p>The second possibility is much more interesting, though still not the 
+		best. With this method, the original protection is first authenticated 
+		after the ASProtect API is called with a constant for decoding the 
+		encoded part of the program. You might use this method if, for example, 
+		the program you want to protect already has its own registration control 
+		and you don't want to change it. This method would be a poor choice if 
+		the original protection is weak, since it would not prevent the cracker 
+		from getting the correct constant.</p>
+		<p>The third and best possibility doesn't add any protection to your 
+		program (although additional protections are possible). Basically, when 
+		using this third method, you specify in the Registration Keys tab in 
+		ASProtect that you want your project to contain a registration key (as 
+		shown in Figure 6.3 on page 80). The program then creates a basic 
+		constant that will serve as a base for other keys, and that will also be 
+		used to encode the protected part of the program. You can generate the 
+		keys according to user names, and you can also save them. Finally, you 
+		determine where the registration key will be saved in the registry 
+		following registration.<br>
+		<br>
+		<i><b>Note </b>ASProtect's key files have KEY endings but are 
+		essentially REG files that are imported into registers once they have 
+		been double-clicked. This is an advantage, because ASProtect's 
+		registration keys are rather long, and it would be tedious for users to 
+		enter them by hand.</i><br>
+		<br>
+		The next step is to verify the registration. If you have only a 
+		registration key, the program will print the name of the registered 
+		user. You can also specify keys that have been illegally made public if 
+		you don't want them to function in future versions of the program. 
+		Subsequent versions of ASProtect will probably be able to generate keys 
+		for only one computer, which will prevent the illegal distribution of 
+		registration keys.</p>
+		<p>Finally, in the program code you specify the parts of the program 
+		that you want to encode&#8212;this is a simple procedure that can be performed 
+		by almost any programmer. Currently ASProtect contains code examples for 
+		Delphi, Visual C++, and Visual Basic. For instance, here's a short 
+		example in Visual C++:</p>
+		<p><font face="Courier New" size="2">include &lt;windows.h&gt;<br>
+		#include &quot;include\asprotect.h&quot;<br>
+		char *message;<br>
+		void RegisterAction ()<br>
+		{<br>
+&nbsp;&nbsp; REG_CRYPT_BEGIN<br>
+&nbsp;&nbsp; message = &quot;Registered version !&quot;;<br>
+&nbsp;&nbsp; REG_CRYPT_END<br>
+		}<br>
+		int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+		PSTR szCmdLine, int iCmdShow)<br>
+		{<br>
+&nbsp;&nbsp; message = &quot;Unregistered version !&quot;;<br>
+&nbsp;&nbsp; RegisterAction();<br>
+&nbsp;&nbsp; MessageBox (0,message,&quot;&quot;,0);<br>
+&nbsp;&nbsp; return 0;<br>
+		}</font><br>
+		<br>
+		You must add <font face="Courier New" size="2">REG_CRYPT_BEGIN</font> to 
+		the beginning of the encoded program and
+		<font face="Courier New" size="2">REG_CRYPT_END</font> to the end.<br>
+		<br>
+		In other words, at the beginning of the encoded part of the program, you 
+		must add the following data:<br>
+		<br>
+		<font face="Courier New" size="2">0EBh, 04h, 0EBh, 05h, 89h, 89h, 0E9h, 
+		0, 0, 0, 0</font><br>
+		<br>
+		And the following data is added at the end:<br>
+		<br>
+		<font face="Courier New" size="2">0EBh, 04h, 0EBh, 05h, 99h, 99h</font><br>
+		<br>
+		This data enables ASProtect to find the areas that you want to encode.</p>
+		<p>Next, you need only call the procedure and the rest will be done for 
+		you. If a program isn't registered, the encoded part will be skipped, or 
+		else an error will occur. If the program is registered, this part will 
+		be decoded at the start of the program, and it will be used later when 
+		it is called.</p>
+		<p>You can get the user's name with the
+		<font face="Courier New" size="2">apiGetRegInfo()</font> API function.</p>
+		<p>Should you need to create many registration keys at once, ASProtect 
+		makes it easy by supplying the library keygen.dll. You can generate 
+		registration keys with its two functions. The
+		<font face="Courier New" size="2">GenerateKeyAsRegFile()</font> function 
+		creates a registration file based on user information. Alternatively, 
+		the <font face="Courier New" size="2">GenerateKeyAsString() </font>
+		function returns the memory pointer to where the registration key was 
+		created.</p>
+		<p>ASProtect allows you to set the number of times that a program can be 
+		run or the number of days it will be useable. Unlike similar commercial 
+		programs, all protection is placed in the PE file, and not in added DLL 
+		or OCX files.<br>
+		<br>
+		As of this writing, it is impossible for a cracker to correctly remove 
+		ASProtect's protection (that means to decode the encoded portion of the 
+		program). To do so, he would need to use the correct registration key to 
+		decode the program and then dump it from memory. Of course, should the 
+		program's creators consider this attack, they may prevent it too by 
+		adding additional protections.<br>
+&nbsp;</td>
+  </tr>
+</table>
+</div>
+    <p>&nbsp;</p>
+	<table border="1" width="75%" background="/images/table.gif" bordercolor="#3D486E" cellspacing="0" bordercolorlight="#3D486E" bordercolordark="#3D486E" style="border-collapse: collapse" id="table3">
+		<tr>
+			<td width="100%" background="images/table.gif">
+			<p align="center"><u><b>References</b></u><b><u>:</u></b></p></td>
+		</tr>
+		<tr>
+			<td width="100%" background="images/table.gif">
+			<p>I suggest the following further readings from now on to complete 
+			your beginner's training, than you'll be free to specialize in 
+			anything you like most, unpacking protectors, writing loaders or 
+			other things..</p>
+			<ol>
+				<li>Havok, &#8220;Asprotected notepad&#8221; Codebreakers-Journal, First 
+				Issue 2004.</li>
+				<li>Labir, E., &#8220;Adding imports by hand&#8221; Codebreakers-Journal, 
+				First Issue 2004.</li>
+				<li>Matt Pietrek, An In-Depth Look into the Win32 Portable 
+				Executable File Format Part 1, Inside Windows,
+				<a href="http://msdn.microsoft.com/msdnmag/issues/02/02/PE/default.aspx">
+				http://msdn.microsoft.com/msdnmag/issues/02/02/PE/default.aspx</a>
+				</li>
+				<li>Matt Pietrek, An In-Depth Look into the Win32 Portable 
+				Executable File Format Part 2, Inside Windows,
+				<a href="http://msdn.microsoft.com/msdnmag/issues/02/03/PE2/default.aspx">
+				http://msdn.microsoft.com/msdnmag/issues/02/03/PE2/default.aspx</a>
+				</li>
+				<li>BiW tutorials pages,
+				<a href="http://biw.rult.at/index.php?page=tuts">
+				http://biw.rult.at/index.php?page=tuts</a> </li>
+				<li>Codebreakers Journal,
+				<a href="http://www.codebreakers-journal.com/">
+				http://www.codebreakers-journal.com/</a> </li>
+			</ol>
+			<p>and obviously our tutorial's page ^__^<br>
+&nbsp;</td>
+		</tr>
+	</table>
+		<p>&nbsp;</p>
+<div align="center"><center>
+	<table border="1" width="75%" background="/images/table.gif" bordercolor="#3D486E" cellspacing="0" bordercolorlight="#3D486E" bordercolordark="#3D486E" style="border-collapse: collapse">
+		<tr>
+			<td width="100%" background="images/table.gif">
+			<p align="center"><b><u>Conclusion:</u></b></p></td>
+		</tr>
+		<tr>
+			<td width="100%" background="images/table.gif">
+			<p><center>Thanks to the whole ARTeam:<br>[<span class="style16">Nilrem</span>] [<span class="style16">JDog45</span>] [<span class="style16">Shub - Nigurrath</span>] [<span class="style16">MaDMAn_H3rCuL3s</span>] [<span class="style16">Ferrari</span>] [<span class="style16">Kruger</span>] [<span class="style16">Teerayoot</span>] [<span class="style16">R@dier</span>] [<span class="style16">ThunderPwr</span>] [<span class="style16">Eggi</span>] [<span class="style16">EJ12N</span>] [<span class="style16">Stickman 373</span>] [<span class="style16">Bone Enterprise</span>] [<span class="style16">KaGra</span>]
+        	</center><br>Thanks to all the people who take time to write tutorials. 
+			<br>Thanks to all the people who continue to develop better tools. 
+			<br>Thanks to Exetools, Woodmann, SND, TSRH, MP2K, TEAMICU and all the others for being a great place of learning.<br>Thanks also to The Codebreakers Journal, and the Anticrack forum.</p>
+			<p>If you have any suggestions, comments or corrections contact me 
+			in usual places..</p></td>
+		</tr>
+	</table></center></div>
+
+</body>
+
+</html>

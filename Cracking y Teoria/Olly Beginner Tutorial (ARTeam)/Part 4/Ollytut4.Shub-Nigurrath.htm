@@ -1,0 +1,983 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Language" content="en-gb">
+		<meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+		<meta name="ProgId" content="FrontPage.Editor.Document">
+		<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+		<title>Beginner Tutorial #4 Shub-Nigurrath </title>
+	</head>
+	<style>
+body { 
+  color: #FFFFFF;
+  font-size:   13;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  scrollbar-base-color:       #FFFFFF; 
+  scrollbar-arrow-color:      #FFFFFF; 
+  scrollbar-track-color:      #434E59; 
+  scrollbar-shadow-color:     #808080;
+  scrollbar-darkshadow-color: #808080;
+  scrollbar-3dlight-color:    #FFFFFF;
+  scrollbar-face-color:       #6B8094;
+  scrollbar-highlight-color:  #C0C0C0;
+}
+td {
+  font-size:   13;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+        .plainborder { border:1px solid #345487;background-color:#F5F9FD }
+.row1 { background-color: #F5F9FD }
+        </style>
+	<body background="Images/back1.gif">
+		<div align="center">
+			&nbsp;<center>
+			<div align="center">
+              <center>
+			<table width="704" border="1" height="16" ID="Tabletools" background="images/back2.gif" style="border-collapse: collapse" bordercolor="#111111" cellpadding="0" cellspacing="0">  				
+					<tr>
+						<td align="center" width="719">
+							<p align="center">
+			<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111">
+              <tr>
+                <td width="100%">
+
+                <p align="center">
+
+<a href="http://forum.accessroot.com/">
+<img border="0" src="./images/enter.jpg" width="551" height="202"></a></td>
+              </tr>
+            </table>
+
+&nbsp;<p align="center"><font size="6" face="Times New Roman"><b>
+                            ARTeam Tutorial </b></font>
+							<p align="center"><b>
+                            <font face="Times New Roman" size="4">by 
+                            Shub-Nigurrath</font></b><p align="center"><b><font color="#CCCCCC" size="1" face="MS Sans Serif">Visit:
+      <a href="http://cracking.accessroot.com"><font color="#FFFFCC">http://cracking.accessroot.com</font></a></font><font color="#FFFFCC" size="1" face="MS Sans Serif"> 
+      | <a href="http://forum.accessroot.com/"><font color="#FFFFCC">
+      http://forum.accessroot.com</font></a></font><font size="2" face="Courier New" color="#FFFFCC"><br>
+      </font></b>
+							<p align="center">
+							<font face="Times New Roman" size="5">Beginner 
+                            tutorial #4: unpacking and patching, a more complex 
+                            case </font>
+							<font face="Times New Roman" size="3">v.1.1</font></td>
+					</tr>
+				</table>
+				</center>
+            </div>
+				<b>
+				<br>
+				</b>
+				<table width="50%" border="1" align="center" height="149" ID="Tabletools" background="images/back2.gif">
+					<tr>
+						<td width="150" height="16">
+                        <font face="Verdana" size="2"><b>
+                        Information</b></font></td>
+						<td width="400" height="16">
+                        <font face="Verdana">A little tutorial which continues 
+						the beginner series started by Gabri3l with some more 
+						explanations on an a program packed with aspack, IAT 
+						details and the Olly selfextracting function.</font></td>
+					</tr>
+					<tr>
+						<td width="150" height="14">
+                        <font face="Verdana" size="2"><b>
+                        Target</b></font></td>
+						<td width="400" height="14">
+                        <font face="Verdana">Super Video Joiner 1.8.0</font></td>
+					</tr>
+					<tr>
+						<td width="150" height="14">
+                        <font face="Verdana" size="2"><b>
+                        Available</b></font></td>
+						<td width="400" height="14">
+                        http://www.witcobber.com/&nbsp; or<br>
+						http:/www.intechhosting.com/~access/ARTeam/tools/superjoiner_180.exe </td>
+					</tr>
+
+					<tr>
+						<td width="150" height="16">
+                        <font face="Verdana" size="2"><b>
+                        Tools</b></font></td>
+						<td width="400" height="16">
+                        <font face="Verdana" size="1">
+          <font color="#CCFFFF">
+          <a href="http://home.t-online.de/home/Ollydbg"><font color="#CCFFFF">OllyDbg 1.10 
+                        (HideDebug and OllyDump plugin)</font></a>, Import 
+                        Reconstructor 1.6, Diablo2oo2 Universal Patcher</font></font></td>
+					</tr>
+					<tr>
+						<td width="150" height="16"><b>
+                        <font face="Verdana" size="2">
+                        Protection</font></b></td>
+						<td width="400" height="16">
+                        <font face="Verdana">AsPack 2.12 with crippled IAT, 
+                        Serial Protection</font></td>
+					</tr>
+					<tr>
+						<td width="150" height="16"><b>
+                        <font face="Verdana" size="2">
+                        level</font></b></td>
+						<td width="400" height="16">
+                        <font face="Verdana" size="1">Beginner</font></td>
+					</tr>
+					<tr>
+						<td width="150" height="12"><b>
+                        <font face="Verdana" size="2">
+                        Category</font></b></td>
+						<td width="400" height="12">
+                        <font face="Verdana">patching</font></td>
+					</tr>
+					<tr>
+						<td width="150" height="13"><b>
+                        <font face="Verdana" size="2">
+                        Author(s)</font></b></td>
+						<td width="400" height="13">
+                        <font face="Verdana" size="1">Shub-Nigurrath Feb 2005</font></td>
+					</tr>
+					
+					<tr>
+						<td width="150" height="13"><b>
+                        <font face="Verdana" size="2">Requirements</font></b></td>
+						<td width="400" height="13">
+                        <font face="Verdana" size="1">Windows XP, Firefox 1.0 
+                        and above for best viewing &amp; printing</font></td>
+					</tr>
+					
+			</table>
+			<br>
+			<br>
+			<!--============================================================================
+				copy the block below for every subtitle 
+			    =============================================================================-->
+			<table width="80%" border="1" align="center" height="16" ID="Tabletools" background="images/back2.gif">  				
+				<tr> 
+    				<td>
+    					<div align="center"><b><font size="3">1. Introduction</font></b></div>
+    				</td>
+  				</tr>
+			</table>
+			<br>
+			
+			<!--==============================================================================
+				copy the block below for every part with regular white text on gray background
+				==============================================================================-->
+			<div align="center">
+              <center>
+			<table width="80%" border="1" height="16" ID="Tabletools" background="images/back2.gif" cellpadding="3" cellspacing="3" style="border-collapse: collapse" bordercolor="#111111">  				
+				<tr> 
+    				<td>
+						<p align="justify"><br>
+                        This tutorial is a follow-up of the series of three wrote 
+                        by Gabri3l, available on our tutorial's site. I will 
+                        suppose you read them before, because some the things he 
+                        already said are given as known. Especially what I'm 
+                        referring to is the last tutorial, the third one, 
+                        arguing about a program protected with AsPack 2.11. </p>
+						<p align="justify">In this tutorial I will (ab)use another little 
+                        program protected with AsPack, but which cannot be 
+                        unpacked with the same method Gabri3l told in his 
+                        already mentioned third tutorial. The target is Super 
+                        Video Joiner, a nice program useful to join different 
+                        videos into an unique final one, also DivXs.</p>
+                        <p align="justify">As we will see later on, this target has a different 
+                        Import Address Table -IAT- format which will require a 
+                        little more advanced use of Import Reconstructor. I will 
+                        also show you how to tell Olly to automatically unpack 
+                        self-extracting applications (such those protected with 
+                        aspack, upx or similar but not with asprotect, armadillo 
+                        etc). The patching of the unpacked application is 
+                        indeed, once dumped, very easy and will be covered in a 
+                        few steps. </p>
+                        <p align="justify">Lastly I will concentrate on the creation of a 
+                        smart patch 
+                        which will, hopefully, be valid for future versions: 
+                        Gabri3l shown you how to use Dup (Diablo2oo2 Universal 
+                        Patcher) using the Offset Patch, I instead will show you 
+                        how to use the Search and Replace tab...</p>
+                        <p align="justify">So, fasten your seatbelts ;-)</td>
+  				</tr>
+			</table>
+			  </center>
+            </div>
+			<br>
+			<br>
+			 <!--============================================================================
+				copy the block below for every subtitle 
+			    =============================================================================-->
+			<table width="80%" border="1" align="center" height="16" ID="Tabletools" background="images/back2.gif">  				
+				<tr> 
+    				<td>
+    					<div align="center"><b><font size="2">2. Unpacking the 
+                          program</font></b></div>
+    				</td>
+  				</tr>
+			</table>
+			<br>
+			<!--==============================================================================
+				copy the block below for every part with regular white text on gray background
+				==============================================================================-->
+			<div align="center">
+              <center>
+			<table width="80%" border="1" height="16" ID="Tabletools" background="images/back2.gif" cellspacing="3" cellpadding="3" style="border-collapse: collapse" bordercolor="#111111">  				
+				<tr> 
+    				<td>
+    					<p align="justify">
+    					<br>
+    					<u>
+    					<b>Understanding the program compression used</b></u><br>
+                        As usual the very first step of any cracking session is 
+                        to understand what we are facing to! The first thing to 
+                        do is to open PEiD and to see what it reports. </p>
+                        <p align="justify">
+                        <img border="0" src="images/Ollytu1.jpg" align="left" width="393" height="232"></p>
+                        <p align="justify">
+                        By 
+                        the way, PEiD is not always 100% correct and sometimes 
+                        report wrong results. Its authors for this reason 
+                        included the possibility to use an external signature 
+                        database, an external file inside its installation 
+                        folder, called <b>userrdb.txt</b>. </p>
+                        <p align="justify">This file contains all the additional signatures not 
+                        already included into PEiD. These signatures are usually 
+                        posted in the forums around, even our one, and you might 
+                        take time to collect some of them to improve your PEiD 
+                        accuracy. PEiD installer install a sample userdfb.txt 
+                        file with no meaningful things inside, so often you need 
+                        to find a real one around.</p>
+                        <p align="justify">
+                        &nbsp;<p align="justify">
+                        Anyway our case is very simple and AsPack is recognised 
+                        by PEiD easily. You should already know that AsPack is a 
+                        program's packer, not a program's protector, so it's 
+                        main target is to reduce the whole exe image file's 
+                        size, rather than to protect it. So its main characteristic is to be &quot;re-entrant&quot;, 
+                        which means that when the unpacking code finishes to 
+                        unpack the program into the memory, it doesn't leave any 
+                        trace and the program appears in memory as nothing 
+                        happened (see also Gabri3l tutorials). This lead to the 
+                        method suggested by Gabri3l in his tutorial, which 
+                        consists in placing an 
+                        hardware breakpoint on Dword on the stack, just after 
+                        the first PUSHAD.<p align="justify">
+                        On the other hand protectors like AsProtect (of the same 
+                        author of AsPack), instead do several things to the 
+                        original executable's code and are &quot;not re-entrant&quot;; 
+                        also when the program is uncompressed in memory, ready 
+                        to execute,&nbsp; it's code has been widely modified 
+                        (its IAT modified so as to not rebuild it easily, its 
+                        instructions modified to not follow the program's flow 
+                        easily and so on).<p align="justify">
+                        <b><u>Let Ollydbg unpack the program for us</u><br>
+                        </b>Ok we can now open OllyDbg and unpack the program. 
+                        Follow on your own, as an exercise, the method exposed in 
+                        the third Gabri3l's tutorial, just to see if you have 
+                        understood it clearly. Done?? Ok, so go on reading 
+                        this..<p align="justify">
+                        In this document I will follow instead an alternative 
+                        way, which is already implemented into OllyDbg and which 
+                        is not so much known/used.<p align="justify">
+                        Goto into the OllyDbg settings and set them as in the 
+                        picture below:<p align="center">
+                        <img border="0" src="images/Image4.jpg" width="630" height="468"><p align="justify">
+                        OllyDbg has an automatic Self Extractors (SFX) feature, which 
+                        does the a trick similar (more complex actually) to what 
+                        Gabri3l explained you. This trick is valid as I told for 
+                        all the &quot;re-entrant&quot; program's packers or generally for 
+                        all the self extractor executable. Ollydbg is able to do 
+                        all the work for you and to stop at the right place!<p align="justify">
+                        Once you set your settings as above you are ready to 
+                        load your target into Ollydbg (in this case the program 
+                        is videojoiner.exe). There's not need to close and 
+                        reopen Olly, it's enough to relauch the program, e.g. 
+                        using CTRL-F2 if it was already opened.<p align="justify">
+                        Usually Ollydbg would have stopped at the first 
+                        instruction of the AsPack unpacker (see below), which 
+                        was a PUSHAD
+    				    <p align="justify">
+                        <font face="Courier New" color="#FFFF00">004F8001 &gt; 60 PUSHAD<br>
+                        004F8002 E8 03000000 CALL videojoi.004F800A<br>
+                        004F8007 - E9 EB045D45 JMP 45AC84F7</font><p align="justify">
+                        <br>
+                        <img border="0" src="images/Image5.jpg" align="left" width="185" height="60">This 
+                        time instead Ollydbg behaves differently and starts to 
+                        analyze deeply the program and especially starts to 
+                        trace it (see the left bottom part of the interface, 
+                        there is a message &quot;Tracing SFX..&quot;). Let Ollydbg works 
+                        till the process stops and you land at what Ollydbg 
+                        believe could be the final destination of the self 
+                        extracting procedure.<p align="justify">
+                        <img border="0" src="images/Image6.jpg" width="724" height="25"><p align="justify">
+                        As you can see Olly also reports in the status bar a 
+                        statistic of the work done:</p>
+                        <p align="justify">
+                        <img border="0" src="images/Image7.jpg" width="601" height="25"></p>
+                        <p align="justify">
+                        If you haven't still done it press a CTRL-A to reanalyze 
+                        the program, and to see clearly that we are in the real 
+                        OEP of the program.<p align="justify">
+                        <b>A note about Ollydbg: </b>Ollydbg stores away (into 
+                        the UDD file) the original OEP just found, so the next time 
+                        we will launch the same program the OEP will be 
+                        immediately found and Ollydbg will report that the SFX 
+						entry point (aka the OEP) has been &quot;learned&quot;:<p align="justify">
+                        <img border="0" src="images/Image8.jpg" width="203" height="23"><p align="justify">
+                        As you can see the point where we stopped this time is 
+                        the same we would have obtained doing the process 
+                        manually! Well, a little bit of work skipped!<p align="justify">
+                        <u>
+                        <b>Dumping the Process and Fixing the IAT</b></u><br>
+                        Now we are ready to dump the program as usually. Try, 
+                        before reading on, to do as Gabri3l told you in the third 
+                        tutorial, and you will see that ImpRec is 
+                        not be able to get any valid import from the running 
+                        process; there's no way to obtain a fixed dump operating 
+                        as Gabri3l told you. Why? Well, we will see it in a 
+                        moment.<p align="justify">
+                        First of all dump the program using OllyDump, uncheck 
+                        Rebuild Import and take note of the OEP. In this case 
+                        is: <b>AF0A0</b>.<p align="center">
+                        <img border="0" src="images/Ollytu2.gif" width="610" height="450"><p align="justify">
+                        I called the dump file, with a name of fantasy, 
+                        <b>dump.exe</b>.<p align="justify">
+                        Now open Import Reconstructor 1.6 and open the process 
+                        you are debugging from the processes list. I'll do it brief hoping you are 
+                        already accustomed to this program, so the picture 
+                        reports everything needed, and the number are the steps 
+                        to follow.<p align="justify">
+                        <img border="0" src="images/Image9.jpg" width="512" height="382" align="left">Once 
+                        you press the &quot;IAT Autosearch&quot; button ImpRec pops up to 
+                        you this dialog message:<p align="justify">
+                        <img border="0" src="images/Image10.jpg" width="355" height="116"><p align="justify">
+                        As you should already know this is the address where 
+                        ImpRec beleives the IAT is (the IAT has a fixed 
+                        structure so it's easily recognized by ImpRec).<br>
+                        Go forward to step 3 and  4 and you should 
+                        get the point: the IAT cannot be reconstructed in this 
+                        way!</p>
+                        <p align="justify">
+                        We need to instruct ImpRec to find on it's own the APIs 
+                        in the memory space of the process in a different way!<p align="justify">
+                        &nbsp;<p align="justify">
+                        See how..<br>
+&nbsp;<p align="justify">
+                        Right click on the white space of the interface, and you 
+                        should get this contextual menu:<p align="justify">
+                        <img border="0" src="images/Image11.gif" width="370" height="262" align="left">Select 
+                        the &quot;Get API Calls&quot; and this is the final dialog which 
+                        appears to you:<p align="center">
+                        <img border="0" src="images/Image12.jpg" width="460" height="198"><p align="justify">
+                        <br>
+                        Before pressing Ok, do you understand what the program 
+                        is going to do? It is going to scan all the CALL [X] 
+                        instructions in the memory that goes from 0000000 to 
+                        FFFFFFF. We will do the same process manually for just 
+                        one call, to understand the work that ImpRec will do 
+                        when you will press able to press ok.<br>
+                        Now leave ImpRec as it is and return to read a little of 
+                        what happens behind the scenes.<p align="justify"><b><u>
+                        Understanding what ImpRec will do</u><br>
+                        </b>Switch to OllyDbg which is still running in 
+                        background, with the process stopped at the OEP.</p>
+                        <p align="justify">This is the situation you should see 
+                        now:</p>
+                        <p align="justify">
+                        <font face="Courier New" color="#FFFF00">004AF0A0 /. 55 
+                        PUSH EBP ; Real entry point of SFX code<br>
+                        004AF0A1 |. 8BEC MOV EBP,ESP<br>
+                        004AF0A3 |. B9 0B000000 MOV ECX,0B<br>
+                        004AF0A8 |&gt; 6A 00 /PUSH 0<br>
+                        004AF0AA |. 6A 00 |PUSH 0<br>
+                        004AF0AC |. 49 |DEC ECX<br>
+                        004AF0AD |.^ 75 F9 \JNZ SHORT videojoi.004AF0A8<br>
+                        004AF0AF |. 53 PUSH EBX<br>
+                        004AF0B0 |. 56 PUSH ESI<br>
+                        004AF0B1 |. B8 B8ED4A00 MOV EAX,videojoi.004AEDB8<br>
+                        004AF0B6 |. E8 6573F5FF CALL videojoi.00406420<br>
+                        004AF0BB |. 8B35 6C204B00 MOV ESI,DWORD PTR DS:[4B206C] 
+                        ; videojoi.004B3C14<br>
+                        004AF0C1 |. 33C0 XOR EAX,EAX<br>
+                        004AF0C3 |. 55 PUSH EBP<br>
+                        004AF0C4 |. 68 28F54A00 PUSH videojoi.004AF528<br>
+                        004AF0C9 |. 64:FF30 PUSH DWORD PTR FS:[EAX]<br>
+                        004AF0CC |. 64:8920 MOV DWORD PTR FS:[EAX],ESP<br>
+                        004AF0CF |. 6A 00 PUSH 0 ; /Title = NULL<br>
+                        004AF0D1 |. 68 38F54A00 PUSH videojoi.004AF538 ; |Class 
+                        = &quot;Super Video Joiner&quot;<br>
+                        004AF0D6 |. E8 B97BF5FF CALL videojoi.00406C94 ; 
+                        \FindWindowA<br>
+                        004AF0DB |. 85C0 TEST EAX,EAX<br>
+                        004AF0DD |. 76 14 JBE SHORT videojoi.004AF0F3</font><br>
+                        <br>
+                        Go to one of the system calls spread around the code and 
+                        see how it is done. For example I will follow the first 
+                        one, FindWindowA, called at <b>004AF0D6</b>.</p>
+                        <p align="justify">Look the call: it is like CALL 
+                        videojoi.00406C94, where 00406C94 is the called address. 
+                        At the called address this what we find:</p>
+                        <p align="justify">
+                        <font face="Courier New" color="#FFFF00">00406C94 $- 
+                        FF25 04474B00 JMP DWORD PTR DS:[4B4704] ; 
+                        user32.FindWindowA<br>
+                        <br>
+                        </font>the JMP at 00406C94 jumps directly into the 
+                        user32's FindWindowA starting address. By the way when 
+                        you are at <b>00406C94</b> look around, there are a lot 
+                        of similar JMPs to the real system calls...</p>
+                        <p align="justify">So let try to summarize: we have a 
+                        CALL to an address (004AF0D6), which contains a JMP to 
+                        another address (004B4704), so we can see the first 
+                        called address as a memory pointer to the real called 
+                        address, which in assembler is as an indirect call. </p>
+                        <p align="justify">Its syntax generally is:<br>
+                        <br>
+                        <font face="Courier New" color="#FFFF00">CALL 
+                        [address_containing_the_real_addr_to_call] </font></p>
+                        <p align="justify">or rather, using ImpRec notation, 
+                        CALL [X].. What the ImpRec is still asking to you? &quot;Get 
+                        CALL [X] Scheme&quot;...</p>
+                        <p align="justify">For example when a registry contains 
+                        an address of a subroutine to call the ASM instruction 
+                        will be CALL [EAX], if EAX is the register.</p><hr>
+						<p align="justify">But let take a short break to dig a 
+						little this specific argument, I think that could be 
+						interesting to know some details about how the calls to 
+						imported functions are generated from the compiler and 
+						why. Let's examine what the call to an imported API 
+						looks like. There are two cases to consider: the 
+						efficient way and inefficient way. In the best case, a 
+						call to an imported API looks like this:</p>
+						<pre class="clsCode"><font face="Courier New" color="#FFFF00">CALL DWORD PTR [0x00405030]</font></pre>
+						<p align="justify">If you're not familiar with x86 
+						assembly language, this is a call through a function 
+						pointer. Whatever DWORD-sized value is at 0x405030 is 
+						where the CALL instruction will send control. In the 
+						previous example, address 0x405030 lies within the IAT.<br>
+						<img area="40" src="file:///D:/My%20Programs/My%20Cracks/Super%20Video%20Joiner/Tutorial/default.aspx_files/indent.gif" alt="" height="4" width="10">The 
+						less efficient call to an imported API looks like this:<br>
+&nbsp;</p>
+						<pre class="clsCode"><font face="Courier New" color="#FFFF00">CALL 0x0040100C
+........
+0x0040100C:
+JMP       DWORD PTR [0x00405030]</font>
+</pre>
+						In this situation, the CALL transfers control to a small 
+						stub. The stub is a JMP to the address whose value is at 
+						0x405030. Again, remember that 0x405030 is an entry 
+						within the IAT. In a nutshell, the less efficient 
+						imported API call uses five bytes of additional code, 
+						and takes longer to execute because of the extra JMP.<p>
+						You're probably wondering why the less efficient method 
+						would ever be used. There's a good explanation. Left to 
+						its own devices, the compiler can't distinguish between 
+						imported API calls and ordinary functions within the 
+						same module. As such, the compiler emits a CALL 
+						instruction of the form<br>
+&nbsp;</p>
+						<pre class="clsCode"><font face="Courier New" color="#FFFF00">CALL XXXXXXXX</font>
+</pre>
+						where XXXXXXXX is an actual code address that will be 
+						filled in by the linker later. Note that this last CALL 
+						instruction isn't through a function pointer. Rather, 
+						it's an actual code address. To keep the cosmic karma in 
+						balance, the linker needs to have a chunk of code to 
+						substitute for XXXXXXXX. The simplest way to do this is 
+						to make the call point to a JMP stub, like you just saw.<p>
+						Where does the JMP stub come from? Surprisingly, it 
+						comes from the import library for the imported function. 
+						If you were to examine an import library, and examine 
+						the code associated with the imported API name, you'd 
+						see that it's a JMP stub like the one just shown. What 
+						this means is that by default, in the absence of any 
+						intervention, imported API calls will use the less 
+						efficient form.</p>
+						<p>Logically, the next question to ask is how to get the 
+						optimized form. The answer comes in the form of a hint 
+						you give to the compiler. The __declspec(dllimport) 
+						function modifier tells the compiler that the function 
+						resides in another DLL and that the compiler should 
+						generate this instruction<br>
+&nbsp;</p>
+						<pre class="clsCode"><font face="Courier New" color="#FFFF00">CALL DWORD PTR [XXXXXXXX]</font>
+</pre>
+						rather than this one:<br>
+&nbsp;<pre class="clsCode"><font face="Courier New" color="#FFFF00">CALL XXXXXXXX</font>
+</pre>
+						In addition, the compiler emits information telling the 
+						linker to resolve the function pointer portion of the 
+						instruction to a symbol named __imp_functionname. For 
+						instance, if you were calling MyFunction, the symbol 
+						name would be __imp_MyFunction. Looking in an import 
+						library, you'll see that in addition to the regular 
+						symbol name, there's also a symbol with the __imp__ 
+						prefix on it. This __imp__ symbol resolves directly to 
+						the IAT entry, rather than to the JMP stub.<p>So what 
+						does this mean in your everyday life? If you're writing 
+						exported functions and providing a .H file for them, 
+						remember to use the __declspec(dllimport) modifier with 
+						the function:<br>
+&nbsp;</p>
+						<pre class="clsCode"><font face="Courier New" color="#FFFF00">__declspec(dllimport) void Foo(void);</font>
+</pre>
+						If you look at the Windows system header files, you'll 
+						find that they use __declspec(dllimport) for the Windows 
+						APIs. It's not easy to see this, but if you search for 
+						the DECLSPEC_IMPORT macro defined in WINNT.H, and which 
+						is used in files such as WinBase.H, you'll see how __declspec(dllimport) 
+						is prepended to the system API declarations.
+						<hr>
+						<p align="justify">
+                        <br>
+                        <b><u>Terminating the dumping process</u><br>
+                        </b>It's time now to finish our dumping procedure and to 
+                        have a fixed working dump ready to be patched, isn't it?</p>
+                        <p align="justify">When you press OK in the ImpRec's 
+                        dialog box discussed above, the program starts to work, 
+                        and the final result is something which looks like 
+                        below:</p>
+                        <p align="justify">
+                        <img border="0" src="images/Image13.jpg" align="left" width="627" height="469">Press 
+                        the &quot;Show Invalid&quot; button and you should see that there 
+                        are still a lot on invalid values: are all calls that 
+                        ImpRec wasn't able to associate to any system call. <br>
+                        No problem, it's obvious and we should have expected it: 
+                        not all the calls of the type CALL [X] are pointing to 
+                        the system and some of them are internal to the program, 
+                        so it's obvious that ImpRec is not able to recognize all 
+                        of them.</p>
+                        <p align="justify">To eliminate them simply right click 
+                        on one of them and select &quot;Cut Chunk(s)&quot; (see the 
+                        contextual menu shown few pictures above).</p>
+                        <p align="justify">Press &quot;Show Invalid&quot; again and this 
+                        time you shouldn't get any invalid entry. </p>
+                        <p align="justify">The ImpRec log window reports 
+                        &quot;Congratulation! There is no more invalid pointers, now 
+                        the question is: Will it work?:-)&quot;</p>
+                        <p align="justify">&nbsp;</p>
+                        <p align="justify">Press Fix Dump and we will answer 
+                        soon to this question ;-)</p>
+                        <p align="justify">Obviously the answer is yes, it 
+                        works!<br>
+&nbsp;</td>
+  				</tr>
+			</table>
+			  </center>
+            </div>
+			<br>
+			<br>
+			<!--============================================================================
+				copy the block below for every subtitle 
+			    =============================================================================-->
+			<table width="80%" border="1" align="center" height="16" ID="Tabletools" background="images/back2.gif">  				
+				<tr> 
+    				<td>
+    					<div align="center"><b><font size="2">3. Patching the 
+                          Program</font></b></div>
+    				</td>
+  				</tr>
+			</table>
+			<br>
+			<!--==============================================================================
+				copy the block below for every part with regular white text on gray background
+				==============================================================================-->
+			<div align="center">
+              <center>
+			<table width="80%" border="1" height="49" ID="Tabletools" background="images/back2.gif" cellspacing="3" cellpadding="3" style="border-collapse: collapse" bordercolor="#111111">  				
+				<tr> 
+    				<td height="43">
+                        <p align="justify">Now we have a working dump and we are 
+                        ready to happily patch the application.</p>
+                        <p align="justify">First of all study the protection: 
+                        there are three limitations to the program, it cannot 
+                        join more than two files, when you exit there is a 
+                        messagebox and you cannot enter any registration code 
+                        you like. All these limitations have very clear Bad Boy 
+                        messages, which are essential grips to start reversing 
+                        with Olly. </p>
+                        <p align="justify">From earlier beginner tutorials of 
+                        this series and of ARTeam's tutorials collection, you 
+                        should have learnt that a Bad Boy is a great place from 
+                        where to find references to the code to patch, you 
+                        should also know how to search referenced strings in 
+                        OllyDbg.</p>
+                        <p align="justify">Following this method I found these 
+                        three points where to patch the application. I will 
+                        report them briefly without commenting them too much, 
+                        because are very simple indeed (just some jmps 
+                        patching). I also anyway reported the referenced strings 
+                        I used to find the right point.</p>
+                        <p><b><u>Patch1</u><br>
+                        <br>
+                        </b>Original Code:<br>
+                        <font face="Courier New" color="#FFFF00">004A7123 |. /75 
+                        14 JNZ SHORT videojoi.004A7139<br>
+                        004A7125 |. |A1 081E4B00 MOV EAX,DWORD PTR DS:[4B1E08]<br>
+                        004A712A |. |8338 00 CMP DWORD PTR DS:[EAX],0<br>
+                        004A712D |. |74 0A JE SHORT videojoi.004A7139<br>
+                        004A712F |. |A1 9C1E4B00 MOV EAX,DWORD PTR DS:[4B1E9C]<br>
+                        004A7134 |. |8338 00 CMP DWORD PTR DS:[EAX],0<br>
+                        004A7137 |. |75 12 JNZ SHORT videojoi.004A714B<br>
+                        004A7139 |&gt; \BA 00724A00 MOV EDX,videojoi.004A7200 ; 
+                        ASCII &quot;Licence to: Unregister&quot;</font></p>
+						<p align="justify">Patched Code:<br>
+                        <font face="Courier New" color="#FFFF00">004A7123 . 90 
+                        NOP<br>
+                        004A7124 . 90 NOP<br>
+                        004A7125 . A1 081E4B00 MOV EAX,DWORD PTR DS:[4B1E08]<br>
+                        004A712A . 8338 00 CMP DWORD PTR DS:[EAX],0<br>
+                        004A712D . 90 NOP<br>
+                        004A712E . 90 NOP<br>
+                        004A712F . A1 9C1E4B00 MOV EAX,DWORD PTR DS:[4B1E9C]<br>
+                        004A7134 . 8338 00 CMP DWORD PTR DS:[EAX],0<br>
+                        004A7137 . EB 12 JMP SHORT videojoi.004A714B<br>
+                        004A7139 . BA 00724A00 MOV EDX,videojoi.004A7200 ; ASCII 
+                        &quot;Licence to: Unregister&quot;</font></p>
+                        <p align="justify"><b><u>Patch2</u><br>
+                        <br>
+                        </b>Original Code:<br>
+                        <font face="Courier New" color="#FFFF00">004A8CE2 |. /75 
+                        18 JNZ SHORT videojoi.004A8CFC<br>
+                        004A8CE4 |. |A1 081E4B00 MOV EAX,DWORD PTR DS:[4B1E08]<br>
+                        004A8CE9 |. |8338 00 CMP DWORD PTR DS:[EAX],0<br>
+                        004A8CEC |. |74 0E JE SHORT videojoi.004A8CFC<br>
+                        004A8CEE |. |A1 9C1E4B00 MOV EAX,DWORD PTR DS:[4B1E9C]<br>
+                        004A8CF3 |. |8338 00 CMP DWORD PTR DS:[EAX],0<br>
+                        004A8CF6 |. |0F85 52020000 JNZ videojoi.004A8F4E<br>
+                        004A8CFC |&gt; \8D45 F0 LEA EAX,[LOCAL.4]<br>
+                        004A8CFF |. BA 28954A00 MOV EDX,videojoi.004A9528 ; 
+                        ASCII &quot;This trial version only can join less than 2 
+                        video files at a time,this limit only can be eliminated 
+                        when it is registered!&quot;<br>
+                        004A8D04 |. E8 E3B4F5FF CALL videojoi.004041EC</font></p>
+						<p align="justify">Patched Code:<br>
+                        <font face="Courier New" color="#FFFF00">004A8CE2 . 90 
+                        NOP<br>
+                        004A8CE3 . 90 NOP<br>
+                        004A8CE4 . A1 081E4B00 MOV EAX,DWORD PTR DS:[4B1E08]<br>
+                        004A8CE9 . 8338 00 CMP DWORD PTR DS:[EAX],0<br>
+                        004A8CEC . 90 NOP<br>
+                        004A8CED . 90 NOP<br>
+                        004A8CEE . A1 9C1E4B00 MOV EAX,DWORD PTR DS:[4B1E9C]<br>
+                        004A8CF3 . 8338 00 CMP DWORD PTR DS:[EAX],0<br>
+                        004A8CF6 . E9 53020000 JMP videojoi.004A8F4E<br>
+                        004A8CFB . 90 NOP<br>
+                        004A8CFC . 8D45 F0 LEA EAX,DWORD PTR SS:[EBP-10]<br>
+                        004A8CFF . BA 28954A00 MOV EDX,videojoi.004A9528 ; ASCII 
+                        &quot;This trial version only can join less than 2 video 
+                        files at a time,this limit only can be eliminated when 
+                        it is registered!&quot;<br>
+                        004A8D04 . E8 E3B4F5FF CALL videojoi.004041EC</font></p>
+						<p align="justify"><b><u>Patch3</u><br>
+                        <br>
+                        </b>Original Code:<br>
+                        <font face="Courier New" color="#FFFF00">004AB0D4 . /75 
+                        12 JNZ SHORT videojoi.004AB0E8<br>
+                        004AB0D6 . |833D FC3C4B00 00 CMP DWORD PTR DS:[4B3CFC],0<br>
+                        004AB0DD . |74 09 JE SHORT videojoi.004AB0E8<br>
+                        004AB0DF . |833D 003D4B00 00 CMP DWORD PTR DS:[4B3D00],0<br>
+                        004AB0E6 . |75 0A JNZ SHORT videojoi.004AB0F2<br>
+                        004AB0E8 &gt; \B8 FCB04A00 MOV EAX,videojoi.004AB0FC ; 
+                        ASCII &quot;This is a unregistered Version, Don't forget to 
+                        register it.&quot;<br>
+                        004AB0ED . E8 327EF8FF CALL videojoi.00432F24</font></p>
+						<p align="justify">Patched Code:<br>
+                        <font face="Courier New" color="#FFFF00">004AB0D4 . 90 
+                        NOP<br>
+                        004AB0D5 . 90 NOP<br>
+                        004AB0D6 . 833D FC3C4B00 00 CMP DWORD PTR DS:[4B3CFC],0<br>
+                        004AB0DD . 90 NOP<br>
+                        004AB0DE . 90 NOP<br>
+                        004AB0DF . 833D 003D4B00 00 CMP DWORD PTR DS:[4B3D00],0<br>
+                        004AB0E6 . EB 0A JMP SHORT videojoi.004AB0F2<br>
+                        004AB0E8 . B8 FCB04A00 MOV EAX,videojoi.004AB0FC ; ASCII 
+                        &quot;This is a unregistered Version, Don't forget to 
+                        register it.&quot;<br>
+                        004AB0ED . E8 327EF8FF CALL videojoi.00432F24</font></p>
+						<p align="justify">You have done it! I hope you 
+                        understood what I simply pasted here, (sorry, but it's 
+                        useful to make the whole tutorial shorter). From Ollydbg 
+                        save the applied patches to a program and call it for 
+                        exampl <b>dump.patched.exe</b>, then run it. </p>
+						<p align="justify">It works fine with no limitations or 
+                        annoying nags and allows to join more than two 
+                        sequences..<br>
+&nbsp;</p>
+                        </td>
+  				</tr>
+			</table>
+			  </center>
+            </div>
+			<br>
+			<br>
+			
+			
+			<!--============================================================================
+				copy the block below for every subtitle 
+			    =============================================================================-->
+			<table width="80%" border="1" align="center" height="16" ID="table1" background="images/back2.gif">  				
+				<tr> 
+    				<td>
+    					<div align="center"><b><font size="2">4. Creating the 
+                          Patcher</font></b></div>
+    				</td>
+  				</tr>
+			</table>
+			<br>
+			<!--==============================================================================
+				copy the block below for every part with regular white text on gray background
+				==============================================================================-->
+			<div align="center">
+              <center>
+			<table width="80%" border="1" height="16" ID="table2" background="images/back2.gif" cellspacing="3" cellpadding="3" style="border-collapse: collapse" bordercolor="#111111">  				
+				<tr> 
+    				<td>
+    					<p align="justify">Also this time we will use Diablo2oo2 
+                        Universal Patcher to create the patcher, it has an 
+                        unique feature to be able to patch packed programs and 
+                        specifically supports AsPack. The final patch so it will 
+                        be able to work on the original installed file without 
+                        having to dump it and reducing the distribution weight.</p>
+                        <p align="justify">Anyway this time we will use a 
+                        different method to create a patcher, the <b>&quot;Search and 
+                        Replace&quot;</b>.</p>
+                        <p align="justify"><u><b>Search and Replace, general 
+                        considerations<br>
+                        </b></u>This patching method searches through the target 
+                        executable file for a specific byte pattern and when if 
+                        finds it applies the corresponding new pattern. This 
+                        operation is done blindly for all the occurrences of the 
+                        specified byte pattern. So it's potentially dangerous if 
+                        not done on a well thought pattern. <br>
+                        On the other hand if this pattern is well choosen and 
+                        well formed there is an high probability that the same 
+                        pattern will be present in future versions of the same 
+                        program: what often changes among different program's 
+                        versions are the relative offsets inside the program, 
+                        used in JMPs, CALLs and MOVs and so on, but the code 
+                        remains essentially the same (this happens because most 
+                        often we are changing the registration routines which 
+                        very often doesn't change, what changes are the features 
+                        which we leave untouched). Anyone reading this, who 
+                        cracked two different versions of the same program 
+                        should easily realize this concept!</p>
+                        <p align="justify">This is DuP Search and Replace form:</p>
+                        <p align="center">
+                        <img border="0" src="images/Image14.jpg" width="582" height="536"></p>
+                        <p align="justify">
+    						You should start entering the original byte pattern 
+                            in <b>1</b>, the the new one in <b>2</b>, press the 
+                            Add button in <b>3</b> and Check occourrence of 
+                            &quot;Search Bytes&quot; in <b>4</b>. The finally you shold 
+                            see your result(s) in <b>5</b>.<p align="justify">
+    						By the way, generally speaking if the byte pattern 
+                            is not unique DuP let you also choose the 
+                            occourrence number to patch, using the Occourrence 
+                            box.<p align="justify">
+    						<u><b>Choosing the byte patterns<br>
+                            </b></u>Before to preceed I need to clarify a thing: 
+                            each ASM operation has first of all its own op-code 
+                            (an hex number representing it for the CPU), and 
+                            then its operands. Ollydbg separates them for your 
+                            convenience, so an instruction like:<p align="justify">
+    						<font face="Courier New" color="#FFFF00">A1 081E4B00 
+                            MOV EAX,DWORD PTR DS:[4B1E08]</font><p align="justify">
+    						has an op-code equal to A1 (the MOV EAX, DWORD PTR 
+                            DS:[]), and an operand equal to 081E4B00 (which is 
+                            4B1E08 in reverse order).<p align="justify">
+    						Given this, we are ready to go further, to 
+                            understand the way to proceed. For the sake of 
+                            shortness, I will report here again the Patch1 wrote 
+                            in Section #3 of this tutorial. I will do the 
+                            complete steps only for this patch and for the other 
+                            I will only give to you the final results so you can 
+                            train yourself.<p>Original Code:<br>
+                        <font face="Courier New" color="#FFFF00">004A7123 |. /75 
+                        14 JNZ SHORT videojoi.004A7139<br>
+                        004A7125 |. |A1 081E4B00 MOV EAX,DWORD PTR DS:[4B1E08]<br>
+                        004A712A |. |8338 00 CMP DWORD PTR DS:[EAX],0<br>
+                        004A712D |. |74 0A JE SHORT videojoi.004A7139<br>
+                        004A712F |. |A1 9C1E4B00 MOV EAX,DWORD PTR DS:[4B1E9C]<br>
+                        004A7134 |. |8338 00 CMP DWORD PTR DS:[EAX],0<br>
+                        004A7137 |. |75 12 JNZ SHORT videojoi.004A714B<br>
+                        004A7139 |&gt; \BA 00724A00 MOV EDX,videojoi.004A7200 ; 
+                        ASCII &quot;Licence to: Unregister&quot;</font></p>
+						<p align="justify">which in bytes is as follows:</p>
+						<p align="justify">75,<font color="#FFFF00">14</font>,A1,<font color="#FFFF00">08,1E,4B,00</font>,83,38,<font color="#FFFF00">00</font>,74,<font color="#FFFF00">0A</font>,A1,<font color="#FFFF00">9C,1E,4B,00</font>,83,38,<font color="#FFFF00">00</font>,75,12,BA,<font color="#FFFF00">00,72,4A,00</font></p>
+						<p align="justify">the yellow part denotes the operands.<br>
+                        Now ask to yourself, what could change across different 
+                        versions of the program; the answer is: the offsets, the 
+                        addresses of the strings and of the MOVs...</p>
+						<p align="justify">Well, so cut these things away from 
+                        the above byte pattern and substitute them with a couple 
+                        of *</p>
+						<p align="justify">75,<font color="#FFFF00">**,</font>A1,<font color="#FFFF00">**,**,**,**</font>,83,38,<font color="#FFFF00">**,</font>74,0A,A1,<font color="#FFFF00">**,**,**,**</font>,83,38,<font color="#FFFF00">**,</font>75,<font color="#FFFF00">**,</font>BA,<font color="#FFFF00">**,**,**,**</font></p>
+						<p align="justify">Thinking to operands a little more I 
+                        can see that we can leave in place some of them, like 
+                        the first, equal to 14, which is an offset to a relative 
+                        jmp destination (means 14 bytes forward) because I can 
+                        suppose that if the code changes it's position in next 
+                        releases it will do as a whole block so the relative 
+                        offset of 14 bytes is small enough to be sure that even 
+                        the destination bytes of the jmp will be there. The 
+                        operand of the instruction at 004A712A which is 00, is 
+                        also for sure a think that will be still here in future 
+                        releases. </p>
+						<p align="justify">So this lead to our final search 
+                        string:</p>
+						<p align="justify"><b>Original byte sequence:<br>
+                        75,14,A1,**,**,**,**,83,38,00,74,0A,A1,**,**,**,**,83,38,**,75,12,BA,**,**,**,**</b></p>
+						<p align="justify">The concept is: do not include 
+                        offsets too far away from the peice of code you are 
+                        going to patch, the other operands can be left.</p>
+						<p align="justify">The patched code is the follow:<br>
+                        <font face="Courier New" color="#FFFF00">004A7123 . 90 
+                        NOP<br>
+                        004A7124 . 90 NOP<br>
+                        004A7125 . A1 081E4B00 MOV EAX,DWORD PTR DS:[4B1E08]<br>
+                        004A712A . 8338 00 CMP DWORD PTR DS:[EAX],0<br>
+                        004A712D . 90 NOP<br>
+                        004A712E . 90 NOP<br>
+                        004A712F . A1 9C1E4B00 MOV EAX,DWORD PTR DS:[4B1E9C]<br>
+                        004A7134 . 8338 00 CMP DWORD PTR DS:[EAX],0<br>
+                        004A7137 . EB 12 JMP SHORT videojoi.004A714B<br>
+                        004A7139 . BA 00724A00 MOV EDX,videojoi.004A7200 ; ASCII 
+                        &quot;Licence to: Unregister&quot;</font></p>
+                        <p align="justify">
+    						leads to this string instead:<p align="justify">
+    						<b>Patched byte sequence:<br>
+                            90,90,A1,<font color="#FFFF00">**,**,**,**,</font>83,38,00,90,90,A1,**,**,**,**,83,38,**,EB,12,BA,**,**,**,**</b><p align="justify">
+    						Well, enter them into Dup<p align="justify">
+    						<b>Note:</b> if you right click on the edit field <b>
+                            1</b> or <b>2</b> DuP it will open a contextual menu 
+                            which allows to paste the search pattern without 
+                            having to manually insert it (CTRL-C won't work).<p align="justify">
+    						In <b>5</b> select the byte pattern you added and 
+                            press the button in <b>4</b> to get this result:<p align="justify">
+    						<img border="0" src="images/Image15.jpg" align="left" width="577" height="108">The 
+                            VA offset at which the pattern is found is 4A7123 
+                            which is correct!<p align="justify">
+    						&nbsp;<p align="justify">
+    						&nbsp;<p align="justify">
+    						To make the story shorter the byte patterns of the 
+                            other two left patches are:<p align="justify">
+    						<u><b>Patch2:</b></u><p align="justify">
+    						<b>Original byte sequence:<br>
+                            75,18,A1,**,**,**,**,83,38,00,74,0E,A1,**,**,**,**,83,38,00,0F,85,**,**,**,**,8D,45,**,BA,**,**,**,**<br>
+                            <br>
+                            Patched byte sequence:<br>
+                            90,90,A1,**,**,**,**,83,38,00,90,90,A1,**,**,**,**,83,38,00,E9,53,02,00,00,90,8D,45,**,BA,**,**,**,**<br>
+&nbsp;</b><p align="justify">
+    						<u><b>Patch3:</b></u><p align="justify">
+    						<b>Original byte sequence: <br>
+                            75,**,83,3D,**,**,**,**,00,74,09,83,3D,**,**,**,**,00,75,0A,B8,**,**,**,**<br>
+                            <br>
+                            Patched byte sequence: <br>
+                            90,90,83,3D,**,**,**,**,00,90,90,83,3D,**,**,**,**,00,EB,0A,B8,**,**,**,**<br>	
+    				        </b><p align="justify">
+    						I think you might now rebuild how I got them.<p align="justify">
+    						Finally Diablo2oo2 Universal Patcher should look 
+                            like below:<p align="center">
+    						<img border="0" src="images/Image16.jpg" width="582" height="536"><p align="justify">
+    						You are ready to create the patch, remember to tag 
+                            the &quot;Target is packed&quot; checkbox, save the project 
+                            and create the patch.<p align="justify">
+    						You are now ready to test it!<p align="justify">
+    						Of course (should) work.</td>
+  				</tr>
+			</table>
+			    </center>
+            </div>
+			    <p>&nbsp;</p>
+			<table width="80%" border="1" align="center" height="16" ID="Tabletools" background="images/back2.gif">  				
+				<tr> 
+    				<td>
+    					<div align="center"><font size="2"><b>5</b></font><b><font size="2">. 
+                          Conclusions</font></b></div>
+    				</td>
+  				</tr>
+			</table>
+			<br>
+			<!--==============================================================================
+				copy the block below for every part with regular white text on gray background
+				==============================================================================-->
+			<div align="center">
+              <center>
+			<table width="80%" border="1" height="16" ID="Tabletools" background="images/back2.gif" cellspacing="3" cellpadding="3" style="border-collapse: collapse" bordercolor="#111111">  				
+				<tr> 
+    				<td>
+    					<u>
+    					<b>Lesson Learnt</b></u><p>I realize each time that, if 
+                        someone wants to get things basic, there's a lot to 
+                        write and a lot of snapshots to take. So simpler 
+                        tutorials are those which take more time, anyway I write 
+                        them also hoping to help new RCE saplings grow.. ^__^</p>
+                        <p>I hope you improved your skill with ollydbg and with 
+                        what happens under the cover. I hope also you understood 
+                        that even simple things such as AsPack could be a little 
+                        more complicated of how a single tutorial drove you to 
+                        suppose. I also hope you started to understand that 
+                        RCEing most of the times means analyzing things under a 
+                        different point of view and be open minded.</p>
+                        <p>
+    					have phun!<br>
+    						<br>	
+    				</td>
+  				</tr>
+			</table>
+			    </center>
+            </div>
+			    <br>
+&nbsp;<table width="80%" border="1" align="center" height="16" ID="Tabletools0" background="images/back2.gif">  				
+				<tr> 
+    				<td>
+    					<div align="center"><font size="2"><b>6</b></font><b><font size="2">. Greetingz
+                          </font>
+                          </b></div>
+    				</td>
+  				</tr>
+			</table>
+			    <br>
+			<div align="center">
+              <center>
+			<table width="80%" border="1" height="16" ID="Tabletools1" background="images/back2.gif" cellspacing="3" cellpadding="3" style="border-collapse: collapse" bordercolor="#111111">  				
+				<tr> 
+    				<td>
+    					<p align="center">[MAIN TEAM]<br>
+                        | Nilrem | Enforcer | Ferrari | Pompeyfan(ex-member) | 
+                        MaDMAn_H3rCuL3s | EJ12N | Kruger | <br>
+                        Shub-Nigurrath | Jdog45 | R@adier | Teerayoot | 
+						ThunderPwr | Eggi | Bone Enterprise | Gabri3l |<br>
+                        <br>
+                        *****************************<br>
+                        <br>
+                        Exetools | Woodmann | VCT | TSRh | Sir JMI |  | FEUERRADER | Britedream |  
+                        cl0ud (Mephisto) | Zest | Hobgoblin | Nullz | Everyone 
+						I missed 
+                        &amp; you</p>
+                        <p align="left"><b><font face="Verdana"><br>
+                        </font><font face="Courier New">(.|.)<br>
+                        &nbsp;).( (¯`·._.·[¯¨´*·~-.¸¸,.-~*´¨&amp;8~) &#348;&#295;&#367;&#946;¬&#327;ï&#285;µ&#341;&#345;&#257;&#359;&#295; 
+                        ¨´*·~-.¸¸,.-~*´¨]·._.·´¯) <br>
+                        ( v ) <br>
+                        &nbsp;\|/</font></b><br>	
+    				    </p>
+    				</td>
+  				</tr>
+			</table>
+			    </center>
+            </div>
+			    <p>
+			<br>
+			<br>
+
+				
+					
+					
+			    </p>
+
+				
+					
+					
+			</center>
+		</div></body>
+</html>

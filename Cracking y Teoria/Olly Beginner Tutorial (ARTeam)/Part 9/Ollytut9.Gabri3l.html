@@ -1,0 +1,276 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<title>ARTeam Beginner Olly Tutorial #9 by Gabri3l</title>
+<style type="text/css">
+<!--
+body {
+background-image: url(images/Background.gif);
+}
+div#side {
+	height: 7000;
+}
+.style6 {
+	font-size: 12px;
+	font-style: italic;
+}
+.style7 {color: #FFFFFF}
+.style8 {font-size: smaller}
+.style9 {font-weight: bold}
+.style10 {color: #CCCCCC}
+.style16 {font-style: italic}
+.style18 {color: #FFFFFF; font-weight: bold; }
+.style19 {color: #FFFF00}
+.style20 {color: #FFFFFF; font-style: italic; }
+-->
+</style>
+</head>
+
+<body style="background-attachment: fixed;" behavior="fixed" text="#C0C0C0" link="#FFFFFF" vlink="#FFFFFF" alink="#FFFFFF">
+  <div style="float:left; position:absolute; left:0px; top:0px"><img src="images/corner.png" width="86" height="98"></div>
+  <div align = "center">
+    <table align = "center" border="1" width="554" bgcolor="#336699" height="428" bordercolor="#3D486E" cellspacing="0" cellpadding="2" background="images/table.gif" bordercolordark="#3D486E" bordercolorlight="#3D486E" style="border-collapse: collapse">
+      <tr>
+        <td width="100%" height="100" align="center" background="images/ARTeam.gif"bordercolor="#3D486E" bordercolorlight="#3D486E" bordercolordark="#3D486E"><span class="style7"><span class="style9"><u>Beginner Tutorial #9 </u></span><br>
+      By: Gabri3l /ARTeam<br>
+      <a href="http://cracking.accessroot.com" class="style8">http://cracking.accessroot.com</a>        </span>          <p class="style7">Defeating Magic Byte Protection </p></td>
+      </tr>
+      <tr>
+        <td width="100%" height="19" align="left"><b><u>The Target:</u></b><br>
+       MP3 Cutter Joiner v1.8<br>
+       http://www.audiotoolsfactory.com/mp3-cutter/mp3-cutter.htm</td>
+      </tr>
+      <tr>
+        <td width="100%" height="23" align="left"><b><u>The Tools:</u></b><br>
+      PEID, Ollydbg 1.10, HexWorkshop 4.23 </td>
+      </tr>
+      <tr>
+        <td width="100%" height="62" align="left" background="images/table.gif"><b><u>The Protection:</u></b><br>
+      Serial</td>
+      </tr>
+      <tr>
+        <td width="100%" height="20" align="left"><p><b><u>Other Information:</u></b><br>
+        This tutorial combines both Beginner Tutorial #7 and Beginner Tutorial #8. It will cover a protection  which I  call &quot;Magic Bytes&quot;. A program using Magic Byte protection sets a BYTE located somewhere in memory equal to 0 or 1 to represent Unregistered and Registered. If we can locate that BYTE we can reverse it and, <em>like magic</em>, we allow the program to run as Registered. In this tutorial we will take that a step further and locate where the BYTE is written and change the program to always write 1 to that memory location. We will then reverse any attempt to overwrite that byte so we will always stay registered. We will learn more about the program by examining it's API calls. And finally  learn how to register the program without changing any bytes in the original executable. </p></td>
+      </tr>
+    </table>
+</div>
+    <p align="center" class="style6">Best viewed in Firefox at 1280x1024</p>
+    <div align="center"> 
+    <center>
+    <table width="75%" height="227" border="1" cellspacing="0" bordercolor="#3D486E" bordercolorlight="#3D486E" bordercolordark="#3D486E" background="images/table.gif" style="border-collapse: collapse">
+      <tr>
+        <td width="100%" height="24"><p align="center"><b><u>Intro:</u></b></p></td>
+      </tr>
+      <tr>
+        <td width="100%" height="201" valign="top"><p>All the tools you will need can be found online:<br>
+                <a href="http://peid.has.it">http://Peid.has.it</a><br>
+                <a href="http://home.t-online.de/home/Ollydbg/">http://home.t-online.de/home/Ollydbg/</a><br>
+                <a href="http://www.bpsoft.com/downloads/index.html">http://www.bpsoft.com/downloads/index.html</a>            <br>
+                <br>
+        As usual, first get your program set up and ready to crack. Make a quick backup so we don't screw anything up when working on the file. Now begin by opening MP3 Cutter Joiner.exe in PEID to see if it is packed. The result:<br>
+        <img src="images/PEID.gif" align="left"></p>
+          <p>Borland Delphi. There are a few different ways to reverse the protection scheme of a Delphi application A very popular method is to use DeDe. Which is a delphi decompiler. By using DeDe you can decompile the program down to very simple code. You can also recover the forms and find out what functions are called when you click on a button. As useful as DeDe is, we are not going to use it this time. But keep it in mind if you ever encounter a delphi application. For more DeDe information check out <u><a href="http://tutorials.accessroot.com/">Cracking CaptureNPrint 6.6.6.17 By Shub-Nigurrath</a></u></p>
+        </td>
+      </tr>
+    </table>
+    <br>
+    <br>
+  </center>
+</div>
+<div align=n "center">
+<table width="75%" height="4553" border="1" align="center" cellspacing="0" bordercolor="#3D486E" bordercolorlight="#3D486E" bordercolordark="#3D486E" background="/images/table.gif" style="border-collapse: collapse">
+  <tr>
+    <td width="100%" background="images/table.gif">
+    <p align="center"><b><u>Body:</u></b></p></td>
+  </tr>
+  <tr>
+    <td width="100%" height="4528" valign="top" background="images/table.gif">
+      <p><strong><u>Finding the Magic Byte: </u></strong></p>
+      <p>I want to start with a little information on what a magic byte represents. The magic byte is also called a Boolean variable. A boolean variable can only have two values: 1 or 0. When writing a computer program you often times want to represent something as TRUE or FALSE. The easiest way to do this is by creating a boolean variable and setting it equal to 0 for False and 1 for True. In this particular program the boolean variable determines whether or not we are registered. So the Magic Byte (Boolean Variable) will be equal to 0 (False) if we are not registered and equal to 1 (True) if we are registered. This type of protection was first introduced to you in <a href="http://tutorials.accessroot.com/">Beginner Olly Tutorial Part7 by MaDMAn H3rCuL3s</a>. MaDMAn H3rCuL3s showed you how to find the Boolean Variable by using memory breakpoints. In this tutorial we will use Hardware breakpoints and there will be more than one location we need to patch. </p>
+      <p>Okay, now that we know what a Magic Byte is, lets start reversing. Open up MP3 Cutter Joiner in Ollydbg. You should be at the OEP:<br><center><img src="images/Olly1.gif" width="563" height="148"><br>
+      <a href="images/Olly1.gif">Figure 1</a></center></p>
+      <p>We are going to begin by seeing if we can locate any interesting strings that may help us reverse this program. Right-Click and choose Search for-&gt;All Referenced Text Strings. You should see the following:<br>
+        <center>
+          <img src="images/Olly2.gif"><br>
+            <a href="images/Olly2.gif">Figure 2</a></center> </p>
+          <p>We are going to search for a common word that may help us reverse this program: &quot;register&quot;. Right-Click-&gt;Search for Text and in the box that comes up type &quot;register&quot; without the quotes. UNcheck Case Sensitive and Check Entire Scope. You'll first break on &quot;RegisterAutomation&quot;.<br><center><img src="images/Olly3.gif" width="495" height="146"><br>
+            <a href="images/Olly3.gif">Figure 3</a></center></p>
+          <p>That isn't useful. So press CTRL+L to search for the next occurrence of &quot;Register&quot;. You will break on &quot;tfm_register&quot;. That isn't good either. Continue to press CTRL+L until you see the string: &quot;Sorry, you have converted 30 files. Please register!&quot;. (In version 1.08 the string has changed to &quot;Sorry, you have converted 15 files. Please register!&quot;) That string looks good, Double-Click it and you will land in the code section. Scroll up until your image matches mine:<br><center><img src="images/Olly4.gif"><br>
+            <a href="images/Olly4.gif">Figure 4 
+            </a>
+            </center>
+          </p>
+      <p>I have commented the code to give you a better idea of what is happening. Looking at the code we see that there are two conditional jumps that can jump over the &quot;Sorry you have..&quot; nag. The last conditional jump we see compares the value at 004CEE64 to 1E. Which we know from previous tutorials to equal 30 in decimal. So we can assume that the value at 004CEE64 is used as a counter of how many conversions we have made. When we reach 30 or 1E the program gives us a nag.           
+          <p>But before we get the the comparison jump; the first jump compares the value at location 004CEE56 to 0. If 004CEE56 is not 01 then we continue to the 1E compare. Now if we are registered there is no reason to ever check how many conversions we have made. So obviously that first conditional jump tests if we are registered. If we aren't then the program will test to see if we have reached the limit of 30 conversions. Well we want the program to always think we are registered. The Byte at location 004CEE56 is determining whether or not we are registered. If we can change that byte we can make the program think we are registered. So, in Olly's dump window Right-Click and choose Go To-&gt;Expression and type in 004CEE56. You should see the following:<br>
+            <center>
+            <img src="images/Olly5.gif">
+      <br>
+      <a href="images/olly5.gif">Figure 5</a>          
+            </center>
+          <p>We know that the program will probably test our registration and then write 00 if we are not registered and 01 if we are. We want to try and find out where in the executable 004CEE56 is being written to. We are going to set Olly to break whenever the program writes to location 004CEE56. So choose that BYTE and Right-Click Breakpoint-&gt;Hardware, on Access-&gt;Byte. The program will now break whenever 004CEE56 is accessed by MP3 Cutter Joiner. For more information on the different types of breakpoints and how to use them be sure you have read <a href="http://tutorials.accessroot.com/">Beginner Olly Tutorial Part8 by Shub Nigurrath</a><br>
+            <center><img src="images/Olly6.gif"><br>
+          <a href="images/olly6.gif">Figure 6</a> 
+    </center>
+    <p>We have our breakpoint set on the magic byte. So we can now press RUN and allow the program to load. You should break at the following location. I added a comment, we can see that the program initializes by writing 0 to 004CEE56. Scroll up until your code matches mine:<br><center><img src="images/Olly7.gif"><br>
+      <a href="images/olly7.gif">Figure 7</a></center>
+    <p>The program begins by writing a 0 to 004CEE56, that is somewhat smart programming. If the program wrote a 01 to the code location we could bypass  the registration scheme and be registered. Let's start by modifying the program to do just that. We are going to change the program so that it will now write a 1 to our magic byte location. Select 004C5070 and press SPACE to Assemble the line. In the box that comes up change MOV BYTE PTR DS:[4CEE56],0 to MOV BYTE PTR DS:[4CEE56],1 and press Assemble. Your code should now look like this:<br>
+      <center>
+      <img src="images/Olly8.gif"><br>
+      <a href="images/olly8.gif">Figure 8     </a></center>
+    <p>Since we have already executed the MOV BYTE PTR DS:[4CEE56],0 our magic byte is currently set to 0. So we want to change our Magic Byte to a 01 also. In Olly's dump window, select the BYTE at 004CEE56 and press SPACE. In the box that comes up change the 00 in the HEX  section to 01. Press OK to save what you changed. <br>
+      <center><img src="images/Olly9.gif"><br>
+      <a href="images/Olly9.gif">Figure 9</a></center>     
+    <p>Before we continue, we are going to think logically. We see by the code in front of us that the program initializes itself by writing 0 to our Magic Byte. However, by looking at the code we see that there are no conditional jumps around so the program is going to write 0 if we are registered or not. This means somewhere else in the code the program tests if we are registered. It will then decide to write a 0 or a 1 on top of our Magic Byte.     
+    <p>Through testing this program I found that our hardware breakpoint does not break the next time our magic byte is accessed. And if we use a Memory Breakpoint as we did in MaDMAn H3rCuL3s' tutorial we will encounter an exception in the program. I will explain why this happened in a few paragraphs. To find where the program writes the 0 or 1 we are going to step through the next couple lines of code. Keep an eye on the  Magic Byte in Olly's dump window. Now press F8 to start stepping through the code. After each time you press F8 look at the Magic Byte and make sure it is still 01. Stop pressing F8 when you see it change back to 00. You should be at CMP BYTE PTR DS: [4CEE56],0 when 004CEE56 changes back to 00:<br>
+        <center>
+          <img src="images/Olly10.gif" width="707" height="104"><br>
+          <a href="images/olly10.gif">Figure 10</a>
+        </center>
+    <p>Somehow the program changed our Magic Byte back to 00. And it happened inside CALL MP3_Cutt.0041B4F4. We are going to find out where in that CALL our Magic Byte was changed. Select CALL MP3_Cutt.0041B4F4 and press F2 to set a breakpoint on that CALL. Okay we can remove our Hardware breakpoint by selecting the DEBUG menu and choosing HARDWARE BREAKPOINTS from the dropdown menu. A window will open up with the Hardware Breakpoints you have set. Press the DELETE button next to any breakpoints that are set and press OK. Now, Restart MP3 Cutter Joiner in Olly.     
+    <p>When our program is at the OEP, choose VIEW from Olly's menu and from the dropdown menu choose PATCHES. 
+      The Patches window in Olly saves all the changes we made to the code. Instead of trying to find where the program wrote 0 to our Magic Byte again and fixing it again, we can look at the Patches menu and fix it there. In the Patches window choose 004C5070 and press SPACE this will activate the patch: <br>
+      <center><img src="images/Olly11.gif"><br>
+        <a href="images/Olly11.gif">Figure 11</a>
+      </center>
+    <p>With our changes now activated close the Patches window and go ahead and press RUN to start MP3 Cutter Joiner.You will break on our CALL MP3_Cutt.0041B4F4. Let's take a look at our Magic Byte; In Olly's dump window Right-Click and choose Go To-&gt;Expression and type in 004CEE56. You will see that our Magic Byte is currently 01. That's good, our patch worked so far. Okay, press F7 to step into CALL MP3_Cutt.0041B4F4. You should be here:<br><center><img src="images/Olly12.gif"><br>
+        <a href="images/olly12.gif">Figure 12</a>
+    </center>
+    <p>Continue to press F7 and when you reach CALL NEAR DWORD PTR DS:[ESI+8] you should Step Into the CALL and be at the following code: <em>If you code does not look like mine you need to remove the Analysis. Right-Click choose Analysis-&gt;Remove Analysis from Module</em><br>
+      <center><img src="images/Olly13.gif"><br>
+        <a href="images/Olly13.gif">Figure 13</a>        </center>   
+    <p>We are going to continue stepping Into the CALL's until we find where our magic byte is being overwritten. Press F7 twice and you will have Stepped Into the CALL MP3_Cutt.00408F88. Continue to press F7 until you reach LEA EAX,DWORD PTR SS:[ESP+4] You should be here:<br>
+      <center><img src="images/Olly14.gif"><br>
+        <a href="images/olly14.gif">Figure 14 </a>
+    </center>   
+    <p>Because Olly can get confused sometimes we had to remove the code analysis. When Ollydbg applies analysis sometimes it doesn't always get the ASM functions correct. Sometimes it will mistake a series of functions for an ASCII word. When this happens we end up seeing junk code as you saw. We can remove the analysis to help us step through the code. But when we are finished stepping through the code it is best to reaplly the analysis to help us understand what is happening. Since we are outside of the junk code we can now reapply the Analysis. Press CTRL+A to Analyze the code again. Your code should now look like this: <br>
+      <center><img src="images/Olly15.gif"><br>
+        <a href="images/olly15.gif">Figure 15</a>
+      </center>
+    <p>After applying the Analysis we see that we have a call to ReadFile coming up. The function of ReadFile can be found in the Windows API. See Figure 16. Basically ReadFile  reads a certain amount of bytes from an address location and it then writes those bytes to a new location. Looking at Figure 16 we can say that ReadFile reads <span class="style7">nNumberOfBytesToRead</span> from <span class="style7">lpAddressOfBytesRead</span> and it then writes those BYTES into the <span class="style7">lpBuffer<span class="style10">. </span></span><br>
+      <center><img src="images/Olly16.gif"><br>
+        <a href="images/olly16.gif">Figure 16</a>    </center> 
+    <p>How does the Windows ReadFile know what bytes to read/write? We encountered this in <a href="http://tutorials.accessroot.com">Beginner Tutorial #3</a> when we modified the MessageBox function in L0pht5. <span class="style7">nNumberOfBytesToRead, lpAddressOfBytesRead, lpBuffer, hFile, <span class="style10">and </span>lpOverlapped</span> are al variables called <u>Arguments</u> and  they are defined by the program calling the function.When a program wants to use an Windows API function it has to pass the function values for each of the functions arguments.    However it is important to know that there are two &quot;classic&quot; ways that arguments are passed to API functions. These two methods of passing arguments are called the <u>C Calling Convention</u> and the <u>PASCAL Calling 
+      Convention</u>.     
+    <p>
+      The function ReadFile's arguments look like this:<br>
+      <span class="style18"> ReadFile</span> (<span class="style7">hFile, lpBuffer, nNumberOfBytesToRead, lpNumberOfBytesRead, lpOverlapped</span>)<br>
+      To pass these arguments to the function we need to PUSH them onto the stack. The Calling Convention determines in what order variables are PUSHed onto the stack.    
+    <p>The C calling convention PUSHes arguments from Right to Left. <br>
+        Using the <u>C Calling Convention</u> variables would be passed like so:<br>
+        PUSH <span class="style7">lpOverlapped</span><br>
+        PUSH <span class="style7">lpNumberOfBytesRead</span> <br>
+        PUSH <span class="style7">nNumberOfBytesToRead</span><br>
+        PUSH <span class="style7">lpBuffer</span> <br>
+        PUSH <span class="style7">hFile</span><br>
+        CALL <span class="style7">Kernel32.ReadFile</span>
+    <p>
+    The PASCAL calling convention is the opposite of the C Calling Convention. The PASCAL calling convention passes arguments from Left to Right. Using the <u>PASCAL Calling Convention</u> variables would be passed like so:<br>
+    PUSH <span class="style7">hFile</span><br>
+PUSH <span class="style7">lpBuffer</span> <br>
+PUSH <span class="style7">nNumberOfBytesToRead</span><br>
+PUSH <span class="style7">lpNumberOfBytesRead</span> <br>
+PUSH <span class="style7">lpOverlapped</span><br>
+CALL <span class="style7">Kernel32.ReadFile</span>    
+    <p>By looking at the registers in Olly we can determine the arguments that will be PUSHed onto the stack and what those values mean to the ReadFile function. We can even determine that this program uses the C Calling Convention<br>
+        <img src="images/Olly15.gif"><br>
+        <span class="style7">PUSH EAX: </span>The ADDRESS to READ the BYTES FROM is <span class="style19"><u>EAX</u></span>: <span class="style20">pNumberOfBytesRead = EAX = 0012FA58</span><br>
+        <span class="style7">PUSH EDI: </span>The NUMBER of BYTES to READ is <span class="style19"><u>EDI</u></span>: <span class="style20">nNumberOfBytesToRead = EDI = 00000001</span><br>
+        <span class="style7">PUSH ESI: </span>Where The BYTES will be WRITTEN is <span class="style19"><u>ESI</u></span>: <span class="style20">lpBuffer = ESI = <u>004CEE56</u></span> <span class="style10"><u>***OUR MAGIC BYTE LOCATION!***</u></span><br>
+        <span class="style7">PUSH EBX: </span>The HANDLE to the FILE is <span class="style19"><u>EBX</u></span>: <span class="style20">hFile = EBX = 00000190</span>    
+    <p>I hope all of that made sense. If you are having a hard time following just press F7 until you reach <span class="style7">CALL &lt;JMP.&amp;kernel32.ReadFile&gt;</span>. Look at the stack window and you will see that the values have filled themselves in:<br><center><img src="images/Olly17.gif" width="284" height="47"><br>
+        <a href="images/olly17.gif">Figure 17</a>
+    </center>
+    <p>Looking at the stack we can see that ReadFile will read only 1  byte and then wrote that byte to 004CEE56.<br>
+      If you remember back I told you that when I set a memory breakpoint on 004CEE56 it threw an exception. Well, this is why. The program used ReadFile to write overtop of our magic byte. However, when a memory breakpoint is set it effectively &quot;reserves&quot; that byte. When it a program tries to access that byte the breakpoint traps that instruction and throws an exception telling the debugger to stop. In this case the memory breakpoint was trying to trap the attempts to write to that location, but when ReadFile tried to write to there, it failed and threw an exception in the ReadFile function rather than in the debugger. This is why we had to step through the code rather than relying on a breakpoint. Now, from the last time we ran the program we know that MP3 Cutter Joiner will overwrote our Magic Byte at 004CEE56 with 00. It did it by using the windows API function ReadFile. We don't want our Byte to be overwritten! There is an easy and elegant fix for this.    
+    <p>Right now the BYTES are being read from EAX and written to ESI. What if we changed the values so that ReadFile read the values from the same place it was writing them to? It would basically make ReadFile do nothing. We can easily do this by changing the register that is PUSHed as the Buffer.  We are going to change them so it reads and writes to EAX. Select the PUSH ESI in Olly and press SPACE to Assemble. In the box that opens up change PUSH ESI to PUSH EAX and press Assemble. Your code should now look like this: <br>
+    <center><img src="images/Olly18.gif"><br>
+      <a href="images/Olly18.gif">Figure 18</a>
+    </center>
+    <p>The program will not overwrite our Magic Byte anymore. So we should always be registered. Okay, now that we have made that modification; Restart MP3 Cutter Joiner in Olly. When you are at the beginning of the program, apply both Patches from the Patch Window. Go ahead and press RUN...<br>
+      <center><img src="images/Olly19.gif"><br>
+        <a href="images/olly19.gif">Figure 19</a>
+    </center>    
+    <p>We did it! We located the Magic Byte. We found out where the program was overwriting the Magic Byte and fixed it to stop overwriting it. Finally we successfully made the program think it is registered by manipulating the Magic Byte to always equal 1.    
+    <p><strong><u>Further Analysis and Patching: </u> </strong>
+    <p> For all purposes we have defeated the Magic Byte protection scheme. However in this second part we will delve deeper into the program to try and better understand the protection. Let us review what we know about the programs protection:
+    <li>The program uses a boolean variable to store our registration information</li>   
+    <li>The boolean variable is located at the offset 004CEE56</li>
+    <li>The program initially writes a 0 to the magic byte location</li>
+    <li>The program then reads a byte from a second file and writes that byte overtop of our magic byte</li>
+    <p>There are many weaknesses in this protection scheme. We have already patched the program to write a 1 to the boolean variable location. We then disabled the ReadFile function that was overwriting our magic byte. However there is another weakness in this protection that we have not covered. Instead of patching the program we can instead locate the file that our &quot;unregistered&quot; byte is read from. If we were able to find and patch this second file we could change the 0 in it to a 1. There would be no need for any patching of our original program. This is exactly what we are going to do in this second section.
+    <p>The first thing we need to do is try and locate the file accessed by ReadFile. To do this we need to learn a little about how the Windows API accesses files. We already learned  about how ReadFile works, but ReadFile depends on variables supplied by other Windows API functions. One of the first parameters required by ReadFile is <span class="style7">hFile</span>. Looking back at <a href="/images/olly16.gif">Figure 16</a> we see that <span class="style7">hFile</span> is the handle of the file to read. Well, where does that handle come from and how is it assigned? Before any program can read from or write to a file, Windows first needs to open that specific file.  Assume you wrote a program and wanted to open File1 and copy it to File2. Windows opens File1 and assigns it a unique identifier called a handle it then does the same for File2. You can now pass the handle of File1 as a parameter to the ReadFile function. Once Windows reads in the information of File1 you can pass File2's handle to WriteFile. Now windows will write your information to the File identified by the File2 handle. If you switched the handles for File1 and File2, the program would then do the opposite. 
+    <p>We know why the file handle is important, now we need to know where Windows assigns that handle. Windows assigns file handles through the CreateFile API function. Don't be confused, even though the API is called CreateFile it is also used to open already existing files.  We can learn more about CreateFile online, Microsoft is kind enough to document most of it's API functions on the internet in what is called the MSDN or Microsoft Developers Network. The CreateFile function is explained here: <a href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/fileio/fs/createfile.asp">http://msdn.microsoft.com/library/default.asp?url=/library/en-us/fileio/fs/createfile.asp </a>
+    <ul>
+      <li class="style7"> The <b>CreateFile</b> function creates or opens a file, file stream, directory, physical disk, volume, console buffer, tape drive, communications resource, mailslot, or named pipe. The function returns a handle that can be used to access an object.</li>
+    </ul>    
+    <p>Since the file handle is unique to each opened file. If we know the file handle then we can easily figure out what file it corresponds to. 
+    <p>I think we know everything we need to know right now. So let's begin by opening the original MP3 Cutter Joiner in Olly. When we are at the OEP we are going to put breakpoints on every call to the CreateFile API functions.<br><center><img src="images/Olly20.gif"><br>
+        <a href="images/Olly20.gif">Figure 20</a></center>
+
+    <p>Now that we have our breakpoints set go ahead and press RUN. The program will load and you should eventually break here: <br><center><img src="images/Olly21.gif"><br>
+        <a href="images/Olly21.gif">Figure 21</a>
+    </center>
+    <p>If you look down a little bit you can see the CALL to ReadFile that overwrites our Magic Byte. So we know we are in the right place. Look at the stack to determine the arguments that are being passed to CreateFileA:<br><center><img src="images/Olly22.gif"><br>
+        <a href="images/Olly22.gif">Figure 22</a></center><br>
+      On the stack you see the argument &quot;<span class="style7">FileName</span>&quot; with the value &quot;<span class="style7">C:\WINNT\System32\SysCut.dat</span>&quot;. So we know that the file to be opened or created is going to be SysCut.dat. Well how are we going to find the Handle that CreateFile assigns? Hopefully, if you read <a href="http://tutorials.accessroot.com">Beginner Tutorial #5</a> you know that the Windows API functions most commonly return their values through EAX. To get the FileHandle for SysCut.dat all we need to do is execute the CreateFileA function and then look at the value in EAX. Let's do that.
+    <p>Press the Step Over button One time. CreateFileA should execute and you should be on <span class="style7">POP EDI<span class="style10">. Now take a look at the Registers Window: <br><center><img src="images/Olly23.gif"><br>
+          <a href="images/olly23.gif">Figure 23</a></center><br>
+          The value of the FileHandle for SysCut.dat in my case is <span class="style7">00000190</span>. Now we need to see if this is the same file that is being accessed by ReadFile. Scroll down and set a breakpoint on the <span class="style7">CALL &lt;JMP.&amp;kernel32.ReadFile&gt;</span>: <br><center><img src="images/Olly24.gif"><br>
+          <a href="images/Olly24.gif">Figure 24</a></center></span></span>
+    <p>Now Press RUN. You should break on <span class="style7"><span class="style10">CALL &lt;JMP.&amp;kernel32.ReadFile&gt;. Look at the Stack in Olly to see the arguments for this call to ReadFile:<br>
+          <center><img src="images/Olly25.gif" width="297" height="50"><br>
+            <a href="images/olly25.gif">Figure 25</a>
+          </center></span></span>
+    <p>Take a look at <span class="style7">hFile</span> it equals the FileHandle for SysCut.dat. ReadFile is accessing SysCut.dat! However, look at the value for <span class="style7">Buffer</span> and the number of <span class="style7">BytesToRead</span>. Our Magic Byte isn't being overwritten, instead 4 BYTES are being Read from SysCut.dat and written to <span class="style7">004CEE64</span>.  ReadFile is obviously being called more than once. Make a note of the fact that 4 Bytes are being read. 
+    <p>Okay let's press RUN again and try and find when our Magic Byte is being overwritten. 
+    You should break on ReadFile again. This time the stack looks like we expected it to:<br><center><img src="images/Olly26.gif"><br>
+    <a href="images/olly26.gif">Figure 26</a> </center>   
+    <p>We have now confirmed that SysCut.dat is the file that holds our registration information. By looking at the stack we see that 1 Byte from SysCut.dat is being used to overwrite our Magic Byte. If we can patch that one byte we can make the program run as registered without changing any patching of the executable at all!
+    <p>Just to be safe, Press Run again and see if SysCut.dat is accessed again... No, it is not. We can now move on to patching SysCut.dat.
+    <p>Locate SysCut.dat in you System32 folder, and open it up with HexWorkshop. The first thing you will notice is that it is only 5 Bytes: <br><center><img src="images/Olly27.gif"><br>
+        <a href="images/olly27.gif">Figure 27</a>
+    </center>
+    <p>Currently SysCut.dat is all 00's, we need to change one of those 00's into a 01. But which one? Well, our first ReadFile accessed 4 Bytes and our second ReadFile accessed only 1 Byte,  that was our registration byte. This means that the first 4 Bytes of SysCut.dat are used elsewhere in the program but the 5'th byte in SysCut.dat represents whether or not we are registered. If we change the 5'th Byte in SysCut.dat to a 01. Hopefully we will be registered. 
+    <p>Position your cursor just before  the last byte in SysCut.dat and type 01. The file should now look like this:<br><center><img src="images/Olly28.gif"><br>
+      <a href="images/olly28.gif">Figure 28</a></center>    
+    <p>Choose File-&gt;Save and overwrite the original SysCut.dat. We can now test out our ORIGINAL MP3 Cutter Joiner.exe and see if it is registered... <br><center><img src="images/Olly29.gif"><br>
+      <a href="images/olly29.gif">Figure 29</a></center>      
+    <p>Excellent! We used our knowledge of the Windows API to locate our Magic Byte. We found what file the magic byte was located in, and exactly where in the file it was located. We then successfully registered the program without changing a single byte of the original executable!
+      <p>You may come across other programs that use a boolean variable to check registration, whether the Magic Byte is located in the executable or in a separate file, hopefully you will be able to apply what you learned here to other targets.    </td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<div align="center">
+  <center>
+  <table border="1" width="75%" background="/images/table.gif" bordercolor="#3D486E" cellspacing="0" bordercolorlight="#3D486E" bordercolordark="#3D486E" style="border-collapse: collapse">
+    <tr>
+      <td width="100%" background="images/table.gif">
+        <p align="center"><b><u>Conclusion:</u></b></p>
+      </td>
+    </tr>
+    <tr>
+      <td width="100%" background="images/table.gif"><p>I used this particular program purely as a demonstration
+          for finding and reversing Magic Byte protection schemes. If you like the program and are going to
+          use it please purchase it.</p>
+        <p align="center"> Thanks to the whole ARTeam:<br>
+[<span class="style16 style7">Nilrem</span>] [<span class="style16 style7">JDog45</span>] [<span class="style16 style7">Shub - Nigurrath</span>] [<span class="style16 style7">MaDMAn_H3rCuL3s</span>] [<span class="style16 style7">Ferrari</span>] [<span class="style16 style7">Kruger</span>] [<span class="style16 style7">Teerayoot</span>] [<span class="style16 style7">R@dier</span>] [<span class="style16 style7">ThunderPwr</span>] [<span class="style16 style7">Eggi</span>] [<span class="style16 style7">EJ12N</span>] [<span class="style16 style7">Stickman 373</span>] [<span class="style16 style7">Bone Enterprise</span>] [<span class="style7">Gabri3l</span>] [<span class="style16 style7">KaGra</span>] <br>Visit <a href="http://tutorials.accessroot.com/">http://tutorials.accessroot.com</a> for more tutorials</p>
+        <p>Thanks to all the people who take time to write tutorials. <br>
+          Thanks to all the people who continue to develop better tools. <br>
+    Thanks to Exetools, Woodmann, MP2K, TSRH, SND, RES,  and ICU  forums for being great places of learning.<br>
+          Thanks also to The Codebreakers Journal, and the Anticrack forum.<br>
+          Thanks Also to marcus from ARTeam forum for bringing this program to my attention</p>
+        <p>If you have any suggestions, comments or corrections email me:
+        Gabri3l2003[at]yahoo.com&nbsp;      </p>
+        </td>
+    </tr>
+  </table>
+  </center>
+</div>
+
+</body>
+
+</html>
