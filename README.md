@@ -9,7 +9,7 @@ Es el complemento ideal para ser usado con nuestro [toolkit](https://github.com/
 Puede clonar el repo con [git](https://git-scm.com/download/win) o simplemente bajarlo desde descargar.
 
 ```bash
-git clone https://github.com/xchwarze/toolkit
+git clone https://github.com/indetectables-net/manuals
 ```
 
 ## Contribuciones
